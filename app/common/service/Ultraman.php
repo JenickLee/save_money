@@ -24,7 +24,7 @@ class Ultraman extends UltramanBean
 
     public function getList()
     {
-        $field =  "u.id uid, DATE_FORMAT(y.start_time,'%Y') as '年度', user.username, u.deposit_base, u.aims,(u.aims - u.deposit_base) as difference, if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
+        $field =  "u.id uid, y.year, user.username, u.deposit_base, u.aims, y.end_time,(u.aims - u.deposit_base) as difference, if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
         $this->model->setField($field);
         $res = $this->model->findAllInfoJoinUser();
         return $res;

@@ -21,7 +21,7 @@ class Ultraman extends Base
     public function findAllInfoJoinUser()
     {
         if (empty($this->getOrder())) {
-            $this->setOrder('u.deposit_base desc, u.create_time desc, u.id desc');
+            $this->setOrder('u.deposit_base desc, u.aims desc, u.create_time desc, u.id desc');
         }
 
         try {

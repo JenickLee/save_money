@@ -8,8 +8,8 @@
 return [
     //奥特曼表
     'biz_ultraman' => env('table.biz_ultraman', 'biz_ultraman'),
-    //用户表
-    'biz_user' => env('table.biz_user', 'biz_user'),
+    //贴吧用户表
+    'biz_post_it_user' => env('table.biz_post_it_user', 'biz_post_it_user'),
     //奥特曼年度表
     'biz_year_ultraman' => env('table.biz_year_ultraman', 'biz_year_ultraman'),
 ];

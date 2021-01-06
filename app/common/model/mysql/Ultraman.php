@@ -26,7 +26,7 @@ class Ultraman extends Base
 
         try {
             $res = $this->alias('u')
-                ->join(config('table.biz_user') . ' user', 'user.id = u.user_id', 'INNER')
+                ->join(config('table.biz_post_it_user') . ' user', 'user.id = u.p_user_id', 'INNER')
                 ->join(config('table.biz_year_ultraman') . ' y', 'y.id = u.y_id', 'INNER')
                 ->field($this->getField())
                 ->where($this->getWhereArr())

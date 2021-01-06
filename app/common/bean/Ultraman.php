@@ -13,10 +13,8 @@ class Ultraman extends Base
 {
     //主键id
     private $id = null;
-    //年度id
-    private $yid = null;
-    //用户id
-    private $userId = null;
+    //贴吧用户id
+    private $pUserId = null;
     //当前存款基数
     private $depositBase = 0;
     //目标
@@ -25,6 +23,10 @@ class Ultraman extends Base
     private $createTime = null;
     //更新时间
     private $updateTime = null;
+    //开始时间
+    private $startTime = null;
+    //截止时间
+    private $endTime = null;
 
     /**
      * @return null
@@ -45,33 +47,17 @@ class Ultraman extends Base
     /**
      * @return null
      */
-    public function getYid()
+    public function getPUserId()
     {
-        return $this->yid;
+        return $this->pUserId;
     }
 
     /**
-     * @param null $yid
+     * @param null $pUserId
      */
-    public function setYid($yid): void
+    public function setPUserId($pUserId): void
     {
-        $this->yid = $yid;
-    }
-
-    /**
-     * @return null
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param null $userId
-     */
-    public function setUserId($userId): void
-    {
-        $this->userId = $userId;
+        $this->pUserId = $pUserId;
     }
 
     /**
@@ -137,4 +123,37 @@ class Ultraman extends Base
     {
         $this->updateTime = $updateTime;
     }
+
+    /**
+     * @return null
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * @param null $startTime
+     */
+    public function setStartTime($startTime): void
+    {
+        $this->startTime = $startTime;
+    }
+
+    /**
+     * @return null
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * @param null $endTime
+     */
+    public function setEndTime($endTime): void
+    {
+        $this->endTime = $endTime;
+    }
+
 }

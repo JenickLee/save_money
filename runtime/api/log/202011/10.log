@@ -1,0 +1,2 @@
+[2020-11-10T01:32:31+08:00][error] [0]语法错误: unexpected 'catch' (T_CATCH), expecting function (T_FUNCTION) or const (T_CONST)
+[2020-11-10T01:33:21+08:00][error] [0]Connection refused

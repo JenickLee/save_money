@@ -1,4 +1,0 @@
-[2020-09-10T16:03:04+08:00][error] [0]Argument 1 passed to think\Validate::check() must be of the type array, null given, called in /Volumes/doc/PHP/blogapi/app/commonApi/controller/Upload.php on line 51
-[2020-09-10T16:03:20+08:00][error] [0]Argument 1 passed to think\Validate::check() must be of the type array, null given, called in /Volumes/doc/PHP/blogapi/app/commonApi/controller/Upload.php on line 52
-[2020-09-10T16:04:13+08:00][error] [0]Argument 1 passed to think\Validate::check() must be of the type array, null given, called in /Volumes/doc/PHP/blogapi/app/commonApi/controller/Upload.php on line 31
-[2020-09-10T16:28:46+08:00][error] [2]base64_encode() expects parameter 1 to be string, array given

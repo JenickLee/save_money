@@ -1,4 +1,0 @@
-[2020-09-15T15:11:28+08:00][error] [0]不支持: redis
-[2020-09-15T15:36:48+08:00][error] [0]Connection refused
-[2020-09-15T15:57:25+08:00][error] [2]count(): Parameter must be an array or an object that implements Countable
-[2020-09-15T15:57:42+08:00][error] [2]count(): Parameter must be an array or an object that implements Countable

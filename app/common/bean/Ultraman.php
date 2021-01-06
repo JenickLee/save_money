@@ -27,6 +27,19 @@ class Ultraman extends Base
     private $startTime = null;
     //截止时间
     private $endTime = null;
+    //贴吧用户数据
+    private $postItUser = null;
+
+    /**
+     * Ultraman constructor.
+     * @param null $createTime
+     */
+    public function __construct($createTime = null)
+    {
+        if(!isset($createTime)) $createTime = date('Y-m-d H:i:s');
+        $this->createTime = $createTime;
+    }
+
 
     /**
      * @return null
@@ -155,5 +168,22 @@ class Ultraman extends Base
     {
         $this->endTime = $endTime;
     }
+
+    /**
+     * @return null
+     */
+    public function getPostItUser()
+    {
+        return $this->postItUser;
+    }
+
+    /**
+     * @param null $postItUser
+     */
+    public function setPostItUser($postItUser): void
+    {
+        $this->postItUser = $postItUser;
+    }
+
 
 }

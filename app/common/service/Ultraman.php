@@ -57,38 +57,32 @@ class Ultraman extends UltramanBean
      * User: Jenick
      * Date: 2021/1/7
      * Time: 12:45 上午
+     * @throws \Exception
      */
     public function addUltraman()
     {
-        Db::startTrans();
-        try {
-            $postItUserData = [
-                'username' => $this->getPostItUser()->getUsername(),
-                'create_time' => $this->getPostItUser()->getCreateTime()
-            ];
-            $postItUserModel = new PostItUser();
-            $pUserId = $postItUserModel->insertGetId($postItUserData);
-            if (!$pUserId) {
-                throw new \Exception('新增贴吧用户失败');
-            }
-            $ultramanData = [
-                'p_user_id' => $pUserId,
-                'deposit_base' => $this->getDepositBase(),
-                'aims' => $this->getAims(),
-                'start_time' => $this->getStartTime(),
-                'end_time' => $this->getEndTime(),
-                'create_time' => $this->getCreateTime()
-            ];
-            $uid = $this->model->insertGetId($ultramanData);
-            if (!$uid) {
-                throw new \Exception('新增失败');
-            }
-            Db::commit();
-            return true;
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-            Db::rollback();
+        $where = [
+            ['u.start_time', '<=', $this->getStartTime()],
+            ['u.end_time', '>=', $this->getEndTime()],
+            ['u.p_user_id', '=', $this->getPUserId()]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->findAllInfoJoinUser();
+        if ($res) {
+            throw new \Exception('该贴吧用户已参加本次奥特曼活动');
         }
-        return false;
+        $ultramanData = [
+            'p_user_id' => $this->getPUserId(),
+            'deposit_base' => $this->getDepositBase(),
+            'aims' => $this->getAims(),
+            'start_time' => $this->getStartTime(),
+            'end_time' => $this->getEndTime(),
+            'create_time' => $this->getCreateTime()
+        ];
+        $uid = $this->model->insertGetId($ultramanData);
+        if (!$uid) {
+            throw new \Exception('新增失败');
+        }
+        return true;
     }
 }

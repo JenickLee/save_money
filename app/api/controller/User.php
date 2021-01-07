@@ -35,8 +35,8 @@ class User extends Base
         }
         $code = $params['code'];
         try {
-            $this->obj->setNickname($params['nickName'] ?? '');
-            $this->obj->setAvatar($params['avatarUrl'] ?? '');
+            $this->obj->setNickname($params['nickname'] ?? '');
+            $this->obj->setAvatar($params['avatar'] ?? '');
             $res = $this->obj->userRegistered((String)$code);
             return Response::success($res);
         } catch (\Exception $e) {

@@ -32,16 +32,14 @@ class Ultraman extends Base
         $rule['p_user_id|贴吧id'] = 'require';
         $rule['deposit_base|当前存款基数'] = 'require';
         $rule['aims|目标'] = 'require';
-        $rule['start_time|起始时间'] = 'require';
-        $rule['end_time|结束时间'] = 'require';
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
         }
         $this->obj->setPUserId($param['p_user_id']);
         $this->obj->setAims($param['aims']);
         $this->obj->setDepositBase($param['deposit_base']);
-        $this->obj->setStartTime($param['start_time']);
-        $this->obj->setEndTime($param['end_time']);
+        $this->obj->setStartTime($param['start_time']?? date('Y-01-01 00:00:00'));
+        $this->obj->setEndTime($param['end_time']?? date('Y-12-31 23:59:59'));
         try {
             $res = $this->obj->addUltraman();
             return Response::success();

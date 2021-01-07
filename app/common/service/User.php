@@ -92,7 +92,7 @@ class User extends UserBean
     {
         $where['id'] = $this->getId();
         $this->model->setWhereArr($where);
-        $this->model->setField('id user_id, nickname, avatar, img, introduction');
+        $this->model->setField('id user_id, nickname, avatar, img, introduction, root');
         $res = $this->model->findOneInfo();
         return $res;
     }

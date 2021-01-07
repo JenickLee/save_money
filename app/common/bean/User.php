@@ -31,6 +31,8 @@ class User extends Base
     private $createTime = null;
     //更新时间
     private $updateTime = null;
+    //是否超管
+    private $root = 0;
 
     /**
      * User constructor.
@@ -200,6 +202,22 @@ class User extends Base
     public function setUpdateTime($updateTime): void
     {
         $this->updateTime = $updateTime;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoot(): int
+    {
+        return $this->root;
+    }
+
+    /**
+     * @param int $root
+     */
+    public function setRoot(int $root): void
+    {
+        $this->root = $root;
     }
 
 }

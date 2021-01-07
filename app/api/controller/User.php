@@ -27,7 +27,7 @@ class User extends Base
      */
     public function registered()
     {
-        $params = input('get.');
+        $params = input('post.');
         $validate = new Validate();
         $rule['code|code'] = 'require';
         if (!$validate->check($params, $rule)) {

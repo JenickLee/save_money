@@ -43,4 +43,23 @@ class User extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:获取用户信息
+     * User: Jenick
+     * Date: 2020/01/05
+     * Time: 09:40
+     */
+    public function getUserInfo()
+    {
+        $params = input('get.');
+        $validate = new Validate();
+        $rule['user_id'] = 'require';
+        if (!$validate->check($params, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+        $this->obj->setId($params['user_id']);
+        $res = $this->obj->getUserInfo();
+        return Response::success($res);
+    }
 }

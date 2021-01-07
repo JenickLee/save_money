@@ -16,3 +16,4 @@ Route::post("/addUltraman", 'Ultraman/add');//新增贴吧ID奥特曼数据
 
 //---------------------------------------用户-------------------------------------------------
 Route::post("/userRegistered", 'User/registered');//小程序授权登录
+Route::get("/getUserInfo", 'User/getUserInfo');//获取用户信息

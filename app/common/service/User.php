@@ -81,4 +81,19 @@ class User extends UserBean
         }
         return $response ?? [];
     }
+
+    /**
+     * Notes:获取用户信息
+     * User: Jenick
+     * Date: 2020/9/4
+     * Time: 10:12 下午
+     */
+    public function getUserInfo()
+    {
+        $where['id'] = $this->getId();
+        $this->model->setWhereArr($where);
+        $this->model->setField('id user_id, nickname, avatar, img, introduction');
+        $res = $this->model->findOneInfo();
+        return $res;
+    }
 }

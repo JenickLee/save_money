@@ -67,7 +67,7 @@ class Ultraman extends UltramanBean
             ['u.p_user_id', '=', $this->getPUserId()]
         ];
         $this->model->setWhereArr($where);
-        $res = $this->model->findAllInfoJoinUser();
+        $res = $this->model->findOneInfoJoinUser();
         if ($res) {
             throw new \Exception('该贴吧用户已参加本次奥特曼活动');
         }
@@ -84,5 +84,35 @@ class Ultraman extends UltramanBean
             throw new \Exception('新增失败');
         }
         return true;
+    }
+
+    /**
+     * Notes:获取贴吧ID奥特曼信息
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 6:15 下午
+     */
+    public function getPostItUserUltramanInfo()
+    {
+        $field = "u.id uid, 
+                   user.username, 
+                   u.deposit_base, 
+                   u.aims,
+                   DATE_FORMAT(u.end_time, '%Y-%m-%d') as end_time, 
+                   (u.aims - u.deposit_base) as difference, 
+                   if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
+
+
+        $startTime = date('Y-01-01 00:00:00');
+        $endTime = date('Y-12-31 23:59:59');
+        $where = [
+            ['u.start_time', '<=', $startTime],
+            ['u.end_time', '>=', $endTime],
+            ['u.p_user_id', '=', $this->getPUserId()]
+        ];
+        $this->model->setField($field);
+        $this->model->setWhereArr($where);
+        $res = $this->model->findOneInfoJoinUser();
+        return $res;
     }
 }

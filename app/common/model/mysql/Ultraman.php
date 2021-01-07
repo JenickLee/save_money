@@ -40,4 +40,27 @@ class Ultraman extends Base
             return [];
         }
     }
+
+    public function findOneInfoJoinUser()
+    {
+        if (empty($this->getOrder())) {
+            $this->setOrder('u.deposit_base desc, u.aims desc, u.create_time desc, u.id desc');
+        }
+
+        try {
+            $res = $this->alias('u')
+                ->join(config('table.biz_post_it_user') . ' user', 'user.id = u.p_user_id', 'INNER')
+                ->field($this->getField())
+                ->where($this->getWhereArr())
+                ->limit($this->getOffset(), $this->getLimit())
+                ->order($this->getOrder())
+                ->group($this->getGroup())
+                ->find();
+            if (is_object($res)) $res = $res->toArray();
+            return $res;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return [];
+        }
+    }
 }

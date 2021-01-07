@@ -47,4 +47,23 @@ class Ultraman extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:获取贴吧ID奥特曼信息
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 6:17 下午
+     */
+    public function getPostItUserUltramanInfo()
+    {
+        $param = input('get.');
+        $validate = new Validate();
+        $rule['p_user_id|贴吧id'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+        $this->obj->setPUserId($param['p_user_id']);
+        $res = $this->obj->getPostItUserUltramanInfo();
+        return Response::success($res);
+    }
 }

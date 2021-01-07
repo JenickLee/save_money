@@ -5,6 +5,7 @@
  * Date: 2021/1/7
  * Time: 4:32 下午
  */
+
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
@@ -32,6 +33,31 @@ class PostItUser extends PostItUserBean
     {
         $this->model->setOrder('username asc');
         $res = $this->model->findAllInfo();
+        return $res;
+    }
+
+    /**
+     * Notes:新增贴吧id用户
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 5:07 下午
+     */
+    public function addPostItUser()
+    {
+        $username = $this->getUsername();
+        $this->model->setWhereArr(['username' => $username]);
+        $res = $this->model->findOneInfo();
+        if ($res) {
+            throw new \Exception('贴吧ID已存在');
+        }
+        $data = [
+            'username' => $username,
+            'create_time' => $this->getCreateTime()
+        ];
+        $res = $this->model->insertGetId($data);
+        if (!$res) {
+            throw new \Exception('新增贴吧ID失败');
+        }
         return $res;
     }
 }

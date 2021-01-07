@@ -11,3 +11,4 @@
 use think\facade\Route;
 //-------------------------------------贴吧用户-------------------------------------------------
 Route::get("/getPostItUserList", 'PostItUser/getPostItUserList');//获取用户信息
+Route::post("/addPostItUser", 'PostItUser/addPostItUser');//新增贴吧id用户

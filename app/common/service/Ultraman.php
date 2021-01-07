@@ -15,7 +15,7 @@ use think\facade\Db;
 
 class Ultraman extends UltramanBean
 {
-    public function __construct($page = 0, $pageSize = 10)
+    public function __construct($page = 0, $pageSize = null)
     {
         parent::__construct();
         $this->setOffset($page * $pageSize);

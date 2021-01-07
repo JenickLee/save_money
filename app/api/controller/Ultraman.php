@@ -8,18 +8,16 @@
 
 namespace app\api\controller;
 
-use app\common\bean\PostItUser;
 use app\common\lib\Response;
 use think\App;
 use app\common\service\Ultraman as UltramanService;
-use think\Validate;
 
 class Ultraman extends Base
 {
     public function __construct(App $app)
     {
         parent::__construct($app);
-        $this->obj = new UltramanService($this->page, $this->pageSize);
+        $this->obj = new UltramanService($this->page, null);
     }
 
     /**

@@ -66,4 +66,31 @@ class Ultraman extends Base
         $res = $this->obj->getPostItUserUltramanInfo();
         return Response::success($res);
     }
+
+    /***
+     * Notes:新增数据
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 12:31 上午
+     */
+    public function editUltraman()
+    {
+        $param = input('post.');
+        $validate = new Validate();
+        $rule['id'] = 'require';
+        $rule['type'] = 'require';//1-当前基数 2-目标
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+
+        $this->obj->setId($param['id']);
+        $this->obj->setAims($param['aims']??null);
+        $this->obj->setDepositBase($param['deposit_base']??null);
+        try {
+            $res = $this->obj->editUltraman($param['type']);
+            return Response::success();
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
 }

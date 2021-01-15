@@ -135,4 +135,56 @@ class Ultraman extends UltramanBean
         $res = $this->model->findOneInfoJoinUser();
         return $res;
     }
+
+    /**
+     * Notes:更新数据
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 12:45 上午
+     * @throws \Exception
+     */
+    public function editUltraman($type)
+    {
+        $id = $this->getId();
+        $this->model->setWhereArr(['id' => $id]);
+        $info = $this->model->findOneInfo();
+        if (!$info) {
+            throw new \Exception('用户未参加奥特曼');
+        }
+        Db::startTrans();
+        try {
+            $logData = [
+                'type' => $type,
+                'uid'  =>$id,
+                'create_time' => $this->getUpdateTime()
+            ];
+            $ultramanData['update_time'] = $this->getUpdateTime();
+            switch ($type) {
+                case 1:
+                    $ultramanData['deposit_base'] = $this->getDepositBase();
+                    $logData['deposit_base'] = $this->getDepositBase();
+                    break;
+                case 2:
+                    $ultramanData['aims'] = $this->getAims();
+                    $ultramanData['aims'] = $this->getAims();
+                    break;
+            }
+            $this->model->setId($id);
+            $this->model->setArr($ultramanData);
+            $res = $this->model->useIdUpdateData();
+            if ($res) {
+                throw new \Exception('新增失败');
+            }
+            $logModel = new UltramanLogModel();
+            $lid = $logModel->insertGetId($logData);
+            if (!$lid) {
+                throw new \Exception('日志记录失败');
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            throw new \Exception($e->getMessage());
+        }
+        return true;
+    }
 }

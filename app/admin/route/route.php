@@ -16,3 +16,4 @@ Route::post("/addPostItUser", 'PostItUser/addPostItUser');//新增贴吧id用户
 //-------------------------------------奥特曼-------------------------------------------------
 Route::post("/addUltraman", 'Ultraman/addUltraman');//新增奥特曼
 Route::get("/getPostItUserUltramanInfo", 'Ultraman/getPostItUserUltramanInfo');//获取贴吧ID奥特曼信息
+Route::post("/editUltraman", 'Ultraman/editUltraman');//更新奥特曼

@@ -37,6 +37,7 @@ class Ultraman extends UltramanBean
                    u.deposit_base, 
                    u.aims,
                    DATE_FORMAT(u.end_time, '%Y-%m-%d') as end_time, 
+                   DATE_FORMAT(u.update_time, '%Y-%m-%d') as update_time, 
                    (u.aims - u.deposit_base) as difference, 
                    if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
         $startTime = date('Y-01-01 00:00:00');

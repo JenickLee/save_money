@@ -154,7 +154,6 @@ class Ultraman extends UltramanBean
         Db::startTrans();
         try {
             $logData = [
-                'type' => $type,
                 'uid'  =>$id,
                 'create_time' => $this->getUpdateTime()
             ];
@@ -162,11 +161,13 @@ class Ultraman extends UltramanBean
             switch ($type) {
                 case 1:
                     $ultramanData['deposit_base'] = $this->getDepositBase();
+                    $logData['type'] = 2;
                     $logData['deposit_base'] = $this->getDepositBase();
                     break;
                 case 2:
                     $ultramanData['aims'] = $this->getAims();
-                    $ultramanData['aims'] = $this->getAims();
+                    $logData['type'] = 3;
+                    $logData['aims'] = $this->getAims();
                     break;
             }
             $this->model->setId($id);

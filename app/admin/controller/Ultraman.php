@@ -84,8 +84,8 @@ class Ultraman extends Base
         }
 
         $this->obj->setId($param['id']);
-        $this->obj->setAims($param['aims']??null);
-        $this->obj->setDepositBase($param['deposit_base']??null);
+        $this->obj->setAims($param['aims']??0);
+        $this->obj->setDepositBase($param['deposit_base']??0);
         try {
             $res = $this->obj->editUltraman($param['type']);
             return Response::success();

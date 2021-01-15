@@ -9,8 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\Ultraman as UltramanBean;
-use app\common\model\mysql\PostItUser;
-use app\common\model\mysql\Ultraman as UltramanModel;
+use app\common\model\mysql\{Ultraman as UltramanModel, UltramanLog as UltramanLogModel};
 use think\facade\Db;
 
 class Ultraman extends UltramanBean
@@ -61,27 +60,48 @@ class Ultraman extends UltramanBean
      */
     public function addUltraman()
     {
-        $where = [
-            ['u.start_time', '<=', $this->getStartTime()],
-            ['u.end_time', '>=', $this->getEndTime()],
-            ['u.p_user_id', '=', $this->getPUserId()]
-        ];
-        $this->model->setWhereArr($where);
-        $res = $this->model->findOneInfoJoinUser();
-        if ($res) {
-            throw new \Exception('该贴吧用户已参加本次奥特曼活动');
-        }
-        $ultramanData = [
-            'p_user_id' => $this->getPUserId(),
-            'deposit_base' => $this->getDepositBase(),
-            'aims' => $this->getAims(),
-            'start_time' => $this->getStartTime(),
-            'end_time' => $this->getEndTime(),
-            'create_time' => $this->getCreateTime()
-        ];
-        $uid = $this->model->insertGetId($ultramanData);
-        if (!$uid) {
-            throw new \Exception('新增失败');
+        Db::startTrans();
+        try {
+
+            $where = [
+                ['u.start_time', '<=', $this->getStartTime()],
+                ['u.end_time', '>=', $this->getEndTime()],
+                ['u.p_user_id', '=', $this->getPUserId()]
+            ];
+            $this->model->setWhereArr($where);
+            $res = $this->model->findOneInfoJoinUser();
+            if ($res) {
+                throw new \Exception('该贴吧用户已参加本次奥特曼活动');
+            }
+            $ultramanData = [
+                'p_user_id' => $this->getPUserId(),
+                'deposit_base' => $this->getDepositBase(),
+                'aims' => $this->getAims(),
+                'start_time' => $this->getStartTime(),
+                'end_time' => $this->getEndTime(),
+                'create_time' => $this->getCreateTime(),
+                'update_time' => $this->getUpdateTime()
+            ];
+            $uid = $this->model->insertGetId($ultramanData);
+            if (!$uid) {
+                throw new \Exception('新增失败');
+            }
+            $logData = [
+                'type' => 1,
+                'uid' => $uid,
+                'deposit_base' => $this->getDepositBase(),
+                'aims' => $this->getAims(),
+                'create_time' => $this->getCreateTime()
+            ];
+            $logModel = new UltramanLogModel();
+            $lid = $logModel->insertGetId($logData);
+            if (!$lid) {
+                throw new \Exception('日志记录失败');
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            throw new \Exception($e->getMessage());
         }
         return true;
     }

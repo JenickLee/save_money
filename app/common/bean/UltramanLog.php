@@ -2,19 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: Jenick
- * Date: 2021/1/6
- * Time: 5:06 下午
+ * Date: 2021/1/15
+ * Time: 7:20 下午
  */
 
 namespace app\common\bean;
 
 
-class Ultraman extends Base
+class UltramanLog extends Base
 {
     //主键id
     private $id = null;
-    //贴吧用户id
-    private $pUserId = null;
+    //奥特曼id
+    private $uid = null;
+    //类型 1-创建 2-修改当前基数 3-修改目标
+    private $type = null;
     //当前存款基数
     private $depositBase = 0;
     //目标
@@ -23,13 +25,6 @@ class Ultraman extends Base
     private $createTime = null;
     //更新时间
     private $updateTime = null;
-    //开始时间
-    private $startTime = null;
-    //截止时间
-    private $endTime = null;
-    //贴吧用户数据
-    private $postItUser = null;
-
 
     public function __construct($createTime = null, $updateTime = null)
     {
@@ -38,7 +33,6 @@ class Ultraman extends Base
         $this->createTime = $createTime;
         $this->updateTime = $updateTime;
     }
-
 
     /**
      * @return null
@@ -59,17 +53,33 @@ class Ultraman extends Base
     /**
      * @return null
      */
-    public function getPUserId()
+    public function getUid()
     {
-        return $this->pUserId;
+        return $this->uid;
     }
 
     /**
-     * @param null $pUserId
+     * @param null $uid
      */
-    public function setPUserId($pUserId): void
+    public function setUid($uid): void
     {
-        $this->pUserId = $pUserId;
+        $this->uid = $uid;
+    }
+
+    /**
+     * @return null
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param null $type
+     */
+    public function setType($type): void
+    {
+        $this->type = $type;
     }
 
     /**
@@ -105,7 +115,7 @@ class Ultraman extends Base
     }
 
     /**
-     * @return null
+     * @return false|string|null
      */
     public function getCreateTime()
     {
@@ -113,7 +123,7 @@ class Ultraman extends Base
     }
 
     /**
-     * @param null $createTime
+     * @param false|string|null $createTime
      */
     public function setCreateTime($createTime): void
     {
@@ -121,7 +131,7 @@ class Ultraman extends Base
     }
 
     /**
-     * @return null
+     * @return false|string|null
      */
     public function getUpdateTime()
     {
@@ -129,60 +139,10 @@ class Ultraman extends Base
     }
 
     /**
-     * @param null $updateTime
+     * @param false|string|null $updateTime
      */
     public function setUpdateTime($updateTime): void
     {
         $this->updateTime = $updateTime;
     }
-
-    /**
-     * @return null
-     */
-    public function getStartTime()
-    {
-        return $this->startTime;
-    }
-
-    /**
-     * @param null $startTime
-     */
-    public function setStartTime($startTime): void
-    {
-        $this->startTime = $startTime;
-    }
-
-    /**
-     * @return null
-     */
-    public function getEndTime()
-    {
-        return $this->endTime;
-    }
-
-    /**
-     * @param null $endTime
-     */
-    public function setEndTime($endTime): void
-    {
-        $this->endTime = $endTime;
-    }
-
-    /**
-     * @return null
-     */
-    public function getPostItUser()
-    {
-        return $this->postItUser;
-    }
-
-    /**
-     * @param null $postItUser
-     */
-    public function setPostItUser($postItUser): void
-    {
-        $this->postItUser = $postItUser;
-    }
-
-
 }

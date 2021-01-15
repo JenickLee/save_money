@@ -172,8 +172,8 @@ class Ultraman extends UltramanBean
             $this->model->setId($id);
             $this->model->setArr($ultramanData);
             $res = $this->model->useIdUpdateData();
-            if ($res) {
-                throw new \Exception('新增失败');
+            if (!$res) {
+                throw new \Exception('修改失败');
             }
             $logModel = new UltramanLogModel();
             $lid = $logModel->insertGetId($logData);

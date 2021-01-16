@@ -144,7 +144,7 @@ class Ultraman extends UltramanBean
      * Time: 12:45 上午
      * @throws \Exception
      */
-    public function editUltraman($type)
+    public function editUltraman($type, $calculation)
     {
         $id = $this->getId();
         $this->model->setWhereArr(['id' => $id]);
@@ -155,20 +155,44 @@ class Ultraman extends UltramanBean
         Db::startTrans();
         try {
             $logData = [
-                'uid'  =>$id,
+                'uid' => $id,
                 'create_time' => $this->getUpdateTime()
             ];
             $ultramanData['update_time'] = $this->getUpdateTime();
             switch ($type) {
                 case 1:
-                    $ultramanData['deposit_base'] = $this->getDepositBase();
                     $logData['type'] = 2;
-                    $logData['deposit_base'] = $this->getDepositBase();
+                    switch ($calculation) {
+                        case 1://最终
+                            $ultramanData['deposit_base'] = $this->getDepositBase();
+                            $logData['deposit_base'] = $this->getDepositBase();
+                            break;
+                        case 2://增加
+                            $ultramanData['deposit_base'] = $info['deposit_base'] + $this->getDepositBase();
+                            $logData['deposit_base'] = $info['deposit_base'] + $this->getDepositBase();
+                            break;
+                        case 3://减少
+                            $ultramanData['deposit_base'] = $info['deposit_base'] - $this->getDepositBase();
+                            $logData['deposit_base'] = $info['deposit_base'] - $this->getDepositBase();
+                            break;
+                    }
                     break;
                 case 2:
-                    $ultramanData['aims'] = $this->getAims();
                     $logData['type'] = 3;
-                    $logData['aims'] = $this->getAims();
+                    switch ($calculation) {
+                        case 1://最终
+                            $ultramanData['aims'] = $this->getAims();
+                            $logData['aims'] = $this->getAims();
+                            break;
+                        case 2://增加
+                            $ultramanData['aims'] = $info['aims'] + $this->getAims();
+                            $logData['aims'] = $info['aims'] + $this->getAims();
+                            break;
+                        case 3://减少
+                            $ultramanData['aims'] = $info['aims'] + $this->getAims();
+                            $logData['aims'] = $info['aims'] + $this->getAims();
+                            break;
+                    }
                     break;
             }
             $this->model->setId($id);
@@ -188,5 +212,27 @@ class Ultraman extends UltramanBean
             throw new \Exception($e->getMessage());
         }
         return true;
+    }
+
+    /**
+     * Notes:根据id获取奥特曼信息
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 6:15 下午
+     */
+    public function getPostItUserUltramanInfoById()
+    {
+        $field = "u.id uid, 
+                   user.username, 
+                   u.deposit_base, 
+                   u.aims,
+                   DATE_FORMAT(u.end_time, '%Y-%m-%d') as end_time, 
+                   (u.aims - u.deposit_base) as difference, 
+                   if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
+        $where['u.id'] = $this->getId();
+        $this->model->setField($field);
+        $this->model->setWhereArr($where);
+        $res = $this->model->findOneInfoJoinUser();
+        return $res;
     }
 }

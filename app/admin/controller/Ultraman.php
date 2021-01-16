@@ -79,6 +79,7 @@ class Ultraman extends Base
         $validate = new Validate();
         $rule['id'] = 'require';
         $rule['type'] = 'require';//1-当前基数 2-目标
+        $rule['calculation'] = 'require';//1-最终 2-增加 3-减少
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
         }
@@ -87,7 +88,7 @@ class Ultraman extends Base
         $this->obj->setAims($param['aims']??0);
         $this->obj->setDepositBase($param['deposit_base']??0);
         try {
-            $res = $this->obj->editUltraman($param['type']);
+            $this->obj->editUltraman($param['type'], $param['calculation']);
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

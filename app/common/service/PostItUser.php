@@ -110,19 +110,33 @@ class PostItUser extends PostItUserBean
     }
 
     /**
-     * Notes:获取贴吧用户信息
+     * Notes:根据id获取贴吧用户信息
      * User: Jenick
      * Date: 2021/1/17
      * Time: 3:33 下午
      * @throws \Exception
      */
-    public function getPostItUserInfo()
+    public function getPostItUserInfoById()
     {
-        $this->model->setWhereArr(['id'=>$this->getId()]);
+        $this->model->setWhereArr(['id' => $this->getId()]);
         $res = $this->model->findOneInfo();
-        if(!$res) {
+        if (!$res) {
             throw new \Exception('贴吧ID信息不存在');
         }
         return $res;
     }
+
+    /**
+     * Notes:根据user_id获取贴吧用户信息
+     * User: Jenick
+     * Date: 2021/1/17
+     * Time: 5:42 下午
+     */
+    public function getPostItUserInfoByUserId()
+    {
+        $this->model->setWhereArr(['user_id' => $this->getUserId()]);
+        $res = $this->model->findOneInfo();
+        return $res ?? [];
+    }
+
 }

@@ -17,3 +17,6 @@ Route::get("/v1.1/getUltramanList", 'Ultraman/getUltramanList');//获取奥特�
 //---------------------------------------用户-------------------------------------------------
 Route::post("/userRegistered", 'User/registered');//小程序授权登录
 Route::get("/getUserInfo", 'User/getUserInfo');//获取用户信息
+
+//---------------------------------------贴吧ID-------------------------------------------------
+Route::get("/getPostItUserInfo", 'PostItUser/getPostItUserInfo');//获取用户贴吧ID信息

@@ -107,10 +107,11 @@ class PostItUser extends Base
 
         try {
             $this->obj->setId($param['id']);
-            $res = $this->obj->getPostItUserInfo();
+            $res = $this->obj->getPostItUserInfoById();
             return Response::success($res);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
 }

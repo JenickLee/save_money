@@ -13,6 +13,8 @@ class PostItUser extends Base
 {
     //主键id
     private $id = null;
+    //user_id
+    private $userId = null;
     //贴吧ID
     private $username = null;
     //创建时间
@@ -47,6 +49,24 @@ class PostItUser extends Base
     {
         $this->id = $id;
     }
+
+    /**
+     * @return null
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param null $userId
+     */
+    public function setUserId($userId): void
+    {
+        $this->userId = $userId;
+    }
+
+
 
     /**
      * @return null

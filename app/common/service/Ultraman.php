@@ -53,6 +53,25 @@ class Ultraman extends UltramanBean
     }
 
     /**
+     * Notes:获取奥特曼列表
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 12:45 上午
+     */
+    public function getUltramanCount()
+    {
+        $startTime = date('Y-01-01 00:00:00');
+        $endTime = date('Y-12-31 23:59:59');
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->getCount();
+        return $res;
+    }
+
+    /**
      * Notes:新增数据
      * User: Jenick
      * Date: 2021/1/7

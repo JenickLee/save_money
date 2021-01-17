@@ -57,7 +57,7 @@ abstract class Base
         $this->app = $app;
         $this->request = $this->app->request;
         $params = $this->request->param();
-        $pageOpt = Page::getPage(intval($params['page'] ?? 0), intval($params['pageSize'] ?? 10));
+        $pageOpt = Page::getPage(intval($params['page'] ?? $this->page), intval($params['pageSize'] ?? $this->pageSize));
         $this->page = $pageOpt['page'];
         $this->pageSize = $pageOpt['pageSize'];
         $this->response['page'] = $this->page;

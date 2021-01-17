@@ -18,7 +18,7 @@ class PostItUser extends Base
     public function __construct(App $app)
     {
         parent::__construct($app);
-        $this->obj = new PostItUserService();
+        $this->obj = new PostItUserService($this->page, $this->pageSize);
     }
 
     /**
@@ -31,6 +31,19 @@ class PostItUser extends Base
     {
         $res = $this->obj->getPostItUserList();
         return Response::success($res);
+    }
+
+    /**
+     * Notes:获取贴吧id用户列表
+     * User: Jenick
+     * Date: 2021/1/17
+     * Time: 4:10 下午
+     */
+    public function getPostItUserList2()
+    {
+        $this->response['list'] = $this->obj->getPostItUserList();
+        $this->response['count'] = $this->obj->getPostItUserCount();
+        return Response::success($this->response);
     }
 
     /**

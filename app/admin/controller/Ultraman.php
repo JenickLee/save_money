@@ -68,7 +68,7 @@ class Ultraman extends Base
     }
 
     /***
-     * Notes:新增数据
+     * Notes:更新数据
      * User: Jenick
      * Date: 2021/1/7
      * Time: 12:31 上午

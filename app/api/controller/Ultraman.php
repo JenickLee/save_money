@@ -11,6 +11,7 @@ namespace app\api\controller;
 use app\common\lib\Response;
 use think\App;
 use app\common\service\Ultraman as UltramanService;
+use think\Validate;
 
 class Ultraman extends Base
 {
@@ -43,5 +44,24 @@ class Ultraman extends Base
         $this->response['list'] = $this->obj->getList();
         $this->response['count'] = $this->obj->getUltramanCount();
         return Response::success($this->response);
+    }
+
+    /**
+     * Notes:获取贴吧ID奥特曼信息
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 6:17 下午
+     */
+    public function getPostItUserUltramanInfo()
+    {
+        $param = input('get.');
+        $validate = new Validate();
+        $rule['p_user_id|贴吧id'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+        $this->obj->setPUserId($param['p_user_id']);
+        $res = $this->obj->getPostItUserUltramanInfo();
+        return Response::success($res);
     }
 }

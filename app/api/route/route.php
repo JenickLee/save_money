@@ -13,6 +13,7 @@ Route::get("/", 'Index/index');//首页
 //---------------------------------------奥特曼-----------------------------------------------
 Route::get("/getUltramanList", 'Ultraman/getList');//获取奥特曼列表
 Route::get("/v1.1/getUltramanList", 'Ultraman/getUltramanList');//获取奥特曼列表
+Route::get("/getPostItUserUltramanInfo", 'Ultraman/getPostItUserUltramanInfo');//获取贴吧ID奥特曼信息
 
 //---------------------------------------用户-------------------------------------------------
 Route::post("/userRegistered", 'User/registered');//小程序授权登录

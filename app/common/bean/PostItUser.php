@@ -19,15 +19,19 @@ class PostItUser extends Base
     private $createTime = null;
     //更新时间
     private $updateTime = null;
+
     /**
      * PostItUser constructor.
      * @param null $createTime
      */
-    public function __construct($createTime = null)
+    public function __construct($createTime = null, $updateTime = null)
     {
-        if(!isset($createTime)) $createTime = date('Y-m-d H:i:s');
+        if (!isset($createTime)) $createTime = date('Y-m-d H:i:s');
+        if (!isset($updateTime)) $updateTime = date('Y-m-d H:i:s');
+        $this->updateTime = $updateTime;
         $this->createTime = $createTime;
     }
+
     /**
      * @return null
      */

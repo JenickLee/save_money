@@ -52,12 +52,48 @@ class PostItUser extends PostItUserBean
         }
         $data = [
             'username' => $username,
-            'create_time' => $this->getCreateTime()
+            'create_time' => $this->getCreateTime(),
+            'update_time' => $this->getUpdateTime()
         ];
         $res = $this->model->insertGetId($data);
         if (!$res) {
             throw new \Exception('新增贴吧ID失败');
         }
         return $res;
+    }
+
+    /**
+     * Notes:更新贴吧ID
+     * User: Jenick
+     * Date: 2021/1/17
+     * Time: 3:17 下午
+     * @throws \Exception
+     */
+    public function editUsername()
+    {
+        $id = $this->getId();
+        $this->model->setWhereArr(['id' => $id]);
+        $res = $this->model->findOneInfo();
+        if (!$res) {
+            throw new \Exception('贴吧ID不存在');
+        }
+
+        $username = $this->getUsername();
+        $this->model->setWhereArr(['username' => $username]);
+        $res = $this->model->findOneInfo();
+        if ($res) {
+            throw new \Exception('贴吧id已存在');
+        }
+        $data = [
+            'username' => $username,
+            'update_time' => $this->getUpdateTime()
+        ];
+        $this->model->setId($id);
+        $this->model->setArr($data);
+        $res = $this->model->useIdUpdateData();
+        if (!$res) {
+            throw new \Exception('更新贴吧ID失败');
+        }
+        return true;
     }
 }

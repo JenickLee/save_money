@@ -37,6 +37,18 @@ class PostItUser extends PostItUserBean
     }
 
     /**
+     * Notes:获取贴吧用户总数
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 4:34 下午
+     */
+    public function getPostItUserCount()
+    {
+        $res = $this->model->getCount();
+        return $res;
+    }
+
+    /**
      * Notes:新增贴吧id用户
      * User: Jenick
      * Date: 2021/1/7

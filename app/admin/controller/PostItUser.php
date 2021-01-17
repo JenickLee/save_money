@@ -37,19 +37,6 @@ class PostItUser extends Base
     /**
      * Notes:获取贴吧id用户列表
      * User: Jenick
-     * Date: 2021/1/17
-     * Time: 4:10 下午
-     */
-    public function getPostItUserList2()
-    {
-        $this->response['list'] = $this->obj->getPostItUserList();
-        $this->response['count'] = $this->obj->getPostItUserCount();
-        return Response::success($this->response);
-    }
-
-    /**
-     * Notes:获取贴吧id用户列表
-     * User: Jenick
      * Date: 2021/1/7
      * Time: 4:31 下午
      */

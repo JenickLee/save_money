@@ -76,14 +76,13 @@ class PostItUser extends Base
             array_push($letter, '#');
         }
 
-        $response['list'] = [];
+        $response = [];
         foreach ($letter as $item) {
-            $response['list'][] = [
+            $response[] = [
                 'letter' => $item,
                 'data' => $arr[$item]
             ];
         }
-        $response['count'] = count($res);
         return Response::success($response);
     }
 

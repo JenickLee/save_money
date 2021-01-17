@@ -68,9 +68,34 @@ class PostItUser extends Base
         }
 
         try {
+            $this->obj->setId($param['id']);
             $this->obj->setUsername($param['username']);
             $this->obj->editUsername();
             return Response::success();
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
+
+    /**
+     * Notes:获取贴吧ID信息
+     * User: Jenick
+     * Date: 2021/1/17
+     * Time: 3:34 下午
+     */
+    public function getPostItUserInfo()
+    {
+        $param = input('get.');
+        $validate = new Validate();
+        $rule['id|uid'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+
+        try {
+            $this->obj->setId($param['id']);
+            $res = $this->obj->getPostItUserInfo();
+            return Response::success($res);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
         }

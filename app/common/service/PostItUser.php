@@ -96,4 +96,21 @@ class PostItUser extends PostItUserBean
         }
         return true;
     }
+
+    /**
+     * Notes:获取贴吧用户信息
+     * User: Jenick
+     * Date: 2021/1/17
+     * Time: 3:33 下午
+     * @throws \Exception
+     */
+    public function getPostItUserInfo()
+    {
+        $this->model->setWhereArr(['id'=>$this->getId()]);
+        $res = $this->model->findOneInfo();
+        if(!$res) {
+            throw new \Exception('贴吧ID信息不存在');
+        }
+        return $res;
+    }
 }

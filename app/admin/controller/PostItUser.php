@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use app\common\lib\Response;
+use app\common\lib\Str;
 use app\common\service\PostItUser as PostItUserService;
 use think\App;
 use think\Validate;
@@ -44,6 +45,45 @@ class PostItUser extends Base
         $this->response['list'] = $this->obj->getPostItUserList();
         $this->response['count'] = $this->obj->getPostItUserCount();
         return Response::success($this->response);
+    }
+
+    /**
+     * Notes:获取贴吧id用户列表
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 4:31 下午
+     */
+    public function getPostItUserList3()
+    {
+        $this->obj = new PostItUserService(0, null);
+        $res = $this->obj->getPostItUserList();
+        $arr = [];
+        foreach ($res as $vo) {
+            $firstCharters = Str::getFirstCharters($vo['username']);
+            if (!empty($firstCharters)) {
+                $arr[Str::getFirstCharters($vo['username'])][] = $vo;
+            } else {
+                $arr['#'][] = $vo;
+            }
+        }
+        $letter = array_keys($arr);
+        $index = array_search('#', $letter);
+        if ($index) {
+            unset($letter[$index]);
+        }
+        array_multisort($letter);
+        if ($index) {
+            array_push($letter, '#');
+        }
+
+        $response = [];
+        foreach ($letter as $item) {
+            $response[] = [
+                'letter' => $item,
+                'data' => $arr[$item]
+            ];
+        }
+        return Response::success($response);
     }
 
     /**

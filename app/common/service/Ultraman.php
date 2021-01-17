@@ -189,8 +189,8 @@ class Ultraman extends UltramanBean
                             $logData['aims'] = $info['aims'] + $this->getAims();
                             break;
                         case 3://减少
-                            $ultramanData['aims'] = $info['aims'] + $this->getAims();
-                            $logData['aims'] = $info['aims'] + $this->getAims();
+                            $ultramanData['aims'] = $info['aims'] - $this->getAims();
+                            $logData['aims'] = $info['aims'] - $this->getAims();
                             break;
                     }
                     break;

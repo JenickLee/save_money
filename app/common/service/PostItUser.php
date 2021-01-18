@@ -9,6 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
+use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
 
 class PostItUser extends PostItUserBean
@@ -37,6 +38,48 @@ class PostItUser extends PostItUserBean
     }
 
     /**
+     * Notes:获取贴吧用户列表
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 4:34 下午
+     */
+    public function getListAndGetFirstCharters()
+    {
+        $this->model->setOrder('username asc');
+        $res = $this->model->findAllInfo();
+        if(!$res) {
+            return [];
+        }
+        $arr = [];
+        foreach ($res as $vo) {
+            $firstCharters = Str::getFirstCharters($vo['username']);
+            if (!empty($firstCharters)) {
+                $arr[Str::getFirstCharters($vo['username'])][] = $vo;
+            } else {
+                $arr['#'][] = $vo;
+            }
+        }
+        $letter = array_keys($arr);
+        $index = array_search('#', $letter);
+        if ($index) {
+            unset($letter[$index]);
+        }
+        array_multisort($letter);
+        if ($index) {
+            array_push($letter, '#');
+        }
+
+        $response = [];
+        foreach ($letter as $item) {
+            $response[] = [
+                'letter' => $item,
+                'data' => $arr[$item]
+            ];
+        }
+        return $response;
+    }
+
+    /**
      * Notes:获取贴吧用户总数
      * User: Jenick
      * Date: 2021/1/7
@@ -53,6 +96,7 @@ class PostItUser extends PostItUserBean
      * User: Jenick
      * Date: 2021/1/7
      * Time: 5:07 下午
+     * @throws \Exception
      */
     public function addPostItUser()
     {
@@ -64,7 +108,9 @@ class PostItUser extends PostItUserBean
         }
         $data = [
             'username' => $username,
+            'cby' => $this->getCby(),
             'create_time' => $this->getCreateTime(),
+            'uby' => $this->getUby(),
             'update_time' => $this->getUpdateTime()
         ];
         $res = $this->model->insertGetId($data);
@@ -98,6 +144,7 @@ class PostItUser extends PostItUserBean
         }
         $data = [
             'username' => $username,
+            'uby' => $this->getUby(),
             'update_time' => $this->getUpdateTime()
         ];
         $this->model->setId($id);

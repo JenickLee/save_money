@@ -9,7 +9,6 @@
 namespace app\admin\controller;
 
 use app\common\lib\Response;
-use app\common\lib\Str;
 use app\common\service\PostItUser as PostItUserService;
 use think\App;
 use think\Validate;
@@ -43,33 +42,7 @@ class PostItUser extends Base
     public function getPostItUserList3()
     {
         $this->obj = new PostItUserService(0, null);
-        $res = $this->obj->getPostItUserList();
-        $arr = [];
-        foreach ($res as $vo) {
-            $firstCharters = Str::getFirstCharters($vo['username']);
-            if (!empty($firstCharters)) {
-                $arr[Str::getFirstCharters($vo['username'])][] = $vo;
-            } else {
-                $arr['#'][] = $vo;
-            }
-        }
-        $letter = array_keys($arr);
-        $index = array_search('#', $letter);
-        if ($index) {
-            unset($letter[$index]);
-        }
-        array_multisort($letter);
-        if ($index) {
-            array_push($letter, '#');
-        }
-
-        $response = [];
-        foreach ($letter as $item) {
-            $response[] = [
-                'letter' => $item,
-                'data' => $arr[$item]
-            ];
-        }
+        $response = $this->obj->getListAndGetFirstCharters();
         return Response::success($response);
     }
 
@@ -88,6 +61,8 @@ class PostItUser extends Base
             return Response::error(config('code.params_invalid'), $validate->getError());
         }
         try {
+            $this->obj->setCby($this->adminUserId);
+            $this->obj->setUby($this->adminUserId);
             $this->obj->setUsername($param['username']);
             $res = $this->obj->addPostItUser();
             return Response::success($res);
@@ -108,6 +83,7 @@ class PostItUser extends Base
         }
 
         try {
+            $this->obj->setUby($this->adminUserId);
             $this->obj->setId($param['id']);
             $this->obj->setUsername($param['username']);
             $this->obj->editUsername();

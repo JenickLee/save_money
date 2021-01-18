@@ -36,7 +36,21 @@ class PostItUser extends Base
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            return [];
+        }
+    }
+
+    public function findOneInfoAndUser()
+    {
+        try {
+            $res = $this->alias('p')
+                ->join(config('table.fnd_user') . ' user', 'user.id = p.user_id', 'LEFT')
+                ->field($this->getField())
+                ->where($this->getWhereArr())
+                ->find();
+            if (is_object($res)) $res = $res->toArray();
+            return $res;
+        } catch (\Exception $e) {
             return [];
         }
     }

@@ -167,8 +167,9 @@ class PostItUser extends PostItUserBean
      */
     public function getPostItUserInfoById()
     {
-        $this->model->setWhereArr(['id' => $this->getId()]);
-        $res = $this->model->findOneInfo();
+        $this->model->setWhereArr(['p.id' => $this->getId()]);
+        $this->model->setField("p.*, user.avatar");
+        $res = $this->model->findOneInfoAndUser();
         if (!$res) {
             throw new \Exception('贴吧ID信息不存在');
         }

@@ -36,7 +36,6 @@ class Ultraman extends Base
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {
-            echo $e->getMessage();
             return [];
         }
     }
@@ -59,7 +58,6 @@ class Ultraman extends Base
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {
-            echo $e->getMessage();
             return [];
         }
     }

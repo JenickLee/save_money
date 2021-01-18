@@ -15,6 +15,7 @@ Route::get("/2.0/getPostItUserList", 'PostItUser/getPostItUserList3');//获取�
 Route::post("/addPostItUser", 'PostItUser/addPostItUser');//新增贴吧id用户
 Route::post("/editUsername", 'PostItUser/editUsername');//更新贴吧id
 Route::get("/getPostItUserInfo", 'PostItUser/getPostItUserInfo');//获取贴吧ID信息
+Route::post("/generateBindingCode", 'PostItUser/generateBindingCode');//生成绑定码
 
 //-------------------------------------奥特曼-------------------------------------------------
 Route::post("/addUltraman", 'Ultraman/addUltraman');//新增奥特曼

@@ -117,4 +117,27 @@ class PostItUser extends Base
         }
     }
 
+    /**
+     * Notes:生成绑定码
+     * User: Jenick
+     * Date: 2021/1/18
+     * Time: 3:00 下午
+     */
+    public function generateBindingCode()
+    {
+        $param = input('post.');
+        $validate = new Validate();
+        $rule['id|uid'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+        try {
+            $this->obj->setId($param['id']);
+            $res = $this->obj->generateBindingCode();
+            return Response::success($res);
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
+
 }

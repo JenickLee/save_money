@@ -9,6 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
+use app\common\lib\IdWork;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
 
@@ -47,7 +48,7 @@ class PostItUser extends PostItUserBean
     {
         $this->model->setOrder('username asc');
         $res = $this->model->findAllInfo();
-        if(!$res) {
+        if (!$res) {
             return [];
         }
         $arr = [];
@@ -186,4 +187,28 @@ class PostItUser extends PostItUserBean
         return $res ?? [];
     }
 
+    /**
+     * Notes:生成绑定码
+     * User: Jenick
+     * Date: 2021/1/18
+     * Time: 3:01 下午
+     * @throws \Exception
+     */
+    public function generateBindingCode()
+    {
+        $id = $this->getId();
+        $this->model->setWhereArr(['id' => $id]);
+        $res = $this->model->findOneInfo();
+        if (!$res) {
+            throw new \Exception('贴吧ID不存在');
+        }
+        $bindingCode = IdWork::getInstance()->nextId();
+        $this->model->setId($id);
+        $this->model->setArr(['binding_code' => $bindingCode, 'exp_time' => date('Y-m-d H:i:s', time() + 60 * 60)]);
+        $res = $this->model->useIdUpdateData();
+        if (!$res) {
+            throw new \Exception('绑定码生成失败');
+        }
+        return $bindingCode;
+    }
 }

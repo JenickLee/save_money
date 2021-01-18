@@ -9,6 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
+use app\common\lib\buildId;
 use app\common\lib\IdWork;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
@@ -206,7 +207,7 @@ class PostItUser extends PostItUserBean
             throw new \Exception('该贴吧ID已被绑定');
         }
         $arr = [
-            'binding_code' => IdWork::getInstance()->nextId(),
+            'binding_code' => BuildId::createId(),
             'exp_time' => date('Y-m-d H:i:s', time() + 60 * 60)
         ];
         $this->model->setId($id);

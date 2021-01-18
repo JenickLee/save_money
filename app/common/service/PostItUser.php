@@ -205,19 +205,17 @@ class PostItUser extends PostItUserBean
         if (!empty($res['user_id'])) {
             throw new \Exception('该贴吧ID已被绑定');
         }
-
-        $bindingCode = IdWork::getInstance()->nextId();
-        $expTime = date('Y-m-d H:i:s', time() + 60 * 60);
+        $arr = [
+            'binding_code' => IdWork::getInstance()->nextId(),
+            'exp_time' => date('Y-m-d H:i:s', time() + 60 * 60)
+        ];
         $this->model->setId($id);
-        $this->model->setArr(['binding_code' => $bindingCode, 'exp_time' => $expTime]);
+        $this->model->setArr($arr);
         $res = $this->model->useIdUpdateData();
         if (!$res) {
             throw new \Exception('绑定码生成失败');
         }
-        return [
-            'binding_code' => $bindingCode,
-            'exp_time' => $expTime
-        ];
+        return $arr;
     }
 
     /**

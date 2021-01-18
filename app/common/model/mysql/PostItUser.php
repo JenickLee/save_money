@@ -17,4 +17,27 @@ class PostItUser extends Base
         $this->table = config('table.biz_post_it_user');
         parent::__construct($data);
     }
+
+    public function findAllInfoAndUser()
+    {
+        if (empty($this->getOrder())) {
+            $this->setOrder('p.username asc, p.id asc');
+        }
+
+        try {
+            $res = $this->alias('p')
+                ->join(config('table.fnd_user') . ' user', 'user.id = p.user_id', 'LEFT')
+                ->field($this->getField())
+                ->where($this->getWhereArr())
+                ->limit($this->getOffset(), $this->getLimit())
+                ->order($this->getOrder())
+                ->group($this->getGroup())
+                ->select();
+            if (is_object($res)) $res = $res->toArray();
+            return $res;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return [];
+        }
+    }
 }

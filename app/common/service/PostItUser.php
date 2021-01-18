@@ -46,8 +46,9 @@ class PostItUser extends PostItUserBean
      */
     public function getListAndGetFirstCharters()
     {
-        $this->model->setOrder('username asc');
-        $res = $this->model->findAllInfo();
+        $this->model->setOrder('p.username asc');
+        $this->model->setField("p.*, user.avatar");
+        $res = $this->model->findAllInfoAndUser();
         if (!$res) {
             return [];
         }

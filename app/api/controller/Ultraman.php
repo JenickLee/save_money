@@ -78,10 +78,12 @@ class Ultraman extends Base
         $rule['id'] = 'require';
         $rule['type'] = 'require';//1-当前基数 2-目标
         $rule['calculation'] = 'require';//1-最终 2-增加 3-减少
+        $rule['user_id'] = 'require';
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
         }
 
+        $this->obj->setUby($param['user_id']);
         $this->obj->setId($param['id']);
         $this->obj->setAims($param['aims']??0);
         $this->obj->setDepositBase($param['deposit_base']??0);
@@ -103,12 +105,15 @@ class Ultraman extends Base
     {
         $param = input('post.');
         $validate = new Validate();
+        $rule['user_id|user_id'] = 'require';
         $rule['p_user_id|贴吧id'] = 'require';
         $rule['deposit_base|当前存款基数'] = 'require';
         $rule['aims|目标'] = 'require';
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
         }
+        $this->obj->setCby($param['user_id']);
+        $this->obj->setUby($param['user_id']);
         $this->obj->setPUserId($param['p_user_id']);
         $this->obj->setAims($param['aims']);
         $this->obj->setDepositBase($param['deposit_base']);

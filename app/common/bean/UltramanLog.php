@@ -21,17 +21,15 @@ class UltramanLog extends Base
     private $depositBase = 0;
     //目标
     private $aims = 0;
+    //创建人
+    private $cby = null;
     //创建时间
     private $createTime = null;
-    //更新时间
-    private $updateTime = null;
 
-    public function __construct($createTime = null, $updateTime = null)
+    public function __construct($createTime = null)
     {
         if(!isset($createTime)) $createTime = date('Y-m-d H:i:s');
-        if(!isset($updateTime)) $updateTime = date('Y-m-d H:i:s');
         $this->createTime = $createTime;
-        $this->updateTime = $updateTime;
     }
 
     /**
@@ -115,6 +113,23 @@ class UltramanLog extends Base
     }
 
     /**
+     * @return null
+     */
+    public function getCby()
+    {
+        return $this->cby;
+    }
+
+    /**
+     * @param null $cby
+     */
+    public function setCby($cby): void
+    {
+        $this->cby = $cby;
+    }
+
+
+    /**
      * @return false|string|null
      */
     public function getCreateTime()
@@ -128,21 +143,5 @@ class UltramanLog extends Base
     public function setCreateTime($createTime): void
     {
         $this->createTime = $createTime;
-    }
-
-    /**
-     * @return false|string|null
-     */
-    public function getUpdateTime()
-    {
-        return $this->updateTime;
-    }
-
-    /**
-     * @param false|string|null $updateTime
-     */
-    public function setUpdateTime($updateTime): void
-    {
-        $this->updateTime = $updateTime;
     }
 }

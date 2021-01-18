@@ -17,6 +17,8 @@ use think\Validate;
 abstract class Base
 {
     public $obj;
+    //管理员user_id
+    public $adminUserId = null;
     //页码
     public $page = 0;
     //数量
@@ -56,6 +58,7 @@ abstract class Base
     {
         $this->app = $app;
         $this->request = $this->app->request;
+        $this->adminUserId = $this->app->request->adminUserId;
         $params = $this->request->param();
         $pageOpt = Page::getPage(intval($params['page'] ?? $this->page), intval($params['pageSize'] ?? $this->pageSize));
         $this->page = $pageOpt['page'];

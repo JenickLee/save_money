@@ -19,8 +19,12 @@ class Ultraman extends Base
     private $depositBase = 0;
     //目标
     private $aims = 0;
+    //创建人
+    private $cby = null;
     //创建时间
     private $createTime = null;
+    //更新人
+    private $uby = null;
     //更新时间
     private $updateTime = null;
     //开始时间
@@ -107,6 +111,22 @@ class Ultraman extends Base
     /**
      * @return null
      */
+    public function getCby()
+    {
+        return $this->cby;
+    }
+
+    /**
+     * @param null $cby
+     */
+    public function setCby($cby): void
+    {
+        $this->cby = $cby;
+    }
+
+    /**
+     * @return null
+     */
     public function getCreateTime()
     {
         return $this->createTime;
@@ -119,6 +139,23 @@ class Ultraman extends Base
     {
         $this->createTime = $createTime;
     }
+
+    /**
+     * @return null
+     */
+    public function getUby()
+    {
+        return $this->uby;
+    }
+
+    /**
+     * @param null $uby
+     */
+    public function setUby($uby): void
+    {
+        $this->uby = $uby;
+    }
+
 
     /**
      * @return null

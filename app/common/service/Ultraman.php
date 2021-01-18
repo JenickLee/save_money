@@ -99,7 +99,9 @@ class Ultraman extends UltramanBean
                 'aims' => $this->getAims(),
                 'start_time' => $this->getStartTime(),
                 'end_time' => $this->getEndTime(),
+                'cby' => $this->getCby(),
                 'create_time' => $this->getCreateTime(),
+                'uby' => $this->getUby(),
                 'update_time' => $this->getUpdateTime()
             ];
             $uid = $this->model->insertGetId($ultramanData);
@@ -111,6 +113,7 @@ class Ultraman extends UltramanBean
                 'uid' => $uid,
                 'deposit_base' => $this->getDepositBase(),
                 'aims' => $this->getAims(),
+                'cby' => $this->getCby(),
                 'create_time' => $this->getCreateTime()
             ];
             $logModel = new UltramanLogModel();
@@ -175,8 +178,10 @@ class Ultraman extends UltramanBean
         try {
             $logData = [
                 'uid' => $id,
+                'cby' => $this->getUby(),
                 'create_time' => $this->getUpdateTime()
             ];
+            $ultramanData['uby'] = $this->getUby();
             $ultramanData['update_time'] = $this->getUpdateTime();
             switch ($type) {
                 case 1:

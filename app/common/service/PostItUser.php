@@ -219,4 +219,34 @@ class PostItUser extends PostItUserBean
             'exp_time' => $expTime
         ];
     }
+
+    /**
+     * Notes:账号绑定
+     * User: Jenick
+     * Date: 2021/1/18
+     * Time: 9:40 下午
+     * @throws \Exception
+     */
+    public function accountBinding()
+    {
+        $bindingCode = $this->getBindingCode();
+        $this->model->setWhereArr([
+            ['binding_code', '=', $bindingCode],
+            ['exp_time', '>', date('Y-m-d H:i:s')],
+            ['user_id', '=', null]
+        ]);
+        $res = $this->model->findOneInfo();
+        if (!$res) {
+            throw new \Exception('绑定码不存在或者已失效！');
+        }
+
+        $userId = $this->getUserId();
+        $this->model->setId($res['id']);
+        $this->model->setArr(['user_id' => $userId, 'uby' => $userId, 'update_time' => date('Y-m-d H:i:s')]);
+        $res = $this->model->useIdUpdateData();
+        if (!$res) {
+            throw new \Exception('绑定失败');
+        }
+        return true;
+    }
 }

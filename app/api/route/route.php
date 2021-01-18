@@ -23,3 +23,4 @@ Route::get("/getUserInfo", 'User/getUserInfo');//获取用户信息
 
 //---------------------------------------贴吧ID-------------------------------------------------
 Route::get("/getPostItUserInfo", 'PostItUser/getPostItUserInfo');//获取用户贴吧ID信息
+Route::post("/accountBinding", 'PostItUser/accountBinding');//绑定贴吧ID

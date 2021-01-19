@@ -30,8 +30,22 @@ class Ultraman extends UltramanBean
      * Date: 2021/1/7
      * Time: 12:45 上午
      */
-    public function getList()
+    public function getList($orderBy = 1)
     {
+        switch ($orderBy) {
+            case 1://当前基数
+                $order = 'u.deposit_base desc, u.aims desc, u.id desc';
+                break;
+            case 2://目标
+                $order = 'u.aims desc, u.deposit_base desc,u.id desc';
+                break;
+            case 3://完成率
+                $order = "if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) desc, u.deposit_base desc,u.id desc";
+                break;
+            default:
+                $order = 'u.deposit_base desc, u.aims desc, u.id desc';
+                break;
+        }
         $field = "u.id uid, 
                    user.username, 
                    u.deposit_base, 
@@ -48,6 +62,7 @@ class Ultraman extends UltramanBean
         ];
         $this->model->setField($field);
         $this->model->setWhereArr($where);
+        $this->model->setOrder($order);
         $res = $this->model->findAllInfoJoinUser();
         return $res;
     }

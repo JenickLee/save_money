@@ -11,7 +11,6 @@
 use think\facade\Route;
 Route::get("/", 'Index/index');//首页
 //---------------------------------------奥特曼-----------------------------------------------
-Route::get("/getUltramanList", 'Ultraman/getList');//获取奥特曼列表
 Route::get("/v1.1/getUltramanList", 'Ultraman/getUltramanList');//获取奥特曼列表
 Route::get("/getPostItUserUltramanInfo", 'Ultraman/getPostItUserUltramanInfo');//获取贴吧ID奥特曼信息
 Route::post("/addUltraman", 'Ultraman/addUltraman');//新增奥特曼

@@ -27,18 +27,6 @@ class Ultraman extends Base
      * Date: 2021/1/6
      * Time: 5:42 下午
      */
-    public function getList()
-    {
-        $res = $this->obj->getList();
-        return Response::success($res);
-    }
-
-    /**
-     * Notes:获取奥特曼列表
-     * User: Jenick
-     * Date: 2021/1/6
-     * Time: 5:42 下午
-     */
     public function getUltramanList()
     {
         $this->response['list'] = $this->obj->getList();

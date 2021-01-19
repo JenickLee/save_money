@@ -40,7 +40,7 @@ class Ultraman extends UltramanBean
                 $order = 'u.aims desc, u.deposit_base desc,u.id desc';
                 break;
             case 3://完成率
-                $order = "if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) desc, u.deposit_base desc,u.id desc";
+                $order = "schedule desc, u.deposit_base desc,u.id desc";
                 break;
             default:
                 $order = 'u.deposit_base desc, u.aims desc, u.id desc';

@@ -295,14 +295,14 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 4000000, '<', 600000], 'color' => '#1890FF', 'type' => '400k-600k'],
             ['where' => ['>=' => 6000000], 'color' => '#2FC25B', 'type' => '600k及以上']
         ];
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime]
+        ];
 
         for($i = 0; $i < count($condition); $i++) {
-            $where = [
-                ['start_time', '<=', $startTime],
-                ['end_time', '>=', $endTime]
-            ];
             foreach ($condition['where'] as $key => $value){
-                $where[] = ['deposit_base', $key, $value];
+                array_push($where,  ['deposit_base', $key, $value]);
             }
             $this->model->setWhereArr($where);
             $res = $this->model->getCount();
@@ -337,14 +337,13 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 6000000, '<', 800000], 'color' => '#1890FF', 'type' => '600k-800k'],
             ['where' => ['>=' => 8000000], 'color' => '#2FC25B', 'type' => '800k及以上']
         ];
-
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime]
+        ];
         for($i = 0; $i < count($condition); $i++) {
-            $where = [
-                ['start_time', '<=', $startTime],
-                ['end_time', '>=', $endTime]
-            ];
             foreach ($condition['where'] as $key => $value){
-                $where[] = ['aims', $key, $value];
+                array_push($where,  ['aims', $key, $value]);
             }
             $this->model->setWhereArr($where);
             $res = $this->model->getCount();

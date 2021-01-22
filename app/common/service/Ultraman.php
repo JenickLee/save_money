@@ -274,4 +274,129 @@ class Ultraman extends UltramanBean
         $res = $this->model->findOneInfoJoinUser();
         return $res;
     }
+
+    /**
+     * Notes:根据当前基数分析数据
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 1:00 上午
+     */
+    public function getDataAnalysisByDepositBase()
+    {
+        $response['data'] = [];
+        $response['color'] = [];
+        $startTime = date('Y-01-01 00:00:00');
+        $endTime = date('Y-12-31 23:59:59');
+
+        //0及0以下
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime],
+            ['deposit_base', '<=', 0]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->getCount();
+        if ($res) {
+            $response['data'][] = [
+                'const' => 'const',
+                'type' => '0及0以下',
+                'num' => $res
+            ];
+            $response['color'][] = '#223273';
+        }
+        //0-200k
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime],
+            ['deposit_base', '>', 0],
+            ['deposit_base', '<=', 200000]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->getCount();
+        if ($res) {
+            $response['data'][] = [
+                'const' => 'const',
+                'type' => '0-200k',
+                'num' => $res
+            ];
+            $response['color'][] = '#13C2C2';
+        }
+
+        //200k-400k
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime],
+            ['deposit_base', '>', 200000],
+            ['deposit_base', '<=', 400000]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->getCount();
+        if ($res) {
+            $response['data'][] = [
+                'const' => 'const',
+                'type' => '200k-400k',
+                'num' => $res
+            ];
+            $response['color'][] = '#FACC14';
+        }
+
+        //400k-600k
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime],
+            ['deposit_base', '>', 400000],
+            ['deposit_base', '<=', 600000]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->getCount();
+        if ($res) {
+            $response['data'][] = [
+                'const' => 'const',
+                'type' => '400k-600k',
+                'num' => $res
+            ];
+            $response['color'][] = '#1890FF';
+        }
+
+        //600k以上
+        $where = [
+            ['start_time', '<=', $startTime],
+            ['end_time', '>=', $endTime],
+            ['deposit_base', '>', 400000],
+            ['deposit_base', '<=', 600000]
+        ];
+        $this->model->setWhereArr($where);
+        $res = $this->model->getCount();
+        if ($res) {
+            $response['data'][] = [
+                'const' => 'const',
+                'type' => '600k以上',
+                'num' => $res
+            ];
+            $response['color'][] = '#2FC25B';
+        }
+        return $response;
+    }
+
+    /**
+     * Notes:根据目标分析数据
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 1:02 上午
+     */
+    public function getDataAnalysisByAims()
+    {
+
+    }
+
+    /**
+     * Notes:根据完成率分析数据
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 1:03 上午
+     */
+    public function getDataAnalysisBySchedule()
+    {
+
+    }
 }

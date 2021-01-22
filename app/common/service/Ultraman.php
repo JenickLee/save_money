@@ -299,7 +299,8 @@ class Ultraman extends UltramanBean
             ['start_time', '<=', $startTime],
             ['end_time', '>=', $endTime]
         ];
-
+        $response['data'] = [];
+        $response['color'] = [];
         for($i = 0; $i < count($condition); $i++) {
             foreach ($condition[$i]['where'] as $key => $value){
                 array_push($where,  ['deposit_base', $key, $value]);
@@ -307,12 +308,12 @@ class Ultraman extends UltramanBean
             $this->model->setWhereArr($where);
             $res = $this->model->getCount();
             if ($res) {
-                $response['data'][] = [
+                array_push($response['data'], [
                     'const' => 'const',
                     'type' => $condition[$i]['type'],
                     'num' => $res
-                ];
-                $response['color'][] = $condition[$i]['color'];
+                ]);
+                array_push($response['color'], $condition[$i]['color']);
             }
         }
         return $response;

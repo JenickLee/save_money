@@ -301,7 +301,7 @@ class Ultraman extends UltramanBean
         ];
 
         for($i = 0; $i < count($condition); $i++) {
-            foreach ($condition['where'] as $key => $value){
+            foreach ($condition[$i]['where'] as $key => $value){
                 array_push($where,  ['deposit_base', $key, $value]);
             }
             $this->model->setWhereArr($where);
@@ -342,7 +342,7 @@ class Ultraman extends UltramanBean
             ['end_time', '>=', $endTime]
         ];
         for($i = 0; $i < count($condition); $i++) {
-            foreach ($condition['where'] as $key => $value){
+            foreach ($condition[$i]['where'] as $key => $value){
                 array_push($where,  ['aims', $key, $value]);
             }
             $this->model->setWhereArr($where);

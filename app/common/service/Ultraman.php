@@ -288,92 +288,32 @@ class Ultraman extends UltramanBean
         $startTime = date('Y-01-01 00:00:00');
         $endTime = date('Y-12-31 23:59:59');
 
-        //0及0以下
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime],
-            ['deposit_base', '<=', 0]
+        $condition = [
+            ['where' => ['<' => 0], 'color' => '#223273', 'type' => '0以下'],
+            ['where' => ['>=' => 0, '<', 200000], 'color' => '#13C2C2', 'type' => '0-200k'],
+            ['where' => ['>=' => 200000, '<', 400000], 'color' => '#FACC14', 'type' => '200k-400k'],
+            ['where' => ['>=' => 4000000, '<', 600000], 'color' => '#1890FF', 'type' => '400k-600k'],
+            ['where' => ['>=' => 6000000], 'color' => '#2FC25B', 'type' => '600k及以上']
         ];
-        $this->model->setWhereArr($where);
-        $res = $this->model->getCount();
-        if ($res) {
-            $response['data'][] = [
-                'const' => 'const',
-                'type' => '0及0以下',
-                'num' => $res
-            ];
-            $response['color'][] = '#223273';
-        }
-        //0-200k
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime],
-            ['deposit_base', '>', 0],
-            ['deposit_base', '<=', 200000]
-        ];
-        $this->model->setWhereArr($where);
-        $res = $this->model->getCount();
-        if ($res) {
-            $response['data'][] = [
-                'const' => 'const',
-                'type' => '0-200k',
-                'num' => $res
-            ];
-            $response['color'][] = '#13C2C2';
-        }
 
-        //200k-400k
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime],
-            ['deposit_base', '>', 200000],
-            ['deposit_base', '<=', 400000]
-        ];
-        $this->model->setWhereArr($where);
-        $res = $this->model->getCount();
-        if ($res) {
-            $response['data'][] = [
-                'const' => 'const',
-                'type' => '200k-400k',
-                'num' => $res
+        for($i = 0; $i < count($condition); $i++) {
+            $where = [
+                ['start_time', '<=', $startTime],
+                ['end_time', '>=', $endTime]
             ];
-            $response['color'][] = '#FACC14';
-        }
-
-        //400k-600k
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime],
-            ['deposit_base', '>', 400000],
-            ['deposit_base', '<=', 600000]
-        ];
-        $this->model->setWhereArr($where);
-        $res = $this->model->getCount();
-        if ($res) {
-            $response['data'][] = [
-                'const' => 'const',
-                'type' => '400k-600k',
-                'num' => $res
-            ];
-            $response['color'][] = '#1890FF';
-        }
-
-        //600k以上
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime],
-            ['deposit_base', '>', 400000],
-            ['deposit_base', '<=', 600000]
-        ];
-        $this->model->setWhereArr($where);
-        $res = $this->model->getCount();
-        if ($res) {
-            $response['data'][] = [
-                'const' => 'const',
-                'type' => '600k以上',
-                'num' => $res
-            ];
-            $response['color'][] = '#2FC25B';
+            foreach ($condition['where'] as $key => $value){
+                $where[] = ['deposit_base', $key, $value];
+            }
+            $this->model->setWhereArr($where);
+            $res = $this->model->getCount();
+            if ($res) {
+                $response['data'][] = [
+                    'const' => 'const',
+                    'type' => $condition['type'],
+                    'num' => $res
+                ];
+                $response['color'][] = $condition['color'];
+            }
         }
         return $response;
     }
@@ -386,7 +326,38 @@ class Ultraman extends UltramanBean
      */
     public function getDataAnalysisByAims()
     {
+        $response['data'] = [];
+        $response['color'] = [];
+        $startTime = date('Y-01-01 00:00:00');
+        $endTime = date('Y-12-31 23:59:59');
+        $condition = [
+            ['where' => ['>=' => 0, '<' => 2000000], 'color' => '#223273', 'type' => '0-200k'],
+            ['where' => ['>=' => 2000000, '<', 400000], 'color' => '#13C2C2', 'type' => '200k-400k'],
+            ['where' => ['>=' => 4000000, '<', 600000], 'color' => '#FACC14', 'type' => '400k-600k'],
+            ['where' => ['>=' => 6000000, '<', 800000], 'color' => '#1890FF', 'type' => '600k-800k'],
+            ['where' => ['>=' => 8000000], 'color' => '#2FC25B', 'type' => '800k及以上']
+        ];
 
+        for($i = 0; $i < count($condition); $i++) {
+            $where = [
+                ['start_time', '<=', $startTime],
+                ['end_time', '>=', $endTime]
+            ];
+            foreach ($condition['where'] as $key => $value){
+                $where[] = ['aims', $key, $value];
+            }
+            $this->model->setWhereArr($where);
+            $res = $this->model->getCount();
+            if ($res) {
+                $response['data'][] = [
+                    'const' => 'const',
+                    'type' => $condition['type'],
+                    'num' => $res
+                ];
+                $response['color'][] = $condition['color'];
+            }
+        }
+        return $response;
     }
 
     /**

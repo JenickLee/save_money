@@ -295,13 +295,14 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 4000000, '<', 600000], 'color' => '#1890FF', 'type' => '400k-600k'],
             ['where' => ['>=' => 6000000], 'color' => '#2FC25B', 'type' => '600k及以上']
         ];
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime]
-        ];
         $response['data'] = [];
         $response['color'] = [];
         for($i = 0; $i < count($condition); $i++) {
+            $where = [];
+            $where = [
+                ['start_time', '<=', $startTime],
+                ['end_time', '>=', $endTime]
+            ];
             foreach ($condition[$i]['where'] as $key => $value){
                 array_push($where,  ['deposit_base', $key, $value]);
             }
@@ -338,23 +339,26 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 6000000, '<', 800000], 'color' => '#1890FF', 'type' => '600k-800k'],
             ['where' => ['>=' => 8000000], 'color' => '#2FC25B', 'type' => '800k及以上']
         ];
-        $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime]
-        ];
+        $response['data'] = [];
+        $response['color'] = [];
         for($i = 0; $i < count($condition); $i++) {
+            $where = [];
+            $where = [
+                ['start_time', '<=', $startTime],
+                ['end_time', '>=', $endTime]
+            ];
             foreach ($condition[$i]['where'] as $key => $value){
                 array_push($where,  ['aims', $key, $value]);
             }
             $this->model->setWhereArr($where);
             $res = $this->model->getCount();
             if ($res) {
-                $response['data'][] = [
+                array_push($response['data'], [
                     'const' => 'const',
                     'type' => $condition[$i]['type'],
                     'num' => $res
-                ];
-                $response['color'][] = $condition[$i]['color'];
+                ]);
+                array_push($response['color'], $condition[$i]['color']);
             }
         }
         return $response;

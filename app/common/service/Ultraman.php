@@ -290,21 +290,21 @@ class Ultraman extends UltramanBean
 
         $condition = [
             ['where' => ['<' => 0], 'color' => '#223273', 'type' => '0以下'],
-            ['where' => ['>=' => 0, '<', 200000], 'color' => '#13C2C2', 'type' => '0-200k'],
-            ['where' => ['>=' => 200000, '<', 400000], 'color' => '#FACC14', 'type' => '200k-400k'],
-            ['where' => ['>=' => 4000000, '<', 600000], 'color' => '#1890FF', 'type' => '400k-600k'],
+            ['where' => ['>=' => 0, '<' => 200000], 'color' => '#13C2C2', 'type' => '0-200k'],
+            ['where' => ['>=' => 200000, '<' => 400000], 'color' => '#FACC14', 'type' => '200k-400k'],
+            ['where' => ['>=' => 4000000, '<' => 600000], 'color' => '#1890FF', 'type' => '400k-600k'],
             ['where' => ['>=' => 6000000], 'color' => '#2FC25B', 'type' => '600k及以上']
         ];
+
         $response['data'] = [];
         $response['color'] = [];
-        for($i = 0; $i < count($condition); $i++) {
-            $where = [];
+        for ($i = 0; $i < count($condition); $i++) {
             $where = [
                 ['start_time', '<=', $startTime],
                 ['end_time', '>=', $endTime]
             ];
-            foreach ($condition[$i]['where'] as $key => $value){
-                array_push($where,  ['deposit_base', $key, $value]);
+            foreach ($condition[$i]['where'] as $key => $value) {
+                array_push($where, ['deposit_base', $key, $value]);
             }
             $this->model->setWhereArr($where);
             $res = $this->model->getCount();
@@ -334,21 +334,20 @@ class Ultraman extends UltramanBean
         $endTime = date('Y-12-31 23:59:59');
         $condition = [
             ['where' => ['>=' => 0, '<' => 2000000], 'color' => '#223273', 'type' => '0-200k'],
-            ['where' => ['>=' => 2000000, '<', 400000], 'color' => '#13C2C2', 'type' => '200k-400k'],
-            ['where' => ['>=' => 4000000, '<', 600000], 'color' => '#FACC14', 'type' => '400k-600k'],
-            ['where' => ['>=' => 6000000, '<', 800000], 'color' => '#1890FF', 'type' => '600k-800k'],
+            ['where' => ['>=' => 2000000, '<' => 400000], 'color' => '#13C2C2', 'type' => '200k-400k'],
+            ['where' => ['>=' => 4000000, '<' => 600000], 'color' => '#FACC14', 'type' => '400k-600k'],
+            ['where' => ['>=' => 6000000, '<' => 800000], 'color' => '#1890FF', 'type' => '600k-800k'],
             ['where' => ['>=' => 8000000], 'color' => '#2FC25B', 'type' => '800k及以上']
         ];
         $response['data'] = [];
         $response['color'] = [];
-        for($i = 0; $i < count($condition); $i++) {
-            $where = [];
+        for ($i = 0; $i < count($condition); $i++) {
             $where = [
                 ['start_time', '<=', $startTime],
                 ['end_time', '>=', $endTime]
             ];
-            foreach ($condition[$i]['where'] as $key => $value){
-                array_push($where,  ['aims', $key, $value]);
+            foreach ($condition[$i]['where'] as $key => $value) {
+                array_push($where, ['aims', $key, $value]);
             }
             $this->model->setWhereArr($where);
             $res = $this->model->getCount();

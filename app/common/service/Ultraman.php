@@ -309,10 +309,10 @@ class Ultraman extends UltramanBean
             if ($res) {
                 $response['data'][] = [
                     'const' => 'const',
-                    'type' => $condition['type'],
+                    'type' => $condition[$i]['type'],
                     'num' => $res
                 ];
-                $response['color'][] = $condition['color'];
+                $response['color'][] = $condition[$i]['color'];
             }
         }
         return $response;
@@ -350,10 +350,10 @@ class Ultraman extends UltramanBean
             if ($res) {
                 $response['data'][] = [
                     'const' => 'const',
-                    'type' => $condition['type'],
+                    'type' => $condition[$i]['type'],
                     'num' => $res
                 ];
-                $response['color'][] = $condition['color'];
+                $response['color'][] = $condition[$i]['color'];
             }
         }
         return $response;

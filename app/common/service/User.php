@@ -107,7 +107,7 @@ class User extends UserBean
      */
     public function getAddUserDataAnalysis()
     {
-        $startDate = date("Y-m-d", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
+        $startDate = date("Y-m-d", mktime(0, 0, 0, date("d") - 14, 1, date("Y")));
         $endDate = date("Y-m-d");
         $where = [
             ['create_time', '>=', "{$startDate} 00:00:00"],
@@ -121,8 +121,8 @@ class User extends UserBean
         $response = [];
         foreach ($date as $value) {
             $response[] = [
-                'date' => $value,
-                'value' => count(array_filter($res, function ($item) use ($value) {
+                'date' => date("m-d", strtotime($value)),
+                'sales' => count(array_filter($res, function ($item) use ($value) {
                     return date("Y-m-d", strtotime($item['create_time'])) == $value;
                 }))
             ];

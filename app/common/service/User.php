@@ -5,11 +5,13 @@
  * Date: 2021/1/7
  * Time: 2:21 下午
  */
+
 namespace app\common\service;
 
 use app\common\model\mysql\{User as UserModel};
 use app\common\bean\User as UserBean;
-use app\common\lib\{WeChat as WeChatLib};
+use app\common\lib\{Date, WeChat as WeChatLib};
+
 class User extends UserBean
 {
     public function __construct($page = 0, $pageSize = 10)
@@ -69,7 +71,7 @@ class User extends UserBean
                     $this->model->useIdUpdateData();
                 }
 
-                if($userId){
+                if ($userId) {
                     $response['user_id'] = $userId;
                     $response['openid'] = $result['openid'];
                     $response['nickname'] = $this->getNickname();
@@ -95,5 +97,36 @@ class User extends UserBean
         $this->model->setField('id user_id, nickname, avatar, img, introduction, root');
         $res = $this->model->findOneInfo();
         return $res;
+    }
+
+    /**
+     * Notes:小程序新增人数
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 3:52 下午
+     */
+    public function getAddUserDataAnalysis()
+    {
+        $startDate = date("Y-m-d", mktime(0, 0, 0, date("m") - 2, 1, date("Y")));
+        $endDate = date("Y-m-d");
+        $where = [
+            ['create_time', '>=', "{$startDate} 00:00:00"],
+            ['create_time', '<=', "{$endDate} 23:59:59"]
+        ];
+        $this->model->setWhereArr($where);
+        $this->model->setField('create_time, id');
+        $res = $this->model->findAllInfo();
+
+        $date = Date::getDateByInterval($startDate, $endDate, 'day');
+        $response = [];
+        foreach ($date as $value) {
+            $response[] = [
+                'date' => $value,
+                'value' => count(array_filter($res, function ($item) use ($value) {
+                    return date("Y-m-d", strtotime($item['create_time'])) == $value;
+                }))
+            ];
+        }
+        return $response;
     }
 }

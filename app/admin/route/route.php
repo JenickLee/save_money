@@ -20,3 +20,6 @@ Route::post("/generateBindingCode", 'PostItUser/generateBindingCode');//生成�
 Route::post("/addUltraman", 'Ultraman/addUltraman');//新增奥特曼
 Route::get("/getPostItUserUltramanInfo", 'Ultraman/getPostItUserUltramanInfo');//获取贴吧ID奥特曼信息
 Route::post("/editUltraman", 'Ultraman/editUltraman');//更新奥特曼
+
+//---------------------------------------数据分析-------------------------------------------------
+Route::get("/getAddUserDataAnalysis", 'DataAnalysis/getAddUserDataAnalysis');//小程序新增人数

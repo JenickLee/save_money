@@ -26,3 +26,4 @@ Route::post("/accountBinding", 'PostItUser/accountBinding');//绑定贴吧ID
 
 //---------------------------------------数据分析-------------------------------------------------
 Route::get("/getUltramanDataAnalysis", 'DataAnalysis/getUltramanDataAnalysis');//获取奥特曼数据统计
+Route::get("/getParticipateDataAnalysis", 'DataAnalysis/getParticipateDataAnalysis');//统计月份奥特曼参加人数

@@ -9,6 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\Ultraman as UltramanBean;
+use app\common\lib\Date;
 use app\common\model\mysql\{Ultraman as UltramanModel, UltramanLog as UltramanLogModel};
 use think\facade\Db;
 
@@ -410,6 +411,32 @@ class Ultraman extends UltramanBean
                 ]);
                 array_push($response['color'], $condition[$i]['color']);
             }
+        }
+        return $response;
+    }
+
+    /**
+     * Notes:统计月份奥特曼参加人数
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 2:09 下午
+     */
+    public function getParticipateDataAnalysis()
+    {
+        $startDate = date("Y-m-d", mktime(0, 0, 0, date("m") - 11, 1, date("Y")));
+        $endDate = date("Y-m-d");
+        $date = Date::getDateByInterval($startDate, $endDate, 'month');
+        $response = [];
+        foreach ($date as $value){
+            $where = [
+                ['create_time', '>=', "{$value['startDate']} 00:00:00"],
+                ['create_time', '<=', "{$value['endDate']} 23:59:59"]
+            ];
+            $this->model->setWhereArr($where);
+            $response[] = [
+                'year' => date('M', strtotime($value['startDate'])),
+                'sales' => $this->model->getCount()
+            ];
         }
         return $response;
     }

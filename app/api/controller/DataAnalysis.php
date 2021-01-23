@@ -47,4 +47,21 @@ class DataAnalysis extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:统计月份奥特曼参加人数
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 2:07 下午
+     */
+    public function getParticipateDataAnalysis()
+    {
+        try {
+            $this->obj = new UltramanService();
+            $res = $this->obj->getParticipateDataAnalysis();
+            return Response::success($res);
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
 }

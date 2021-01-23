@@ -30,13 +30,7 @@ class PostItUser extends Base
      */
     public function getPostItUserInfo()
     {
-        $params = input('get.');
-        $validate = new Validate();
-        $rule['user_id'] = 'require';
-        if (!$validate->check($params, $rule)) {
-            return Response::error(config('code.params_invalid'), $validate->getError());
-        }
-        $this->obj->setUserId($params['user_id']);
+        $this->obj->setUserId($this->userId);
         $res = $this->obj->getPostItUserInfoByUserId();
         return Response::success($res);
     }

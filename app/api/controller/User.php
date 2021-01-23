@@ -52,13 +52,7 @@ class User extends Base
      */
     public function getUserInfo()
     {
-        $params = input('get.');
-        $validate = new Validate();
-        $rule['user_id'] = 'require';
-        if (!$validate->check($params, $rule)) {
-            return Response::error(config('code.params_invalid'), $validate->getError());
-        }
-        $this->obj->setId($params['user_id']);
+        $this->obj->setId($this->userId);
         $res = $this->obj->getUserInfo();
         return Response::success($res);
     }

@@ -107,7 +107,7 @@ class User extends UserBean
      */
     public function getAddUserDataAnalysis()
     {
-        $startDate = date("Y-m-d", mktime(0, 0, 0, date("m") - 2, 1, date("Y")));
+        $startDate = date("Y-m-d", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
         $endDate = date("Y-m-d");
         $where = [
             ['create_time', '>=', "{$startDate} 00:00:00"],

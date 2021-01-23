@@ -44,7 +44,6 @@ class PostItUser extends Base
     public function accountBinding(){
         $params = input('post.');
         $validate = new Validate();
-        $rule['user_id'] = 'require';
         $rule['binding_code'] = 'require';
         if (!$validate->check($params, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
@@ -52,7 +51,7 @@ class PostItUser extends Base
 
         try {
             $this->obj->setBindingCode($params['binding_code']);
-            $this->obj->setUserId($params['user_id']);
+            $this->obj->setUserId($this->userId);
             $this->obj->accountBinding();
             return Response::success();
         } catch (\Exception $e) {

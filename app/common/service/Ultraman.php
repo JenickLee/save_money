@@ -297,7 +297,7 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 150000, '<' => 200000], 'color' => '#F04864', 'type' => '150k-200k'],
             ['where' => ['>=' => 200000, '<' => 250000], 'color' => '#8543E0', 'type' => '200k-250k'],
             ['where' => ['>=' => 250000, '<' => 300000], 'color' => '#3436C7', 'type' => '250k-300k'],
-            ['where' => ['>=' => 300000], 'color' => '#223273', 'type' => '300k及以上'],
+            ['where' => ['>=' => 300000], 'color' => '#F47983', 'type' => '300k及以上'],
         ];
 
         for ($i = 0; $i < count($condition); $i++) {
@@ -343,7 +343,7 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 300000, '<' => 350000], 'color' => '#F04864', 'type' => '300k-350k'],
             ['where' => ['>=' => 350000, '<' => 400000], 'color' => '#8543E0', 'type' => '350k-400k'],
             ['where' => ['>=' => 400000, '<' => 450000], 'color' => '#3436C7', 'type' => '400k-450k'],
-            ['where' => ['>=' => 450000], 'color' => '#223273', 'type' => '450k及以上'],
+            ['where' => ['>=' => 450000], 'color' => '#F47983', 'type' => '450k及以上'],
         ];
         for ($i = 0; $i < count($condition); $i++) {
             $where = [

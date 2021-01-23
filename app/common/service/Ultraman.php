@@ -48,6 +48,7 @@ class Ultraman extends UltramanBean
                 break;
         }
         $field = "u.id uid, 
+                   u.p_user_id,
                    user.username, 
                    u.deposit_base, 
                    u.aims,

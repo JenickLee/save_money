@@ -157,8 +157,8 @@ class Ultraman extends UltramanBean
                    u.deposit_base, 
                    u.aims,
                    DATE_FORMAT(u.end_time, '%Y-%m-%d') as end_time, 
-                   (u.aims - u.deposit_base) as difference, 
-                   if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
+                   if( ((u.aims - u.deposit_base) < 0), 0.00, (u.aims - u.deposit_base))  as difference,
+                   if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) as schedule";
 
 
         $startTime = date('Y-01-01 00:00:00');
@@ -266,8 +266,8 @@ class Ultraman extends UltramanBean
                    u.deposit_base, 
                    u.aims,
                    DATE_FORMAT(u.end_time, '%Y-%m-%d') as end_time, 
-                   (u.aims - u.deposit_base) as difference, 
-                   if((truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0),truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2),0.00) as schedule";
+                   if( ((u.aims - u.deposit_base) < 0), 0.00, (u.aims - u.deposit_base))  as difference,
+                   if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) as schedule";
         $where['u.id'] = $this->getId();
         $this->model->setField($field);
         $this->model->setWhereArr($where);
@@ -283,8 +283,7 @@ class Ultraman extends UltramanBean
      */
     public function getDataAnalysisByDepositBase()
     {
-        $response['data'] = [];
-        $response['color'] = [];
+        $response['data'] = $response['color'] = [];
         $startTime = date('Y-01-01 00:00:00');
         $endTime = date('Y-12-31 23:59:59');
 
@@ -301,8 +300,6 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 300000], 'color' => '#223273', 'type' => '300k及以上'],
         ];
 
-        $response['data'] = [];
-        $response['color'] = [];
         for ($i = 0; $i < count($condition); $i++) {
             $where = [
                 ['start_time', '<=', $startTime],
@@ -333,13 +330,12 @@ class Ultraman extends UltramanBean
      */
     public function getDataAnalysisByAims()
     {
-        $response['data'] = [];
-        $response['color'] = [];
+        $response['data'] = $response['color'] = [];
         $startTime = date('Y-01-01 00:00:00');
         $endTime = date('Y-12-31 23:59:59');
         $condition = [
             ['where' => ['>=' => 0, '<' => 50000], 'color' => '#223273', 'type' => '0-50k'],
-            ['where' => ['>=' => 50000, '<' =>100000], 'color' => '#2FC25B', 'type' => '50-100k'],
+            ['where' => ['>=' => 50000, '<' => 100000], 'color' => '#2FC25B', 'type' => '50-100k'],
             ['where' => ['>=' => 100000, '<' => 150000], 'color' => '#13C2C2', 'type' => '100k-150k'],
             ['where' => ['>=' => 150000, '<' => 200000], 'color' => '#FACC14', 'type' => '150k-200k'],
             ['where' => ['>=' => 200000, '<' => 250000], 'color' => '#1890FF', 'type' => '200k-250k'],
@@ -349,8 +345,6 @@ class Ultraman extends UltramanBean
             ['where' => ['>=' => 400000, '<' => 450000], 'color' => '#3436C7', 'type' => '400k-450k'],
             ['where' => ['>=' => 450000], 'color' => '#223273', 'type' => '450k及以上'],
         ];
-        $response['data'] = [];
-        $response['color'] = [];
         for ($i = 0; $i < count($condition); $i++) {
             $where = [
                 ['start_time', '<=', $startTime],
@@ -381,6 +375,42 @@ class Ultraman extends UltramanBean
      */
     public function getDataAnalysisBySchedule()
     {
+        $response['data'] = $response['color'] = [];
+        $formula = "( (deposit_base / aims) * 100)";
+        $startTime = date('Y-01-01 00:00:00');
+        $endTime = date('Y-12-31 23:59:59');
+        $condition = [
+            ['where' => ['>=' => 0, '<' => 10], 'color' => '#223273', 'type' => '0-10%'],
+            ['where' => ['>=' => 10, '<' => 20], 'color' => '#2FC25B', 'type' => '10-20%'],
+            ['where' => ['>=' => 20, '<' => 30], 'color' => '#13C2C2', 'type' => '20-30%'],
+            ['where' => ['>=' => 30, '<' => 40], 'color' => '#FACC14', 'type' => '30-40%'],
+            ['where' => ['>=' => 40, '<' => 50], 'color' => '#1890FF', 'type' => '40-50%'],
+            ['where' => ['>=' => 50, '<' => 60], 'color' => '#2FC25B', 'type' => '50-60%'],
+            ['where' => ['>=' => 60, '<' => 70], 'color' => '#F04864', 'type' => '60-70%'],
+            ['where' => ['>=' => 70, '<' => 80], 'color' => '#8543E0', 'type' => '70-80%'],
+            ['where' => ['>=' => 80, '<' => 90], 'color' => '#3436C7', 'type' => '80-90%'],
+            ['where' => ['>=' => 90, '<' => 100], 'color' => '#223273', 'type' => '90-100%'],
+            ['where' => ['=' => 100], 'color' => '#F47983', 'type' => '100%'],
+        ];
 
+        for ($i = 0; $i < count($condition); $i++) {
+            $schedule = "";
+            foreach ($condition[$i]['where'] as $key => $value) {
+                if (!empty($schedule)) $schedule .= " and ";
+                $schedule .= "IF(TRUNCATE ( {$formula}, 2 ) > 0, if(TRUNCATE ({$formula}, 2 ) > 100.00, 100.00, TRUNCATE ({$formula}, 2 )), 0.00 ) {$key} {$value}";
+            }
+
+            $this->model->setWhereArr("start_time <= '{$startTime}' and end_time >= '{$endTime}' and {$schedule}");
+            $res = $this->model->getCount();
+            if ($res) {
+                array_push($response['data'], [
+                    'const' => 'const',
+                    'type' => $condition[$i]['type'],
+                    'num' => $res
+                ]);
+                array_push($response['color'], $condition[$i]['color']);
+            }
+        }
+        return $response;
     }
 }

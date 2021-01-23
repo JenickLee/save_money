@@ -10,6 +10,7 @@ namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
 use app\common\lib\BuildId;
+use app\common\lib\Date;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
 
@@ -248,5 +249,37 @@ class PostItUser extends PostItUserBean
             throw new \Exception('绑定失败');
         }
         return true;
+    }
+
+
+    /**
+     * Notes:贴吧ID新增人数统计
+     * User: Jenick
+     * Date: 2021/1/23
+     * Time: 3:52 下午
+     */
+    public function getAddPostItUserDataAnalysis()
+    {
+        $startDate = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - 6, date("Y")));
+        $endDate = date("Y-m-d");
+        $where = [
+            ['create_time', '>=', "{$startDate} 00:00:00"],
+            ['create_time', '<=', "{$endDate} 23:59:59"]
+        ];
+        $this->model->setWhereArr($where);
+        $this->model->setField('create_time, id');
+        $res = $this->model->findAllInfo();
+
+        $date = Date::getDateByInterval($startDate, $endDate, 'day');
+        $response = [];
+        foreach ($date as $value) {
+            $response[] = [
+                'date' => date("m-d", strtotime($value)),
+                'sales' => count(array_filter($res, function ($item) use ($value) {
+                    return date("Y-m-d", strtotime($item['create_time'])) == $value;
+                }))
+            ];
+        }
+        return $response;
     }
 }

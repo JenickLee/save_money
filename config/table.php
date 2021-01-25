@@ -14,4 +14,6 @@ return [
     'biz_post_it_user' => env('table.biz_post_it_user', 'biz_post_it_user'),
     //用户表
     'fnd_user' => env('table.fnd_user', 'fnd_user'),
+    //系统图片设置
+    'fnd_sys_image' => env('table.fnd_sys_image', 'fnd_sys_image'),
 ];

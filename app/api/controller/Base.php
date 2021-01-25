@@ -22,7 +22,7 @@ abstract class Base
     //页码
     public $page = 0;
     //数量
-    public $pageSize = 30;
+    public $pageSize = null;
     //响应数据
     public $response = [];
     /**

@@ -65,6 +65,7 @@ class Base extends Bean
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {
+            echo $e->getMessage();
             return [];
         }
     }

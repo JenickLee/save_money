@@ -20,14 +20,14 @@ class DataAnalysis extends Base
      */
     public function getAddUserDataAnalysis()
     {
-        $data = [
-            time(),
-           '5823185398',
-            '76b58be3f0ab729bf300384b3b28d235'
-        ];
-        // token检验
-        $data['token'] = md5(implode('&&', $data));
-        dump($data);
+//        $data = [
+//            time(),
+//           '5823185398',
+//            '76b58be3f0ab729bf300384b3b28d235'
+//        ];
+//        // token检验
+//        $data['token'] = md5(implode('&&', $data));
+//        dump($data);
         try {
             $this->obj = new UserService(0, null);
             $res = $this->obj->getAddUserDataAnalysis();

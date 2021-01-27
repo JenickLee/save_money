@@ -4,6 +4,7 @@ declare (strict_types=1);
 namespace app\api\controller;
 
 use app\common\lib\Page;
+use app\common\service\SysLog;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
@@ -19,6 +20,8 @@ abstract class Base
     public $obj;
     //user_id
     public $userId = null;
+    //用户信息
+    public $userInfo = null;
     //页码
     public $page = 0;
     //数量
@@ -59,6 +62,7 @@ abstract class Base
         $this->app = $app;
         $this->request = $this->app->request;
         $this->userId = $this->app->request->userId;
+        $this->userInfo = $this->app->request->userInfo;
         $params = $this->request->param();
         $pageOpt = Page::getPage(intval($params['page'] ?? $this->page), intval($params['pageSize'] ?? $this->pageSize));
         $this->page = $pageOpt['page'];
@@ -111,6 +115,28 @@ abstract class Base
         }
 
         return $v->failException(true)->check($data);
+    }
+
+    /**
+     * Notes:记录日志
+     * User: Jenick
+     * Date: 2020/1/6
+     * Time: 17:46
+     * @param $message
+     */
+    protected function saveSysLog($message)
+    {
+        $ip = $this->request->header('X-Forwarded-For') ?? '';
+        if (!empty($ip)) {
+            $ip = explode(',', $ip)[0];
+            $ip = trim($ip);
+        }
+        $sysLogService = new SysLog();
+        $sysLogService->setIp($ip);
+        $sysLogService->setContent($message);
+        $sysLogService->saveSysLog();
+        $sysLogService->setType(1);
+        $sysLogService->setCby($this->userId);
     }
 
 }

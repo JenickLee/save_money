@@ -16,4 +16,6 @@ return [
     'fnd_user' => env('table.fnd_user', 'fnd_user'),
     //系统图片设置
     'fnd_sys_image' => env('table.fnd_sys_image', 'fnd_sys_image'),
+    //系统操作日志表
+    'fnd_sys_log' => env('table.fnd_sys_log', 'fnd_sys_log'),
 ];

@@ -41,7 +41,8 @@ class PostItUser extends Base
      * Date: 2021/1/18
      * Time: 9:38 下午
      */
-    public function accountBinding(){
+    public function accountBinding()
+    {
         $params = input('post.');
         $validate = new Validate();
         $rule['binding_code'] = 'require';
@@ -52,7 +53,9 @@ class PostItUser extends Base
         try {
             $this->obj->setBindingCode($params['binding_code']);
             $this->obj->setUserId($this->userId);
-            $this->obj->accountBinding();
+            $res = $this->obj->accountBinding();
+
+            $this->saveSysLog("用户【{$this->userInfo['nickname']}】，绑定了贴吧ID【id：{$res['id']}, username：{$res['username']}】");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

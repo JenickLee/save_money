@@ -240,7 +240,7 @@ class PostItUser extends PostItUserBean
         if (!$res) {
             throw new \Exception('绑定码不存在或者已失效！');
         }
-
+        $postUserIt = $res;
         $userId = $this->getUserId();
         $this->model->setId($res['id']);
         $this->model->setArr(['user_id' => $userId, 'uby' => $userId, 'update_time' => date('Y-m-d H:i:s')]);
@@ -248,7 +248,7 @@ class PostItUser extends PostItUserBean
         if (!$res) {
             throw new \Exception('绑定失败');
         }
-        return true;
+        return $postUserIt;
     }
 
 

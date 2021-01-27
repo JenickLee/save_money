@@ -53,6 +53,7 @@ class PostItUser extends Base
             $this->obj->setUby($this->adminUserId);
             $this->obj->setUsername($param['username']);
             $res = $this->obj->addPostItUser();
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，新增了贴吧ID[{$param['username']}]");
             return Response::success($res);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
@@ -74,7 +75,8 @@ class PostItUser extends Base
             $this->obj->setUby($this->adminUserId);
             $this->obj->setId($param['id']);
             $this->obj->setUsername($param['username']);
-            $this->obj->editUsername();
+            $res = $this->obj->editUsername();
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，将贴吧ID[{$res['old_username']}]，修改为[{$res['new_username']}]");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
@@ -122,7 +124,8 @@ class PostItUser extends Base
         try {
             $this->obj->setId($param['id']);
             $res = $this->obj->generateBindingCode();
-            return Response::success($res);
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，生成贴吧ID[{$res['username']}]的[绑定码：{$res['binding_info']['binding_code']}，失效日期：{$res['binding_info']['exp_time']}]");
+            return Response::success($res['binding_info']);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
         }

@@ -7,6 +7,7 @@
  */
 
 namespace app\admin\middleware;
+use app\common\service\User;
 use \Closure;
 
 class Check
@@ -15,8 +16,17 @@ class Check
     {
         $header = $request->header();
         $userId =  $header['user-id'] ?? null;
+        $request->adminUserInfo = $this->_getUserInfo($userId);
         $request->adminUserId =$userId;
         $response = $next($request);
         return $response;
+    }
+
+    public function _getUserInfo($userId)
+    {
+        if (empty($userId)) return [];
+        $userService = new User();
+        $userService->setId($userId);
+        return $userService->getUserInfo() ;
     }
 }

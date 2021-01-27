@@ -156,7 +156,10 @@ class PostItUser extends PostItUserBean
         if (!$res) {
             throw new \Exception('更新贴吧ID失败');
         }
-        return true;
+        return [
+            'old_username' => $res['username'],
+            'new_username' => $username
+        ];
     }
 
     /**
@@ -208,6 +211,7 @@ class PostItUser extends PostItUserBean
         if (!empty($res['user_id'])) {
             throw new \Exception('该贴吧ID已被绑定');
         }
+        $username = $res['username'];
         $arr = [
             'binding_code' => BuildId::createId(),
             'exp_time' => date('Y-m-d H:i:s', time() + 60 * 60)
@@ -218,7 +222,10 @@ class PostItUser extends PostItUserBean
         if (!$res) {
             throw new \Exception('绑定码生成失败');
         }
-        return $arr;
+        return [
+            'username' => $username,
+            'binding_info' => $arr
+        ];
     }
 
     /**

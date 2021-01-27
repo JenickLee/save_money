@@ -55,7 +55,7 @@ class PostItUser extends Base
             $this->obj->setUserId($this->userId);
             $res = $this->obj->accountBinding();
 
-            $this->saveSysLog("用户【{$this->userInfo['nickname']}】，绑定了贴吧ID【id：{$res['id']}, username：{$res['username']}】");
+            $this->saveSysLog("用户[{$this->userInfo['nickname']}]，绑定了贴吧ID[id：{$res['id']}, username：{$res['username']}]");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

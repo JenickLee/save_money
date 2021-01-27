@@ -30,7 +30,7 @@ class Ultraman extends Base
     public function getUltramanList()
     {
         $param = input('get.');
-        $this->response['list'] = $this->obj->getList($param['orderBy']??1);
+        $this->response['list'] = $this->obj->getList($param['orderBy'] ?? 1);
         $this->response['count'] = $this->obj->getUltramanCount();
         return Response::success($this->response);
     }
@@ -73,42 +73,16 @@ class Ultraman extends Base
 
         $this->obj->setUby($this->userId);
         $this->obj->setId($param['id']);
-        $this->obj->setAims($param['aims']??0);
-        $this->obj->setDepositBase($param['deposit_base']??0);
+        $this->obj->setAims($param['aims'] ?? 0);
+        $this->obj->setDepositBase($param['deposit_base'] ?? 0);
         try {
-            $this->obj->editUltraman($param['type'], $param['calculation']);
-            switch ($param['type']){
-                case 1:
-                    $str = "用户【{$this->userInfo['nickname']}】，将奥特曼【{$param['id']}】的当前基数";
-                    switch ($param['calculation']){
-                        case 1:
-                            $str .= "调整为{$param['deposit_base']}";
-                            break;
-                        case 2:
-                            $str .= "增加了{$param['deposit_base']}";
-                            break;
-                        case 3:
-                            $str .= "减少了{$param['deposit_base']}";
-                            break;
-                    }
-                    $this->saveSysLog($str);
-                    break;
-                case 2:
-                    $str = "用户【{$this->userInfo['nickname']}】，将奥特曼【{$param['id']}】的目标";
-                    switch ($param['calculation']){
-                        case 1:
-                            $str .= "调整为{$param['aims']}";
-                            break;
-                        case 2:
-                            $str .= "增加了{$param['aims']}";
-                            break;
-                        case 3:
-                            $str .= "减少了{$param['aims']}";
-                            break;
-                    }
-                    $this->saveSysLog($str);
-                    break;
+            $res = $this->obj->editUltraman($param['type'], $param['calculation']);
+            $str = "当前基数调整为￥{$res['deposit_base']}";
+            if ($param['type'] === 2) {
+                $str = "目标调整为￥{$res['aims']}";
             }
+
+            $this->saveSysLog("用户【{$res['username']}】，将奥特曼【{$param['id']}}】的{$str}");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
@@ -136,8 +110,8 @@ class Ultraman extends Base
         $this->obj->setPUserId($param['p_user_id']);
         $this->obj->setAims($param['aims']);
         $this->obj->setDepositBase($param['deposit_base']);
-        $this->obj->setStartTime($param['start_time']?? date('Y-01-01 00:00:00'));
-        $this->obj->setEndTime($param['end_time']?? date('Y-12-31 23:59:59'));
+        $this->obj->setStartTime($param['start_time'] ?? date('Y-01-01 00:00:00'));
+        $this->obj->setEndTime($param['end_time'] ?? date('Y-12-31 23:59:59'));
         try {
             $res = $this->obj->addUltraman();
             $this->saveSysLog("用户【{$this->userInfo['nickname']}】，参加奥特曼【id：{$res}，当前基数为：{$param['deposit_base']}，目标为：{$param['aims']}】");

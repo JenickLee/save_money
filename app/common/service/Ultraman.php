@@ -186,8 +186,9 @@ class Ultraman extends UltramanBean
     public function editUltraman($type, $calculation)
     {
         $id = $this->getId();
-        $this->model->setWhereArr(['id' => $id]);
-        $info = $this->model->findOneInfo();
+        $this->model->setField('u.*, user.username');
+        $this->model->setWhereArr(['u.id' => $id]);
+        $info = $this->model->findOneInfoJoinUser();
         if (!$info) {
             throw new \Exception('用户未参加奥特曼');
         }
@@ -252,7 +253,11 @@ class Ultraman extends UltramanBean
             Db::rollback();
             throw new \Exception($e->getMessage());
         }
-        return true;
+        return [
+            'username' => $info['username'],
+            'aims' => $ultramanData['aims'],
+            'deposit_base' => $ultramanData['deposit_base']
+        ];
     }
 
     /**
@@ -428,7 +433,7 @@ class Ultraman extends UltramanBean
         $endDate = date("Y-m-d");
         $date = Date::getDateByInterval($startDate, $endDate, 'month');
         $response = [];
-        foreach ($date as $value){
+        foreach ($date as $value) {
             $where = [
                 ['create_time', '>=', "{$value['startDate']} 00:00:00"],
                 ['create_time', '<=', "{$value['endDate']} 23:59:59"]

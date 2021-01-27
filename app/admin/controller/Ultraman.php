@@ -45,6 +45,7 @@ class Ultraman extends Base
         $this->obj->setStartTime($param['start_time'] ?? date('Y-01-01 00:00:00'));
         $this->obj->setEndTime($param['end_time'] ?? date('Y-12-31 23:59:59'));
         try {
+            dump($this->adminUserInfo);
             $res = $this->obj->addUltraman();
             $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，创建奥特曼[id：{$res}，当前基数为：{$param['deposit_base']}，目标为：{$param['aims']}]");
             return Response::success();

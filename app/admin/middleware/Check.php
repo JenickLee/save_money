@@ -17,7 +17,7 @@ class Check
         $header = $request->header();
         $userId =  $header['user-id'] ?? null;
         $request->adminUserInfo = $this->_getUserInfo($userId);
-        $request->adminUserId =$userId;
+        $request->adminUserId = $userId;
         $response = $next($request);
         return $response;
     }

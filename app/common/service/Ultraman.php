@@ -143,7 +143,7 @@ class Ultraman extends UltramanBean
             Db::rollback();
             throw new \Exception($e->getMessage());
         }
-        return true;
+        return $uid;
     }
 
     /**

@@ -138,7 +138,7 @@ class PostItUser extends PostItUserBean
         if (!$res) {
             throw new \Exception('贴吧ID不存在');
         }
-
+        $oldUsername = $res['username'];
         $username = $this->getUsername();
         $this->model->setWhereArr(['username' => $username]);
         $res = $this->model->findOneInfo();
@@ -157,7 +157,7 @@ class PostItUser extends PostItUserBean
             throw new \Exception('更新贴吧ID失败');
         }
         return [
-            'old_username' => $res['username'],
+            'old_username' => $oldUsername,
             'new_username' => $username
         ];
     }

@@ -100,7 +100,7 @@ class Ultraman extends Base
                 $str = "目标调整为￥{$res['aims']}";
             }
 
-            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，将[id：{$param['id']}}，username：{$res['username']}]的奥特曼的{$str}");
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，将奥特曼[id：{$param['id']}，username：{$res['username']}]的{$str}");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

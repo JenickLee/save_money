@@ -255,8 +255,8 @@ class Ultraman extends UltramanBean
         }
         return [
             'username' => $info['username'],
-            'aims' => $ultramanData['aims'],
-            'deposit_base' => $ultramanData['deposit_base']
+            'aims' => $ultramanData['aims'] ?? null,
+            'deposit_base' => $ultramanData['deposit_base'] ?? null
         ];
     }
 

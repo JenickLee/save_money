@@ -134,9 +134,10 @@ abstract class Base
         $sysLogService = new SysLog();
         $sysLogService->setIp($ip);
         $sysLogService->setContent($message);
-        $sysLogService->saveSysLog();
         $sysLogService->setType(1);
         $sysLogService->setCby($this->userId);
+        $sysLogService->saveSysLog();
+
     }
 
 }

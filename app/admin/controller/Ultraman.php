@@ -45,7 +45,6 @@ class Ultraman extends Base
         $this->obj->setStartTime($param['start_time'] ?? date('Y-01-01 00:00:00'));
         $this->obj->setEndTime($param['end_time'] ?? date('Y-12-31 23:59:59'));
         try {
-            dump($this->adminUserInfo);
             $res = $this->obj->addUltraman();
             $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，创建奥特曼[id：{$res}，当前基数为：{$param['deposit_base']}，目标为：{$param['aims']}]");
             return Response::success();
@@ -101,7 +100,7 @@ class Ultraman extends Base
                 $str = "目标调整为￥{$res['aims']}";
             }
 
-            $this->saveSysLog("管理员[{$this->adminUserId['nickname']}]，将[id：{$param['id']}}，username：{$res['username']}]的奥特曼的{$str}");
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，将[id：{$param['id']}}，username：{$res['username']}]的奥特曼的{$str}");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

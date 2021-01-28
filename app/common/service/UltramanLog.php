@@ -22,4 +22,23 @@ class UltramanLog extends UltramanLogBean
         $this->model->setOffset($this->getOffset());
         $this->model->setLimit($this->getLimit());
     }
+
+    /**
+     * Notes:获取用户当前基数数据
+     * User: Jenick
+     * Date: 2021/1/28
+     * Time: 12:24 下午
+     */
+    public function getUserDepositBaseDataAnalysis($pUserId)
+    {
+        $where = [
+            ['u.p_user_id', '=', $pUserId],
+            ['log.type', 'in', [1, 2]],
+            ['log.create_time', '>=', date('Y-01-01 00:00:00')],
+            ['log.create_time', '<=', date('Y-12-31 23:59:59')]
+        ];
+        $this->model->setWhereArr($where);
+        $this->model->setField('log.create_time date, log.deposit_base value');
+        return $this->model->findAllInfoJoinUltraman();
+    }
 }

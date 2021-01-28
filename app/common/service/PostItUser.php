@@ -289,4 +289,5 @@ class PostItUser extends PostItUserBean
         }
         return $response;
     }
+
 }

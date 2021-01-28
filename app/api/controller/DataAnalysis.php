@@ -10,7 +10,7 @@ namespace app\api\controller;
 
 
 use app\common\lib\Response;
-use app\common\service\Ultraman as UltramanService;
+use app\common\service\{Ultraman as UltramanService, UltramanLog as UltramanLogService};
 use think\Validate;
 
 class DataAnalysis extends Base
@@ -59,6 +59,29 @@ class DataAnalysis extends Base
         try {
             $this->obj = new UltramanService();
             $res = $this->obj->getParticipateDataAnalysis();
+            return Response::success($res);
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
+
+    /**
+     * Notes:获取用户当前基数数据
+     * User: Jenick
+     * Date: 2021/1/28
+     * Time: 12:22 下午
+     */
+    public function getUserDepositBaseDataAnalysis()
+    {
+        $param = input('post.');
+        $validate = new Validate();
+        $rule['p_user_id'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+        try {
+            $this->obj = new UltramanLogService();
+            $res = $this->obj->getUserDepositBaseDataAnalysis($param['p_user_id']);
             return Response::success($res);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

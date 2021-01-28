@@ -44,7 +44,6 @@ class UltramanLog extends UltramanLogBean
             if(floor($vo['value'])- $vo['value'] == 0){
                 $vo['value'] = intval($vo['value']);
             }
-            $vo['value'] = $vo['value'] / 10000;
         }
         return $res;
     }

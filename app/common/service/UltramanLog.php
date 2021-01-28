@@ -40,11 +40,6 @@ class UltramanLog extends UltramanLogBean
         $this->model->setWhereArr($where);
         $this->model->setField("FROM_UNIXTIME( UNIX_TIMESTAMP( log.create_time ), '%Y-%m-%d' ) date, log.deposit_base value");
         $res = $this->model->getUserDepositBaseDataAnalysis();
-        foreach ($res as &$vo) {
-            if(floor($vo['value'])- $vo['value'] == 0){
-                $vo['value'] = intval($vo['value']);
-            }
-        }
         return $res;
     }
 }

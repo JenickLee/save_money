@@ -38,7 +38,8 @@ class UltramanLog extends UltramanLogBean
             ['log.create_time', '<=', date('Y-12-31 23:59:59')]
         ];
         $this->model->setWhereArr($where);
-        $this->model->setField('log.create_time date, log.deposit_base value');
-        return $this->model->findAllInfoJoinUltraman();
+        $this->model->setField("FROM_UNIXTIME( UNIX_TIMESTAMP( log.create_time ), '%Y-%m-%d' ) date, log.deposit_base value");
+        $res = $this->model->getUserDepositBaseDataAnalysis();
+        return $res;
     }
 }

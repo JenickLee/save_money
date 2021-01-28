@@ -9,6 +9,8 @@
 namespace app\common\model\mysql;
 
 
+use think\facade\Db;
+
 class UltramanLog extends Base
 {
     public function __construct(array $data = [])
@@ -18,20 +20,20 @@ class UltramanLog extends Base
         parent::__construct($data);
     }
 
-    public function findAllInfoJoinUltraman()
+    public function getUserDepositBaseDataAnalysis()
     {
-        if (empty($this->getOrder())) {
-            $this->setOrder('log.create_time asc, log.id asc');
-        }
+        $this->setOrder('log.create_time desc, log.id desc');
 
         try {
-            $res = $this->alias('log')
+            $subQuery = $this->alias('log')
                 ->join(config('table.biz_ultraman') . ' u', 'u.id = log.uid', 'INNER')
                 ->field($this->getField())
                 ->where($this->getWhereArr())
-                ->limit($this->getOffset(), $this->getLimit())
+                ->limit(0, 10000)
                 ->order($this->getOrder())
-                ->group($this->getGroup())
+                ->buildSql();
+            $res = Db::table("{$subQuery} sub")
+                ->group('sub.date')
                 ->select();
             if (is_object($res)) $res = $res->toArray();
             return $res;

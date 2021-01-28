@@ -80,34 +80,26 @@ class UltramanLog extends Base
         $this->type = $type;
     }
 
-    /**
-     * @return int
-     */
-    public function getDepositBase(): int
+
+    public function getDepositBase()
     {
         return $this->depositBase;
     }
 
-    /**
-     * @param int $depositBase
-     */
-    public function setDepositBase(int $depositBase): void
+
+    public function setDepositBase($depositBase): void
     {
         $this->depositBase = $depositBase;
     }
 
-    /**
-     * @return int
-     */
-    public function getAims(): int
+
+    public function getAims()
     {
         return $this->aims;
     }
 
-    /**
-     * @param int $aims
-     */
-    public function setAims(int $aims): void
+
+    public function setAims($aims): void
     {
         $this->aims = $aims;
     }

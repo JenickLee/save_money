@@ -20,6 +20,7 @@ class UltramanLog extends Base
         parent::__construct($data);
     }
 
+
     public function getUserDepositBaseDataAnalysis()
     {
         $this->setOrder('log.create_time desc, log.id desc');

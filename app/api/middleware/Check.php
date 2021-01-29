@@ -15,7 +15,7 @@ use \Closure;
 class Check
 {
     private $checkPathInfo = [
-        '/v1.1/getUltramanList',//获取奥特曼列表
+        'v1.1/getUltramanList',//获取奥特曼列表
         'userRegistered',//小程序授权登录
         'getUltramanDataAnalysis',//获取奥特曼数据统计
         'getParticipateDataAnalysis',//统计月份奥特曼参加人数

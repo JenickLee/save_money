@@ -56,8 +56,8 @@ class Binding extends Base
     {
         try {
             $this->obj->setCby($this->userId);
-            $this->obj->getBindingInfoByCby();
-            return Response::success();
+            $res = $this->obj->getBindingInfoByCby();
+            return Response::success($res);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
         }

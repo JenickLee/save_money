@@ -45,4 +45,21 @@ class Binding extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:获取绑定信息
+     * User: Jenick
+     * Date: 2021/1/29
+     * Time: 11:03 下午
+     */
+    public function getBindingInfo()
+    {
+        try {
+            $this->obj->setCby($this->userId);
+            $this->obj->getBindingInfoByCby();
+            return Response::success();
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
 }

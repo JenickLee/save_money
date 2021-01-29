@@ -48,4 +48,17 @@ class Binding extends BindingBean
         }
     }
 
+    /**
+     * Notes:根据提交人获取最新的绑定信息
+     * User: Jenick
+     * Date: 2021/1/29
+     * Time: 11:04 下午
+     */
+    public function getBindingInfoByCby()
+    {
+        $this->model->setWhereArr(['cby' => $this->getCby()]);
+        $this->model->setOrder("create_time desc, id desc");
+        return $this->model->findOneInfo();
+    }
+
 }

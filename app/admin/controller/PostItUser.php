@@ -124,7 +124,10 @@ class PostItUser extends Base
         try {
             $this->obj->setId($param['id']);
             $res = $this->obj->generateBindingCode();
-            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，生成贴吧ID[{$res['username']}][绑定码：{$res['binding_info']['binding_code']}，失效日期：{$res['binding_info']['exp_time']}]");
+            if ($res['flag']) {
+                $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，生成贴吧ID[{$res['username']}][绑定码：{$res['binding_info']['binding_code']}，失效日期：{$res['binding_info']['exp_time']}]");
+            }
+
             return Response::success($res['binding_info']);
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

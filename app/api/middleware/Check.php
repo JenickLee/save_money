@@ -26,7 +26,7 @@ class Check
     {
         if (!in_array($request->pathinfo(), $this->checkPathInfo)) {
             $header = $request->header();
-            $userId = $header['user-id'];
+            $userId = $header['user-id'] ?? null;
             if (empty($userId)) {
                 return Response::error(config('code.api_check_error'));
             }

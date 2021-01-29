@@ -7,6 +7,7 @@
  */
 
 namespace app\admin\middleware;
+
 use app\common\lib\Response;
 use app\common\service\User;
 use \Closure;
@@ -16,7 +17,7 @@ class Check
     public function handle($request, Closure $next)
     {
         $header = $request->header();
-        $userId =  $header['user-id'];
+        $userId = $header['user-id'] ?? null;
         if (empty($userId)) {
             return Response::error(config('code.api_check_error'));
         }
@@ -31,6 +32,6 @@ class Check
         if (empty($userId)) return [];
         $userService = new User();
         $userService->setId($userId);
-        return $userService->getUserInfo() ;
+        return $userService->getUserInfo();
     }
 }

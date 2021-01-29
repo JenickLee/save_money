@@ -12,6 +12,8 @@ return [
     'biz_ultraman_log' => env('table.biz_ultraman_log', 'biz_ultraman_log'),
     //贴吧用户表
     'biz_post_it_user' => env('table.biz_post_it_user', 'biz_post_it_user'),
+    //绑定百度ID表
+    'biz_binding' => env('table.biz_binding', 'biz_binding'),
     //用户表
     'fnd_user' => env('table.fnd_user', 'fnd_user'),
     //系统图片设置

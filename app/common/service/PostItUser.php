@@ -233,6 +233,7 @@ class PostItUser extends PostItUserBean
         }
 
         return [
+            'flag' => ($res['exp_time'] < date('Y-m-d H:i:s', time() + 60 * 60)),
             'username' => $username,
             'binding_info' => $arr
         ];

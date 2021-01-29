@@ -77,12 +77,14 @@ class Ultraman extends Base
         $this->obj->setDepositBase($param['deposit_base'] ?? 0);
         try {
             $res = $this->obj->editUltraman($param['type'], $param['calculation']);
-            $str = "当前基数调整为￥{$res['deposit_base']}";
-            if ($param['type'] === 2) {
-                $str = "目标调整为￥{$res['aims']}";
-            }
+            if($res['flag']) {
+                $str = "当前基数调整为￥{$res['deposit_base']}";
+                if ($param['type'] === 2) {
+                    $str = "目标调整为￥{$res['aims']}";
+                }
 
-            $this->saveSysLog("用户[{$this->userInfo['nickname']}]，将奥特曼[{$param['id']}]的{$str}");
+                $this->saveSysLog("用户[{$this->userInfo['nickname']}]，将奥特曼[{$param['id']}]的{$str}");
+            }
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

@@ -117,11 +117,12 @@ class PostItUser extends PostItUserBean
 
         $response = [];
         foreach ($letter as $item) {
-            $response[] = [
+            $response['data'][] = [
                 'letter' => $item,
                 'data' => $arr[$item]
             ];
         }
+        $response['sideBarData'] = array_column($response['data'], 'letter');
         return $response;
     }
 

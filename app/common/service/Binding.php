@@ -166,7 +166,7 @@ class Binding extends BindingBean
             //判断该处理任务更新为已处理
             $this->model->setId($this->getId());
             $this->model->setArr(['schedule' => 1, 'process_result' => '已绑定', 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
-            $res = $postUserItModel->useIdUpdateData();
+            $res = $this->model->useIdUpdateData();
             if (!$res) {
                 throw new \Exception('操作失败');
             }

@@ -32,7 +32,7 @@ class Ultraman extends Base
         $param = input('post.');
         $validate = new Validate();
         $rule['p_user_id|贴吧id'] = 'require';
-        $rule['deposit_base|当前存款基数'] = 'require';
+        $rule['deposit_base|当前存款'] = 'require';
         $rule['aims|目标'] = 'require';
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
@@ -46,7 +46,7 @@ class Ultraman extends Base
         $this->obj->setEndTime($param['end_time'] ?? date('Y-12-31 23:59:59'));
         try {
             $res = $this->obj->addUltraman();
-            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，创建奥特曼[id：{$res}，当前基数为：{$param['deposit_base']}，目标为：{$param['aims']}]");
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，创建奥特曼[id：{$res}，当前存款为：{$param['deposit_base']}，目标为：{$param['aims']}]");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
@@ -83,7 +83,7 @@ class Ultraman extends Base
         $param = input('post.');
         $validate = new Validate();
         $rule['id'] = 'require';
-        $rule['type'] = 'require';//1-当前基数 2-目标
+        $rule['type'] = 'require';//1-当前存款 2-目标
         $rule['calculation'] = 'require';//1-最终 2-增加 3-减少
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
@@ -95,7 +95,7 @@ class Ultraman extends Base
         $this->obj->setDepositBase($param['deposit_base'] ?? 0);
         try {
             $res = $this->obj->editUltraman($param['type'], $param['calculation']);
-            $str = "当前基数调整为￥{$res['deposit_base']}";
+            $str = "当前存款调整为￥{$res['deposit_base']}";
             if ($param['type'] === 2) {
                 $str = "目标调整为￥{$res['aims']}";
             }

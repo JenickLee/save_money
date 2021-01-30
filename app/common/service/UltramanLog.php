@@ -24,7 +24,7 @@ class UltramanLog extends UltramanLogBean
     }
 
     /**
-     * Notes:获取用户当前基数数据
+     * Notes:获取用户当前存款数据
      * User: Jenick
      * Date: 2021/1/28
      * Time: 12:24 下午

@@ -15,9 +15,9 @@ class UltramanLog extends Base
     private $id = null;
     //奥特曼id
     private $uid = null;
-    //类型 1-创建 2-修改当前基数 3-修改目标
+    //类型 1-创建 2-修改当前存款 3-修改目标
     private $type = null;
-    //当前存款基数
+    //当前存款存款
     private $depositBase = 0;
     //目标
     private $aims = 0;

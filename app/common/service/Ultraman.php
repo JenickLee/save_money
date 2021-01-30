@@ -34,7 +34,7 @@ class Ultraman extends UltramanBean
     public function getList($orderBy = 1)
     {
         switch ($orderBy) {
-            case 1://当前基数
+            case 1://当前存款
                 $order = 'u.deposit_base desc, u.aims desc, u.id desc';
                 break;
             case 2://目标
@@ -283,7 +283,7 @@ class Ultraman extends UltramanBean
     }
 
     /**
-     * Notes:根据当前基数分析数据
+     * Notes:根据当前存款分析数据
      * User: Jenick
      * Date: 2021/1/23
      * Time: 1:00 上午

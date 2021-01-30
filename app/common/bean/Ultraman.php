@@ -15,7 +15,7 @@ class Ultraman extends Base
     private $id = null;
     //贴吧用户id
     private $pUserId = null;
-    //当前存款基数
+    //当前存款存款
     private $depositBase = 0;
     //目标
     private $aims = 0;

@@ -29,7 +29,7 @@ Route::get("/getBindingInfo", 'Binding/getBindingInfo');//获取绑定信息
 //---------------------------------------数据分析-------------------------------------------------
 Route::get("/getUltramanDataAnalysis", 'DataAnalysis/getUltramanDataAnalysis');//获取奥特曼数据统计
 Route::get("/getParticipateDataAnalysis", 'DataAnalysis/getParticipateDataAnalysis');//统计月份奥特曼参加人数
-Route::post("/getUserDepositBaseDataAnalysis", 'DataAnalysis/getUserDepositBaseDataAnalysis');//获取用户当前基数数据
+Route::post("/getUserDepositBaseDataAnalysis", 'DataAnalysis/getUserDepositBaseDataAnalysis');//获取用户当前存款数据
 
 //---------------------------------------Banner-------------------------------------------------
 Route::get("/getUltramanBanner", 'SysImage/getUltramanBanner');//获取奥特曼Banner图

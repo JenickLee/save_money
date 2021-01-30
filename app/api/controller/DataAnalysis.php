@@ -25,7 +25,7 @@ class DataAnalysis extends Base
     {
         $param = input('get.');
         $validate = new Validate();
-        $rule['analysis_item'] = 'require';//1-当前基数 2-目标 3-完成率
+        $rule['analysis_item'] = 'require';//1-当前存款 2-目标 3-完成率
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.params_invalid'), $validate->getError());
         }
@@ -66,7 +66,7 @@ class DataAnalysis extends Base
     }
 
     /**
-     * Notes:获取用户当前基数数据
+     * Notes:获取用户当前存款数据
      * User: Jenick
      * Date: 2021/1/28
      * Time: 12:22 下午

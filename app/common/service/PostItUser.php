@@ -83,6 +83,49 @@ class PostItUser extends PostItUserBean
     }
 
     /**
+     * Notes:获取贴吧用户列表
+     * User: Jenick
+     * Date: 2021/1/7
+     * Time: 4:34 下午
+     */
+    public function getListAndGetFirstChartersNew()
+    {
+        $this->model->setOrder('p.username asc');
+        $this->model->setField("p.*, user.avatar");
+        $res = $this->model->findAllInfoAndUser();
+        if (!$res) {
+            return [];
+        }
+        $arr = [];
+        foreach ($res as $vo) {
+            $firstCharters = Str::getFirstCharters($vo['username']);
+            if (!empty($firstCharters)) {
+                $arr[Str::getFirstCharters($vo['username'])][] = $vo;
+            } else {
+                $arr['#'][] = $vo;
+            }
+        }
+        $letter = array_keys($arr);
+        $index = array_search('#', $letter);
+        if ($index) {
+            unset($letter[$index]);
+        }
+        array_multisort($letter);
+        if ($index) {
+            array_push($letter, '#');
+        }
+
+        $response = [];
+        foreach ($letter as $item) {
+            $response[] = [
+                'letter' => $item,
+                'data' => $arr[$item]
+            ];
+        }
+        return $response;
+    }
+
+    /**
      * Notes:获取贴吧用户总数
      * User: Jenick
      * Date: 2021/1/7

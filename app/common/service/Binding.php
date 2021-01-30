@@ -61,4 +61,27 @@ class Binding extends BindingBean
         return $this->model->findOneInfo();
     }
 
+    /**
+     * Notes:获取绑定列表
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 10:32 上午
+     */
+    public function getBindingList()
+    {
+        $this->model->setOrder("schedule asc, create_time desc, id desc");
+        return $this->model->findAllInfo();
+    }
+
+    /**
+     * Notes:获取绑定数量
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 10:33 上午
+     */
+    public function getBindingCount()
+    {
+        return $this->model->getCount();
+    }
+
 }

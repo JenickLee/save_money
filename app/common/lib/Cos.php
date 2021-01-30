@@ -122,7 +122,7 @@ class Cos extends Base
      * @param string $key
      * @return array
      */
-    public function getImgUrl($res, $key = 'img', $many = false)
+    public function getImgUrl(&$res, $key = 'img', $many = false)
     {
         if (empty($res)) return $res;
         $arrType = count($res) == count($res, 1);

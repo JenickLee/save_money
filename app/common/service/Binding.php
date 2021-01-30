@@ -95,8 +95,9 @@ class Binding extends BindingBean
     public function getBindingDetailById()
     {
         $this->model->setWhereArr(['b.id' => $this->getId()]);
+        $this->model->setField("b.*, user.nickname");
         $res = $this->model->findOneInfoAndUser();
-        $res = (new Cos())->getImgUrl($res, 'img');
+        (new Cos())->getImgUrl($res, 'img');
         return $res;
     }
 

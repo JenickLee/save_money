@@ -40,7 +40,7 @@ class SysImage extends SysImageBean
         $this->model->setWhereArr($where);
         $this->model->setOrder('sort desc, id desc');
         $res = $this->model->findAllInfo();
-        $res = (new Cos())->getImgUrl($res, 'img');
+        (new Cos())->getImgUrl($res, 'img');
         return $res;
     }
 }

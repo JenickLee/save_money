@@ -110,7 +110,7 @@ class Binding extends Base
             $this->obj->setId($param['id']);
             $this->obj->setUby($this->adminUserId);
             $res = $this->obj->accountBinding($param['p_user_id']);
-            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，审核申请号[{$param['id']}]，同意了该申请，并将百度ID：{$res['postUserItInfo']['username']}和用户ID：{$res['user_id']}账号进行了绑定操作！");
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，审核申请号[{$param['id']}]，同意了该申请，并将百度ID：[{$res['postUserItInfo']['username']}]和用户ID：[{$res['user_id']}]账号进行了绑定操作！");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

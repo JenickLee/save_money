@@ -154,7 +154,7 @@ class Binding extends BindingBean
 
             //判断该百度id是否存在
             $postUserItModel = new PostItUserModel();
-            $this->model->setWhereArr([
+            $postUserItModel->setWhereArr([
                 ['user_id', '=', null],
                 ['id', '=', $p_user_id]
             ]);

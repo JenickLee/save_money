@@ -61,4 +61,31 @@ class Binding extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:拒绝绑定
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 11:27 上午
+     */
+    public function refuseBinding()
+    {
+        $param = input('post.');
+        $validate = new Validate();
+        $rule['id'] = 'require';
+        $rule['process_result|拒绝理由'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+
+        try {
+            $this->obj->setId($param['id']);
+            $this->obj->setUby($this->adminUserId);
+            $this->obj->setProcessResult($param['process_result']);
+            $this->obj->refuseBinding();
+            return Response::success();
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
 }

@@ -101,4 +101,31 @@ class Binding extends BindingBean
         return $res;
     }
 
+    /**
+     * Notes:拒绝绑定
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 11:56 上午
+     * @throws \Exception
+     */
+    public function refuseBinding()
+    {
+        $this->model->setWhereArr(['id' => $this->getId()]);
+        $res = $this->model->findOneInfo();
+        if (!$res) {
+            throw new \Exception('绑定信息不存在');
+        }
+        $this->model->setId($this->getId());
+        $this->model->setArr([
+            'uby' => $this->getUby(),
+            'process_result' => $this->getProcessResult(),
+            'update_time' => $this->getUpdateTime()
+        ]);
+        $res = $this->model->useIdUpdateData();
+        if (!$res) {
+            throw new \Exception('操作错误');
+        }
+        return true;
+    }
+
 }

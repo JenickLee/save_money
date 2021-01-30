@@ -173,7 +173,7 @@ class Binding extends BindingBean
 
             //对百度id进行绑定操作
             $postUserItModel->setId($postUserItInfo['id']);
-            $postUserItModel->setArr(['user_id' => $this->getCby(), 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
+            $postUserItModel->setArr(['user_id' => $bindingInfo['cby'], 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
             $res = $postUserItModel->useIdUpdateData();
             if (!$res) {
                 throw new \Exception('操作失败');

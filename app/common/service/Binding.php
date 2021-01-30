@@ -69,8 +69,9 @@ class Binding extends BindingBean
      */
     public function getBindingList()
     {
-        $this->model->setOrder("schedule asc, create_time desc, id desc");
-        return $this->model->findAllInfo();
+        $this->model->setOrder("b.schedule asc, b.create_time desc, b.id desc");
+        $this->model->setField("b.*, user.nickname");
+        return $this->model->findAllInfoAndUser();
     }
 
     /**

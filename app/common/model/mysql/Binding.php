@@ -17,4 +17,22 @@ class Binding extends Base
         $this->table = config('table.biz_binding');
         parent::__construct($data);
     }
+
+    public function findAllInfoAndUser()
+    {
+        try {
+            $res = $this->alias('b')
+                ->join(config('table.fnd_user') . ' user', 'user.id = b.cby', 'INNER')
+                ->field($this->getField())
+                ->where($this->getWhereArr())
+                ->limit($this->getOffset(), $this->getLimit())
+                ->order($this->getOrder())
+                ->group($this->getGroup())
+                ->select();
+            if (is_object($res)) $res = $res->toArray();
+            return $res;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
 }

@@ -18,6 +18,7 @@ Route::post("/generateBindingCode", 'PostItUser/generateBindingCode');//生成�
 
 //---------------------------------------绑定百度ID-------------------------------------------------
 Route::get("/getBindingList", 'Binding/getBindingList');//获取绑定信息列表
+Route::get("/getBindingDetail", 'Binding/getBindingDetail');//获取绑定信息详情
 
 //-------------------------------------奥特曼-------------------------------------------------
 Route::post("/addUltraman", 'Ultraman/addUltraman');//新增奥特曼

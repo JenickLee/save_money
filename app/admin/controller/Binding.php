@@ -37,4 +37,28 @@ class Binding extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:获取绑定信息详情
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 11:27 上午
+     */
+    public function getBindingDetail()
+    {
+        $param = input('get.');
+        $validate = new Validate();
+        $rule['id|id'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+
+        try {
+            $this->obj->setId($param['id']);
+            $res = $this->obj->getBindingDetailById();
+            return Response::success($res);
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
 }

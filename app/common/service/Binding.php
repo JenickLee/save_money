@@ -9,6 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\Binding as BindingBean;
+use app\common\lib\Cos;
 use app\common\model\mysql\{Binding as BindingModel};
 
 class Binding extends BindingBean
@@ -83,6 +84,20 @@ class Binding extends BindingBean
     public function getBindingCount()
     {
         return $this->model->getCount();
+    }
+
+    /**
+     * Notes:根据id获取绑定信息详情
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 11:28 上午
+     */
+    public function getBindingDetailById()
+    {
+        $this->model->setWhereArr(['b.id' => $this->getId()]);
+        $res = $this->model->findOneInfoAndUser();
+        $res = (new Cos())->getImgUrl($res, 'img');
+        return $res;
     }
 
 }

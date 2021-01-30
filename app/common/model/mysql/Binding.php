@@ -35,4 +35,20 @@ class Binding extends Base
             return [];
         }
     }
+
+    public function findOneInfoAndUser()
+    {
+        try {
+            $res = $this->alias('b')
+                ->join(config('table.fnd_user') . ' user', 'user.id = b.cby', 'INNER')
+                ->field($this->getField())
+                ->where($this->getWhereArr())
+                ->order($this->getOrder())
+                ->find();
+            if (is_object($res)) $res = $res->toArray();
+            return $res;
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
 }

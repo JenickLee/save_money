@@ -83,6 +83,7 @@ class Binding extends Base
             $this->obj->setUby($this->adminUserId);
             $this->obj->setProcessResult($param['process_result']);
             $this->obj->refuseBinding();
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，审核申请号[{$param['id']}]，拒绝了该用户的申请，理由为：{$param['process_result']}");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
@@ -108,7 +109,8 @@ class Binding extends Base
         try {
             $this->obj->setId($param['id']);
             $this->obj->setUby($this->adminUserId);
-            $this->obj->accountBinding($param['p_user_id']);
+            $res = $this->obj->accountBinding($param['p_user_id']);
+            $this->saveSysLog("管理员[{$this->adminUserInfo['nickname']}]，审核申请号[{$param['id']}]，同意了该申请，并将百度ID：{$res['postUserItInfo']['username']}和用户ID：{$res['user_id']}账号进行了绑定操作！");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

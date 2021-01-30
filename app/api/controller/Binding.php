@@ -39,7 +39,8 @@ class Binding extends Base
         try {
             $this->obj->setImg($param['img']);
             $this->obj->setCby($this->userId);
-            $this->obj->addBindingInfo();
+            $res = $this->obj->addBindingInfo();
+            $this->saveSysLog("用户[{$this->userInfo['nickname']}]，提交了绑定百度账号，申请号[{$res}]");
             return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());

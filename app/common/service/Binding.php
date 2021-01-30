@@ -183,7 +183,10 @@ class Binding extends BindingBean
             Db::rollback();
             throw new \Exception($e->getMessage());
         }
-        return $postUserItInfo;
+        return [
+            'postUserItInfo' => $postUserItInfo,
+            'user_id' => $bindingInfo['cby']
+        ];
     }
 
 }

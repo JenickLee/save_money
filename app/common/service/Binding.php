@@ -10,7 +10,8 @@ namespace app\common\service;
 
 use app\common\bean\Binding as BindingBean;
 use app\common\lib\Cos;
-use app\common\model\mysql\{Binding as BindingModel};
+use app\common\model\mysql\{Binding as BindingModel, PostItUser as PostItUserModel};
+use think\facade\Db;
 
 class Binding extends BindingBean
 {
@@ -127,6 +128,62 @@ class Binding extends BindingBean
             throw new \Exception('操作错误');
         }
         return true;
+    }
+
+    /**
+     * Notes:账号绑定
+     * User: Jenick
+     * Date: 2021/1/18
+     * Time: 9:40 下午
+     * @throws \Exception
+     */
+    public function accountBinding($p_user_id)
+    {
+        Db::startTrans();
+
+        try {
+            //判断该处理任务是否已处理
+            $this->model->setWhereArr(['id' => $this->getId()]);
+            $bindingInfo = $this->model->findOneInfo();
+            if (!$bindingInfo) {
+                throw new \Exception('绑定信息不存在！');
+            }
+            if ($bindingInfo['schedule'] == 1) {
+                throw new \Exception('绑定信息已处理不能重复处理！');
+            }
+
+            //判断该百度id是否存在
+            $postUserItModel = new PostItUserModel();
+            $this->model->setWhereArr([
+                ['user_id', '=', null],
+                ['id', '=', $p_user_id]
+            ]);
+            $postUserItInfo = $postUserItModel->findOneInfo();
+            if (!$postUserItInfo) {
+                throw new \Exception('该百度ID不存在或已被绑定！');
+            }
+
+            //判断该处理任务更新为已处理
+            $this->model->setId($this->getId());
+            $this->model->setArr(['schedule' => 1, 'process_result' => '已绑定', 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
+            $res = $postUserItModel->useIdUpdateData();
+            if (!$res) {
+                throw new \Exception('操作失败');
+            }
+
+            //对百度id进行绑定操作
+            $postUserItModel->setId($postUserItInfo['id']);
+            $postUserItModel->setArr(['user_id' => $this->getCby(), 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
+            $res = $postUserItModel->useIdUpdateData();
+            if (!$res) {
+                throw new \Exception('操作失败');
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            throw new \Exception($e->getMessage());
+        }
+        return $postUserItInfo;
     }
 
 }

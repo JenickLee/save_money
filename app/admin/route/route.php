@@ -21,6 +21,7 @@ Route::post("/generateBindingCode", 'PostItUser/generateBindingCode');//生成�
 Route::get("/getBindingList", 'Binding/getBindingList');//获取绑定信息列表
 Route::get("/getBindingDetail", 'Binding/getBindingDetail');//获取绑定信息详情
 Route::post("/refuseBinding", 'Binding/refuseBinding');//拒绝绑定
+Route::post("/accountBinding", 'Binding/accountBinding');//绑定账号
 
 //-------------------------------------奥特曼-------------------------------------------------
 Route::post("/addUltraman", 'Ultraman/addUltraman');//新增奥特曼

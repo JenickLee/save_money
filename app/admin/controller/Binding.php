@@ -88,4 +88,30 @@ class Binding extends Base
             return Response::error(config('code.error'), $e->getMessage());
         }
     }
+
+    /**
+     * Notes:绑定账号
+     * User: Jenick
+     * Date: 2021/1/30
+     * Time: 2:15 下午
+     */
+    public function accountBinding()
+    {
+        $param = input('post.');
+        $validate = new Validate();
+        $rule['id'] = 'require';
+        $rule['p_user_id'] = 'require';
+        if (!$validate->check($param, $rule)) {
+            return Response::error(config('code.params_invalid'), $validate->getError());
+        }
+
+        try {
+            $this->obj->setId($param['id']);
+            $this->obj->setUby($this->adminUserId);
+            $this->obj->accountBinding($param['p_user_id']);
+            return Response::success();
+        } catch (\Exception $e) {
+            return Response::error(config('code.error'), $e->getMessage());
+        }
+    }
 }

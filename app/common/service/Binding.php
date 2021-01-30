@@ -117,6 +117,7 @@ class Binding extends BindingBean
         }
         $this->model->setId($this->getId());
         $this->model->setArr([
+            'schedule' => 1,
             'uby' => $this->getUby(),
             'process_result' => $this->getProcessResult(),
             'update_time' => $this->getUpdateTime()

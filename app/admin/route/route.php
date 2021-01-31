@@ -10,8 +10,7 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 //-------------------------------------贴吧用户-------------------------------------------------
-Route::get("/2.0/getPostItUserList", 'PostItUser/getPostItUserList');//获取贴吧ID列表
-Route::get("/3.0/getPostItUserList", 'PostItUser/getPostItUserListNew');//获取贴吧ID列表
+Route::get("/3.0/getPostItUserList", 'PostItUser/getPostItUserList');//获取贴吧ID列表
 Route::post("/addPostItUser", 'PostItUser/addPostItUser');//新增贴吧id用户
 Route::post("/editUsername", 'PostItUser/editUsername');//更新贴吧id
 Route::get("/getPostItUserInfo", 'PostItUser/getPostItUserInfo');//获取贴吧ID信息

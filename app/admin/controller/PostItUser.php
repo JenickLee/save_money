@@ -22,28 +22,15 @@ class PostItUser extends Base
     }
 
     /**
- * Notes:获取贴吧id用户列表
- * User: Jenick
- * Date: 2021/1/7
- * Time: 4:31 下午
- */
-    public function getPostItUserList()
-    {
-        $this->obj = new PostItUserService(0, null);
-        $response = $this->obj->getListAndGetFirstCharters();
-        return Response::success($response);
-    }
-
-    /**
      * Notes:获取贴吧id用户列表
      * User: Jenick
      * Date: 2021/1/7
      * Time: 4:31 下午
      */
-    public function getPostItUserListNew()
+    public function getPostItUserList()
     {
         $this->obj = new PostItUserService(0, null);
-        $response = $this->obj->getListAndGetFirstChartersNew();
+        $response = $this->obj->getListAndGetFirstCharters();
         return Response::success($response);
     }
 

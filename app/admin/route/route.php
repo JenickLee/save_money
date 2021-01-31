@@ -31,3 +31,4 @@ Route::post("/editUltraman", 'Ultraman/editUltraman');//更新奥特曼
 //---------------------------------------数据分析-------------------------------------------------
 Route::get("/getAddUserDataAnalysis", 'DataAnalysis/getAddUserDataAnalysis');//用户新增人数统计
 Route::get("/getAddPostItUserDataAnalysis", 'DataAnalysis/getAddPostItUserDataAnalysis');//贴吧ID新增人数统计
+Route::post("/getUserDepositBaseDataAnalysis", 'DataAnalysis/getUserDepositBaseDataAnalysis');//获取用户当前存款数据

@@ -6,6 +6,8 @@
  * Time: 15:20
  */
 return [
+    //api key
+    'api_key' =>  env('config.api_key', ''),
     //cos appid
     'cos_appid' => env('config.cos_appid', ''),
     //cos key
@@ -17,5 +19,6 @@ return [
     //sys_image 是否显示值
     'sys_image_show' => 1,
     //奥特曼Banner
-    'ultraman_banner_type' => 1
+    'ultraman_banner_type' => 1,
+
 ];

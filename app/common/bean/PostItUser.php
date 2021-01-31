@@ -25,10 +25,6 @@ class PostItUser extends Base
     private $uby = null;
     //更新时间
     private $updateTime = null;
-    //绑定码
-    private $bindingCode = null;
-    //失效时间
-    private $expTime = null;
 
 
     /**
@@ -158,37 +154,4 @@ class PostItUser extends Base
     {
         $this->updateTime = $updateTime;
     }
-
-    /**
-     * @return null
-     */
-    public function getBindingCode()
-    {
-        return $this->bindingCode;
-    }
-
-    /**
-     * @param null $bindingCode
-     */
-    public function setBindingCode($bindingCode): void
-    {
-        $this->bindingCode = $bindingCode;
-    }
-
-    /**
-     * @return null
-     */
-    public function getExpTime()
-    {
-        return $this->expTime;
-    }
-
-    /**
-     * @param null $expTime
-     */
-    public function setExpTime($expTime): void
-    {
-        $this->expTime = $expTime;
-    }
-
 }

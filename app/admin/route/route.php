@@ -15,7 +15,6 @@ Route::get("/3.0/getPostItUserList", 'PostItUser/getPostItUserListNew');//获取
 Route::post("/addPostItUser", 'PostItUser/addPostItUser');//新增贴吧id用户
 Route::post("/editUsername", 'PostItUser/editUsername');//更新贴吧id
 Route::get("/getPostItUserInfo", 'PostItUser/getPostItUserInfo');//获取贴吧ID信息
-Route::post("/generateBindingCode", 'PostItUser/generateBindingCode');//生成绑定码
 
 //---------------------------------------绑定百度ID-------------------------------------------------
 Route::get("/getBindingList", 'Binding/getBindingList');//获取绑定信息列表

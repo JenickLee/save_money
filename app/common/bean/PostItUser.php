@@ -73,6 +73,23 @@ class PostItUser extends Base
         $this->userId = $userId;
     }
 
+    /**
+     * @return null
+     */
+    public function getLetter()
+    {
+        return $this->letter;
+    }
+
+    /**
+     * @param null $letter
+     */
+    public function setLetter($letter): void
+    {
+        $this->letter = $letter;
+    }
+
+
 
     /**
      * @return null

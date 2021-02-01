@@ -27,7 +27,7 @@ class UltramanLog extends Base
 
         try {
             $subQuery = $this->alias('log')
-                ->join(config('table.biz_ultraman') . ' u', 'u.id = log.uid', 'INNER')
+                ->join(config('table.biz_ultraman') . ' u', 'u.id = log.uid  AND log.create_time >= u.create_time AND log.create_time <= u.end_time', 'INNER')
                 ->field($this->getField())
                 ->where($this->getWhereArr())
                 ->limit(0, 10000)
@@ -39,7 +39,6 @@ class UltramanLog extends Base
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {
-            echo $e->getMessage();
             return [];
         }
     }

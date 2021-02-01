@@ -33,9 +33,7 @@ class UltramanLog extends UltramanLogBean
     {
         $where = [
             ['u.p_user_id', '=', $pUserId],
-            ['log.type', 'in', [1, 2]],
-            ['log.create_time', '>=', date('Y-01-01 00:00:00')],
-            ['log.create_time', '<=', date('Y-12-31 23:59:59')]
+            ['log.type', 'in', [1, 2]]
         ];
         $this->model->setWhereArr($where);
         $this->model->setField("FROM_UNIXTIME( UNIX_TIMESTAMP( log.create_time ), '%Y-%m-%d' ) date, log.deposit_base value");

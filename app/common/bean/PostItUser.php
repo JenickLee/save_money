@@ -15,6 +15,8 @@ class PostItUser extends Base
     private $id = null;
     //user_id
     private $userId = null;
+    //首字拼音开头
+    private $letter = null;
     //贴吧ID
     private $username = null;
     //创建人
@@ -70,7 +72,6 @@ class PostItUser extends Base
     {
         $this->userId = $userId;
     }
-
 
 
     /**

@@ -9,7 +9,6 @@
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
-use app\common\lib\BuildId;
 use app\common\lib\Date;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
@@ -110,7 +109,9 @@ class PostItUser extends PostItUserBean
         if ($res) {
             throw new \Exception('贴吧ID已存在');
         }
+        $firstCharters = Str::getFirstCharters($username);
         $data = [
+            'letter' => (!empty($firstCharters)) ? $firstCharters : '#',
             'username' => $username,
             'cby' => $this->getCby(),
             'create_time' => $this->getCreateTime(),

@@ -56,11 +56,9 @@ class Ultraman extends UltramanBean
                    DATE_FORMAT(u.update_time, '%Y-%m-%d') as update_time, 
                    if( ((u.aims - u.deposit_base) < 0), 0.00, (u.aims - u.deposit_base))  as difference,
                    if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) as schedule";
-        $startTime = date('Y-01-01 00:00:00');
-        $endTime = date('Y-12-31 23:59:59');
+
         $where = [
-            ['u.start_time', '<=', $startTime],
-            ['u.end_time', '>=', $endTime]
+            ['u.end_time', '>=', date('Y-m-d H:i:s')]
         ];
         $this->model->setField($field);
         $this->model->setWhereArr($where);
@@ -77,11 +75,8 @@ class Ultraman extends UltramanBean
      */
     public function getUltramanCount()
     {
-        $startTime = date('Y-01-01 00:00:00');
-        $endTime = date('Y-12-31 23:59:59');
         $where = [
-            ['start_time', '<=', $startTime],
-            ['end_time', '>=', $endTime]
+            ['end_time', '>=', date('Y-m-d H:i:s')]
         ];
         $this->model->setWhereArr($where);
         $res = $this->model->getCount();
@@ -101,8 +96,7 @@ class Ultraman extends UltramanBean
         try {
 
             $where = [
-                ['u.start_time', '<=', $this->getStartTime()],
-                ['u.end_time', '>=', $this->getEndTime()],
+                ['u.end_time', '>=', date('Y-m-d H:i:s')],
                 ['u.p_user_id', '=', $this->getPUserId()]
             ];
             $this->model->setWhereArr($where);
@@ -162,12 +156,8 @@ class Ultraman extends UltramanBean
                    if( ((u.aims - u.deposit_base) < 0), 0.00, (u.aims - u.deposit_base))  as difference,
                    if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) as schedule";
 
-
-        $startTime = date('Y-01-01 00:00:00');
-        $endTime = date('Y-12-31 23:59:59');
         $where = [
-            ['u.start_time', '<=', $startTime],
-            ['u.end_time', '>=', $endTime],
+            ['u.end_time', '>=', date('Y-m-d H:i:s')],
             ['u.p_user_id', '=', $this->getPUserId()]
         ];
         $this->model->setField($field);
@@ -291,8 +281,7 @@ class Ultraman extends UltramanBean
     public function getDataAnalysisByDepositBase()
     {
         $response['data'] = $response['color'] = [];
-        $startTime = date('Y-01-01 00:00:00');
-        $endTime = date('Y-12-31 23:59:59');
+        $endTime = date('Y-m-d H:i:s');
 
         $condition = [
             ['where' => ['<' => 0], 'color' => '#223273', 'type' => '0以下'],
@@ -309,7 +298,6 @@ class Ultraman extends UltramanBean
 
         for ($i = 0; $i < count($condition); $i++) {
             $where = [
-                ['start_time', '<=', $startTime],
                 ['end_time', '>=', $endTime]
             ];
             foreach ($condition[$i]['where'] as $key => $value) {
@@ -338,8 +326,7 @@ class Ultraman extends UltramanBean
     public function getDataAnalysisByAims()
     {
         $response['data'] = $response['color'] = [];
-        $startTime = date('Y-01-01 00:00:00');
-        $endTime = date('Y-12-31 23:59:59');
+        $endTime = date('Y-m-d H:i:s');
         $condition = [
             ['where' => ['>=' => 0, '<' => 50000], 'color' => '#223273', 'type' => '0-50k'],
             ['where' => ['>=' => 50000, '<' => 100000], 'color' => '#2FC25B', 'type' => '50-100k'],
@@ -354,7 +341,6 @@ class Ultraman extends UltramanBean
         ];
         for ($i = 0; $i < count($condition); $i++) {
             $where = [
-                ['start_time', '<=', $startTime],
                 ['end_time', '>=', $endTime]
             ];
             foreach ($condition[$i]['where'] as $key => $value) {
@@ -384,8 +370,7 @@ class Ultraman extends UltramanBean
     {
         $response['data'] = $response['color'] = [];
         $formula = "( (deposit_base / aims) * 100)";
-        $startTime = date('Y-01-01 00:00:00');
-        $endTime = date('Y-12-31 23:59:59');
+        $endTime = date('Y-m-d H:i:s');
         $condition = [
             ['where' => ['>=' => 0, '<' => 10], 'color' => '#223273', 'type' => '0-10%'],
             ['where' => ['>=' => 10, '<' => 20], 'color' => '#2FC25B', 'type' => '10-20%'],
@@ -407,7 +392,7 @@ class Ultraman extends UltramanBean
                 $schedule .= "IF(TRUNCATE ( {$formula}, 2 ) > 0, if(TRUNCATE ({$formula}, 2 ) > 100.00, 100.00, TRUNCATE ({$formula}, 2 )), 0.00 ) {$key} {$value}";
             }
 
-            $this->model->setWhereArr("start_time <= '{$startTime}' and end_time >= '{$endTime}' and {$schedule}");
+            $this->model->setWhereArr("end_time >= '{$endTime}' and {$schedule}");
             $res = $this->model->getCount();
             if ($res) {
                 array_push($response['data'], [

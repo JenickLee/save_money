@@ -140,7 +140,10 @@ class PostItUser extends PostItUserBean
         if ($res) {
             throw new \Exception('贴吧id已存在');
         }
+
+        $firstCharters = Str::getFirstCharters($username);
         $data = [
+            'letter' => (!empty($firstCharters)) ? $firstCharters : '#',
             'username' => $username,
             'uby' => $this->getUby(),
             'update_time' => $this->getUpdateTime()

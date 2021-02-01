@@ -9,6 +9,7 @@
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
+use app\common\lib\Arr;
 use app\common\lib\Date;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
@@ -52,33 +53,21 @@ class PostItUser extends PostItUserBean
         if (!$res) {
             return [];
         }
-        $arr = [];
-        foreach ($res as $vo) {
-            $firstCharters = Str::getFirstCharters($vo['username']);
-            if (!empty($firstCharters)) {
-                $arr[Str::getFirstCharters($vo['username'])][] = $vo;
-            } else {
-                $arr['#'][] = $vo;
-            }
-        }
-        $letter = array_keys($arr);
-        $index = array_search('#', $letter);
-        if ($index) {
-            unset($letter[$index]);
-        }
+        $letter = array_unique(array_column($res, 'letter'));
         array_multisort($letter);
-        if ($index) {
-            array_push($letter, '#');
-        }
-
-        $response = [];
+        $response = [
+            'data' => [],
+            'sideBarData' => []
+        ];
         foreach ($letter as $item) {
             $response['data'][] = [
                 'letter' => $item,
-                'data' => $arr[$item]
+                'data' => array_merge(array_filter($res, function ($arr) use ($item) {
+                    return $arr['letter'] == $item;
+                }))
             ];
         }
-        $response['sideBarData'] = array_column($response['data'], 'letter');
+        $response['sideBarData'] = $letter;
         return $response;
     }
 
@@ -103,26 +92,30 @@ class PostItUser extends PostItUserBean
      */
     public function addPostItUser()
     {
-        $username = $this->getUsername();
-        $this->model->setWhereArr(['username' => $username]);
-        $res = $this->model->findOneInfo();
-        if ($res) {
-            throw new \Exception('贴吧ID已存在');
+        try {
+            $username = $this->getUsername();
+            $this->model->setWhereArr(['username' => $username]);
+            $res = $this->model->findOneInfo();
+            if ($res) {
+                throw new \Exception('贴吧ID已存在');
+            }
+            $firstCharters = Str::getFirstCharters($username);
+            $data = [
+                'letter' => (!empty($firstCharters)) ? $firstCharters : '#',
+                'username' => $username,
+                'cby' => $this->getCby(),
+                'create_time' => $this->getCreateTime(),
+                'uby' => $this->getUby(),
+                'update_time' => $this->getUpdateTime()
+            ];
+            $res = $this->model->insertGetId($data);
+            if (!$res) {
+                throw new \Exception('新增贴吧ID失败');
+            }
+            return $res;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
-        $firstCharters = Str::getFirstCharters($username);
-        $data = [
-            'letter' => (!empty($firstCharters)) ? $firstCharters : '#',
-            'username' => $username,
-            'cby' => $this->getCby(),
-            'create_time' => $this->getCreateTime(),
-            'uby' => $this->getUby(),
-            'update_time' => $this->getUpdateTime()
-        ];
-        $res = $this->model->insertGetId($data);
-        if (!$res) {
-            throw new \Exception('新增贴吧ID失败');
-        }
-        return $res;
     }
 
     /**

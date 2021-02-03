@@ -5,11 +5,8 @@
  * Date: 2020/9/9
  * Time: 10:43 上午
  */
-
 namespace app\common\bean;
 
-
-use app\common\lib\WeChat;
 
 class Base
 {

@@ -9,7 +9,6 @@
 namespace app\common\service;
 
 use app\common\bean\PostItUser as PostItUserBean;
-use app\common\lib\Arr;
 use app\common\lib\Date;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};

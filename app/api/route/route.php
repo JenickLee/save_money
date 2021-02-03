@@ -9,6 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
+
 Route::get("/", 'Index/index');//首页
 //---------------------------------------奥特曼-----------------------------------------------
 Route::get("/v1.1/getUltramanList", 'Ultraman/getUltramanList');//获取奥特曼列表
@@ -32,3 +33,6 @@ Route::post("/getUserDepositBaseDataAnalysis", 'DataAnalysis/getUserDepositBaseD
 
 //---------------------------------------Banner-------------------------------------------------
 Route::get("/getUltramanBanner", 'SysImage/getUltramanBanner');//获取奥特曼Banner图
+
+//---------------------------------------订阅消息-------------------------------------------------
+Route::post("/addSubscribeMessage", 'SubscriptionMessage/addSubscribeMessage');//新增订阅消息

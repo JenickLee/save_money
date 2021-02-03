@@ -20,4 +20,8 @@ return [
     'fnd_sys_image' => env('table.fnd_sys_image', 'fnd_sys_image'),
     //系统操作日志表
     'fnd_sys_log' => env('table.fnd_sys_log', 'fnd_sys_log'),
+    //订阅消息
+    'fnd_subscription_message' => env('table.fnd_subscription_message', 'fnd_subscription_message'),
+    //订阅消息模板
+    'fnd_template' => env('table.fnd_template', 'fnd_template'),
 ];

@@ -9,6 +9,8 @@
 namespace app\common\model\mysql;
 
 
+use think\facade\Db;
+
 class PostItUser extends Base
 {
     public function __construct(array $data = [])
@@ -30,12 +32,13 @@ class PostItUser extends Base
                 ->field($this->getField())
                 ->where($this->getWhereArr())
                 ->limit($this->getOffset(), $this->getLimit())
-                ->order($this->getOrder())
+                ->order(Db::raw($this->getOrder()))
                 ->group($this->getGroup())
                 ->select();
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {
+            echo $e->getMessage();
             return [];
         }
     }

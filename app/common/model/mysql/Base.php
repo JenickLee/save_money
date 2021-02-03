@@ -11,7 +11,6 @@ namespace app\common\model\mysql;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\facade\Db;
 
 class Base extends Bean
 {
@@ -62,7 +61,7 @@ class Base extends Bean
     public function findAllInfo()
     {
         try {
-            $res = $this->field($this->getField())->where($this->getWhereArr())->limit($this->getOffset(), $this->getLimit())->order(Db::raw($this->getOrder()))->select();
+            $res = $this->field($this->getField())->where($this->getWhereArr())->limit($this->getOffset(), $this->getLimit())->order($this->getOrder())->select();
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {

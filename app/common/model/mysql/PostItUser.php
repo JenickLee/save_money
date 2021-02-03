@@ -32,7 +32,7 @@ class PostItUser extends Base
                 ->field($this->getField())
                 ->where($this->getWhereArr())
                 ->limit($this->getOffset(), $this->getLimit())
-                ->order(Db::raw($this->getOrder()))
+                ->order($this->getOrder())
                 ->group($this->getGroup())
                 ->select();
             if (is_object($res)) $res = $res->toArray();

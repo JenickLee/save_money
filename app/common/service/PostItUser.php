@@ -13,6 +13,7 @@ use app\common\lib\Arr;
 use app\common\lib\Date;
 use app\common\lib\Str;
 use app\common\model\mysql\{PostItUser as PostItUserModel};
+use think\facade\Db;
 
 class PostItUser extends PostItUserBean
 {
@@ -47,17 +48,18 @@ class PostItUser extends PostItUserBean
      */
     public function getListAndGetFirstCharters()
     {
-        $letter = range('A', 'Z');
-        array_push($letter, '#');
-        $letter = "'".implode("','", $letter)."'";
-        $this->model->setOrder("FIELD(p.letter, {$letter})");
+        $order = range('A', 'Z');
+        array_push($order, '#');
+        $order = implode("','", $order);
+        $order = "'{$order}'";
+        $this->model->setOrder(Db::raw("FIELD(p.letter, {$order})"));
         $this->model->setField("p.*, user.avatar");
         $res = $this->model->findAllInfoAndUser();
         if (!$res) {
             return [];
         }
 
-        $letter = array_unique(array_column($res, 'letter'));
+        $letter = array_merge(array_unique(array_column($res, 'letter')));
         $response = [
             'data' => [],
             'sideBarData' => []

@@ -73,9 +73,8 @@ class SubscriptionMessage extends SubscriptionMessageBean
      */
     public function sendBaiduIdReviewReminder($numbering, $content, $remarks = null)
     {
-        $templates = config('config.template');
         $where['s.sent_content'] = null;
-        $where['s.code'] = $templates['baidu_id_review_reminder'];
+        $where['s.code'] = 'baidu_id_review_reminder';
         $where['s.user_id'] = $this->getUserId();
         $this->model->setField('s.id, s.code, u.openid, t.status, t.template_id');
         $this->model->setWhereArr($where);
@@ -94,7 +93,7 @@ class SubscriptionMessage extends SubscriptionMessageBean
             }
             $data['character_string5']['value'] = $numbering;
             $data['thing2']['value'] = $content;
-            $data['thing4']['value'] = $remarks ?? '';
+            $data['thing4']['value'] = $remarks ?? '  ';
             $page = "admin/pages/binding/index";
             $weChat->sendSubscribeMessage($temlate['openid'], $temlate['template_id'], $data, $page);
 

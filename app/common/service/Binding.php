@@ -53,7 +53,6 @@ class Binding extends BindingBean
                 $subscriptionMessageService->setUserId($vo['id']);
                 $subscriptionMessageService->sendBaiduIdReviewReminder($res, '百度ID审核提醒');
             }
-
             return $res;
         } catch (\Exception $e) {
             throw new \Exception('提交失败');

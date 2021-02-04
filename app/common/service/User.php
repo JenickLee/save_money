@@ -129,4 +129,18 @@ class User extends UserBean
         }
         return $response;
     }
+
+    /**
+     * Notes:根据root获取用户列表
+     * User: Jenick
+     * Date: 2021/2/4
+     * Time: 11:50 下午
+     */
+    public function getUserByRoot()
+    {
+        $where['root'] = $this->getRoot();
+        $this->model->setWhereArr($where);
+        $res = $this->model->findAllInfo();
+        return $res;
+    }
 }

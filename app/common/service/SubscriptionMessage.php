@@ -8,6 +8,8 @@
 
 namespace app\common\service;
 
+use app\common\lib\Str;
+use app\common\lib\WeChat;
 use app\common\model\mysql\SubscriptionMessage as SubscriptionMessageModel;
 use app\common\bean\SubscriptionMessage as SubscriptionMessageBean;
 
@@ -41,7 +43,7 @@ class SubscriptionMessage extends SubscriptionMessageBean
             $i++;
         }
         $res = $this->model->insertAll($data);
-        if(!$res) {
+        if (!$res) {
             throw new \Exception('新增失败');
         }
         return $res;
@@ -61,5 +63,44 @@ class SubscriptionMessage extends SubscriptionMessageBean
         $where['user_id'] = $this->getUserId();
         $this->model->setWhereArr($where);
         return $this->model->getCount();
+    }
+
+    /**
+     * Notes:发送百度ID审核提醒
+     * User: Jenick
+     * Date: 2021/2/4
+     * Time: 11:38 下午
+     */
+    public function sendBaiduIdReviewReminder($numbering, $content, $remarks = null)
+    {
+        $templates = config('config.template');
+        $where['s.sent_content'] = null;
+        $where['s.code'] = $templates['baidu_id_review_reminder'];
+        $where['s.user_id'] = $this->getUserId();
+        $this->model->setField('s.id, s.code, u.openid, t.status, t.template_id');
+        $this->model->setWhereArr($where);
+        $this->model->setGroup('s.user_id');
+        $temlate = $this->model->findOneInfoJoinUserAndTemlate();
+        $weChat = (new WeChat());
+        if ($temlate) {
+            if (strlen($numbering) > 32) {
+                $numbering = Str::cutStr($numbering, 29, 0, 'UTF-8') . '...';
+            }
+            if (strlen($content) > 20) {
+                $content = Str::cutStr($content, 17, 0, 'UTF-8') . '...';
+            }
+            if (!empty($remarks) && strlen($remarks) > 20) {
+                $remarks = Str::cutStr($remarks, 17, 0, 'UTF-8') . '...';
+            }
+            $data['character_string5']['value'] = $numbering;
+            $data['thing2']['value'] = $content;
+            $data['thing4']['value'] = $remarks ?? '';
+            $page = "admin/pages/binding/index";
+            $weChat->sendSubscribeMessage($temlate['openid'], $temlate['template_id'], $data, $page);
+
+            $this->model->setArr(['sent_content' => json_encode($data), 'send_time' => date('Y-m-d H:i:s')]);
+            $this->model->setId($temlate['id']);
+            $this->model->useIdUpdateData();
+        }
     }
 }

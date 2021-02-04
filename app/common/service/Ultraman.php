@@ -39,7 +39,6 @@ class Ultraman extends UltramanBean
                 break;
             case 2://目标
                 $order = 'u.aims desc';
-
                 break;
             case 3://完成率
                 $order = "schedule desc";

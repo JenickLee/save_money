@@ -35,13 +35,13 @@ class Ultraman extends UltramanBean
     {
         switch ($orderBy) {
             case 1://当前存款
-                $order = 'u.deposit_base desc, u.aims desc, u.id desc';
+                $order = 'u.deposit_base desc';
                 break;
             case 2://目标
-                $order = 'u.aims desc, u.deposit_base desc,u.id desc';
+                $order = 'u.aims desc';
                 break;
             case 3://完成率
-                $order = "schedule desc, u.deposit_base desc,u.id desc";
+                $order = "schedule desc";
                 break;
             default:
                 $order = 'u.deposit_base desc, u.aims desc, u.id desc';

@@ -33,12 +33,13 @@ class Ultraman extends UltramanBean
      */
     public function getList($orderBy = 1)
     {
-        switch ($orderBy) {
+        switch (intval($orderBy)) {
             case 1://当前存款
                 $order = 'u.deposit_base desc';
                 break;
             case 2://目标
                 $order = 'u.aims desc';
+
                 break;
             case 3://完成率
                 $order = "schedule desc";

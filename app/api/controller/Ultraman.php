@@ -29,7 +29,7 @@ class Ultraman extends Base
      */
     public function getUltramanList()
     {
-        $this->response['list'] = $this->obj->getList($param['orderBy'] ?? 1);
+        $this->response['list'] = $this->obj->getList(input('get.orderBy', 1));
         $this->response['count'] = $this->obj->getUltramanCount();
         return Response::success($this->response);
     }

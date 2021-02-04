@@ -30,3 +30,7 @@ Route::post("/editUltraman", 'Ultraman/editUltraman');//更新奥特曼
 Route::get("/getAddUserDataAnalysis", 'DataAnalysis/getAddUserDataAnalysis');//用户新增人数统计
 Route::get("/getAddPostItUserDataAnalysis", 'DataAnalysis/getAddPostItUserDataAnalysis');//贴吧ID新增人数统计
 Route::post("/getUserDepositBaseDataAnalysis", 'DataAnalysis/getUserDepositBaseDataAnalysis');//获取用户当前存款数据
+
+//---------------------------------------订阅消息-------------------------------------------------
+Route::post("/addSubscribeMessage", 'SubscriptionMessage/addSubscribeMessage');//新增订阅消息
+Route::get("/getSubscribeMessageCount", 'SubscriptionMessage/getSubscribeMessageCount');//获取有效订阅消息数

@@ -54,7 +54,7 @@ class SubscriptionMessage extends SubscriptionMessageBean
      * Time: 4:46 下午
      * @return int
      */
-    public function getSubscribeMessageCount()
+    public function getSubscribeMessageCountByCode()
     {
         $where['sent_content'] = null;
         $where['code'] = $this->getCode();

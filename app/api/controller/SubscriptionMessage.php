@@ -31,22 +31,18 @@ class SubscriptionMessage extends Base
      */
     public function addSubscribeMessage()
     {
-        $params = input('post.');
+        $param = input('post.');
         $validate = new Validate();
-        $rule['userId'] = 'require';
         $rule['codes'] = 'require';
-        if (!$validate->check($params, $rule)) {
+        if (!$validate->check($param, $rule)) {
             return Response::error(config('code.error'), $validate->getError());
         }
 
         try {
-            $this->obj->setUserId($params['userId']);
-            $this->obj->setCode(explode(',', $params['codes']));
-            $res = $this->obj->addSubscribeMessage();
-            if ($res) {
-                return Response::success();
-            }
-            return Response::error(config('code.error'), '新增失败');
+            $this->obj->setUserId($this->userId);
+            $this->obj->setCode(explode(',', $param['codes']));
+            $this->obj->addSubscribeMessage();
+            return Response::success();
         } catch (\Exception $e) {
             return Response::error(config('code.error'), $e->getMessage());
         }

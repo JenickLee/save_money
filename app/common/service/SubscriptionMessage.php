@@ -29,6 +29,7 @@ class SubscriptionMessage extends SubscriptionMessageBean
      * Date: 2020/8/13
      * Time: 1:56 下午
      * @return int
+     * @throws \Exception
      */
     public function addSubscribeMessage()
     {
@@ -40,6 +41,9 @@ class SubscriptionMessage extends SubscriptionMessageBean
             $i++;
         }
         $res = $this->model->insertAll($data);
+        if(!$res) {
+            throw new \Exception('新增失败');
+        }
         return $res;
     }
 

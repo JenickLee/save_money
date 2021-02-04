@@ -33,14 +33,14 @@ class SubscriptionMessage extends Base
     {
         $param = input('post.');
         $validate = new Validate();
-        $rule['codes'] = 'require';
+        $rule['code'] = 'require';
         if (!$validate->check($param, $rule)) {
             return Response::error(config('code.error'), $validate->getError());
         }
 
         try {
             $this->obj->setUserId($this->userId);
-            $this->obj->setCode(explode(',', $param['codes']));
+            $this->obj->setCode(explode(',', $param['code']));
             $this->obj->addSubscribeMessage();
             return Response::success();
         } catch (\Exception $e) {

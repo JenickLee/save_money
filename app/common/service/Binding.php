@@ -49,7 +49,7 @@ class Binding extends BindingBean
             $userService->setRoot(1);
             $adminUser = $userService->getUserByRoot();
             $subscriptionMessageService = new SubscriptionMessage();
-            foreach ($adminUser as $vo){
+            foreach ($adminUser as $vo) {
                 $subscriptionMessageService->setUserId($vo['id']);
                 $subscriptionMessageService->sendBaiduIdReviewReminder($res, '百度ID审核提醒');
             }
@@ -127,6 +127,7 @@ class Binding extends BindingBean
         }
         $this->model->setId($this->getId());
         $this->model->setArr([
+            'result' => 0,
             'schedule' => 1,
             'uby' => $this->getUby(),
             'process_result' => $this->getProcessResult(),
@@ -183,7 +184,7 @@ class Binding extends BindingBean
 
             //判断该处理任务更新为已处理
             $this->model->setId($this->getId());
-            $this->model->setArr(['schedule' => 1, 'process_result' => '已绑定', 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
+            $this->model->setArr(['schedule' => 1, 'result' => 0, 'process_result' => '已绑定', 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
             $res = $this->model->useIdUpdateData();
             if (!$res) {
                 throw new \Exception('操作失败');

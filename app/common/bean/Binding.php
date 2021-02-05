@@ -15,6 +15,8 @@ class Binding extends Base
     private $id = null;
     //图片
     private $img = null;
+    //审核结果
+    private $result = null;
     //处理结果
     private $processResult = null;
     //进度 0-未处理 1-已阅读 2-已处理
@@ -67,6 +69,23 @@ class Binding extends Base
     {
         $this->img = $img;
     }
+
+    /**
+     * @return null
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * @param null $result
+     */
+    public function setResult($result): void
+    {
+        $this->result = $result;
+    }
+
 
     /**
      * @return null

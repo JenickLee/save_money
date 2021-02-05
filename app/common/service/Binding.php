@@ -121,8 +121,8 @@ class Binding extends BindingBean
     public function refuseBinding()
     {
         $this->model->setWhereArr(['id' => $this->getId()]);
-        $res = $this->model->findOneInfo();
-        if (!$res) {
+        $bindingInfo = $this->model->findOneInfo();
+        if (!$bindingInfo) {
             throw new \Exception('绑定信息不存在');
         }
         $this->model->setId($this->getId());
@@ -136,6 +136,15 @@ class Binding extends BindingBean
         if (!$res) {
             throw new \Exception('操作错误');
         }
+
+        //发送百度ID审核结果通知
+        $userService = new User();
+        $userService->setId($bindingInfo['cby']);
+        $userInfo = $userService->getUserInfo();
+        $subscriptionMessageService = new SubscriptionMessage();
+        $subscriptionMessageService->setUserId($bindingInfo['cby']);
+        $subscriptionMessageService->sendBaiduIdReviewNotice('百度ID审核结果通知', $userInfo['nickname'], '已拒绝', $this->getProcessResult());
+
         return true;
     }
 
@@ -187,6 +196,14 @@ class Binding extends BindingBean
             if (!$res) {
                 throw new \Exception('操作失败');
             }
+
+            //发送百度ID审核结果通知
+            $userService = new User();
+            $userService->setId($bindingInfo['cby']);
+            $userInfo = $userService->getUserInfo();
+            $subscriptionMessageService = new SubscriptionMessage();
+            $subscriptionMessageService->setUserId($bindingInfo['cby']);
+            $subscriptionMessageService->sendBaiduIdReviewNotice('百度ID审核结果通知', $userInfo['nickname'], '已通过');
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();

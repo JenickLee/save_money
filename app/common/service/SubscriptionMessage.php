@@ -102,4 +102,48 @@ class SubscriptionMessage extends SubscriptionMessageBean
             $this->model->useIdUpdateData();
         }
     }
+
+
+    /**
+     * Notes:发送百度ID审核结果通知
+     * User: Jenick
+     * Date: 2021/2/4
+     * Time: 11:38 下午
+     */
+    public function sendBaiduIdReviewNotice($auditType, $applicant, $approvalResults, $remarks = null)
+    {
+        $where['s.sent_content'] = null;
+        $where['s.code'] = 'baidu_id_review_notice';
+        $where['s.user_id'] = $this->getUserId();
+        $this->model->setField('s.id, s.code, u.openid, t.status, t.template_id');
+        $this->model->setWhereArr($where);
+        $this->model->setGroup('s.user_id');
+        $temlate = $this->model->findOneInfoJoinUserAndTemlate();
+        $weChat = (new WeChat());
+        if ($temlate) {
+            if (strlen($auditType) > 20) {
+                $auditType = Str::cutStr($auditType, 17, 0, 'UTF-8') . '...';
+            }
+            if (strlen($applicant) > 20) {
+                $applicant = Str::cutStr($applicant, 17, 0, 'UTF-8') . '...';
+            }
+            if (strlen($approvalResults) > 5) {
+                $approvalResults = Str::cutStr($approvalResults, 5, 0, 'UTF-8');
+            }
+            if (!empty($remarks) && strlen($remarks) > 20) {
+                $remarks = Str::cutStr($remarks, 17, 0, 'UTF-8') . '...';
+            }
+            $data['thing1']['value'] = $auditType;
+            $data['thing3']['value'] = $applicant;
+            $data['phrase4']['value'] = $approvalResults;
+            $data['time5']['value'] = date('Y-m-d H:i:s');
+            $data['thing6']['value'] = $remarks ?? ' ';
+            $page = "pages/index/index";
+            $weChat->sendSubscribeMessage($temlate['openid'], $temlate['template_id'], $data, $page);
+
+            $this->model->setArr(['sent_content' => json_encode($data), 'send_time' => date('Y-m-d H:i:s')]);
+            $this->model->setId($temlate['id']);
+            $this->model->useIdUpdateData();
+        }
+    }
 }

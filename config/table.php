@@ -24,4 +24,6 @@ return [
     'fnd_subscription_message' => env('table.fnd_subscription_message', 'fnd_subscription_message'),
     //订阅消息模板
     'fnd_template' => env('table.fnd_template', 'fnd_template'),
+    //积分任务表
+    'fnd_points_task' => env('table.fnd_points_task', 'fnd_points_task'),
 ];

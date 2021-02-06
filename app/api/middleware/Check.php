@@ -20,6 +20,7 @@ class Check
         'getUltramanDataAnalysis',//获取奥特曼数据统计
         'getParticipateDataAnalysis',//统计月份奥特曼参加人数
         'getUltramanBanner',//获取奥特曼Banner图
+        'getPointsTaskList',//获取积分任务
     ];
 
     public function handle($request, Closure $next)
@@ -31,12 +32,11 @@ class Check
                 return Response::error(config('code.api_check_error'));
             }
 
-            /**新版本API校验
+            //API校验
             $res = $this->_checkApi($userId, $header['timestamp'] ?? null, $header['token'] ?? null);
             if (!$res) {
                 return Response::error(config('code.api_check_error'));
             }
-             */
             $request->userId = $userId;
             $request->userInfo = $this->_getUserInfo($userId);
         }

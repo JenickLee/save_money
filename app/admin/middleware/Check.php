@@ -22,13 +22,11 @@ class Check
             return Response::error(config('code.api_check_error'));
         }
 
-        //新版本API校验
-        /**
+        //API校验
         $res = $this->_checkApi($userId, $header['timestamp'] ?? null, $header['token'] ?? null);
         if (!$res) {
             return Response::error(config('code.api_check_error'));
         }
-        */
         $request->adminUserInfo = $this->_getUserInfo($userId);
         $request->adminUserId = $userId;
         $response = $next($request);

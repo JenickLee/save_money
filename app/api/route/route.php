@@ -36,3 +36,6 @@ Route::get("/getUltramanBanner", 'SysImage/getUltramanBanner');//获取奥特曼
 
 //---------------------------------------订阅消息-------------------------------------------------
 Route::post("/addSubscribeMessage", 'SubscriptionMessage/addSubscribeMessage');//新增订阅消息
+
+//---------------------------------------积分任务-------------------------------------------------
+Route::get("/getPointsTaskList", 'PointsTask/getPointsTaskList');//获取积分任务

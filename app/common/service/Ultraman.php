@@ -133,24 +133,34 @@ class Ultraman extends UltramanBean
                 throw new \Exception('日志记录失败');
             }
 
-            //获得积分
-            $pointsTaskService = new PointsTask();
-            $pointsTaskService->setTaskType(2);
-            $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
-            if ($pointsTaskInfo) {
-                $postItUserService = new PostItUser();
-                $postItUserService->setId($this->getPUserId());
-                $info = $postItUserService->getPostItUserInfoById();
-                if($info && !empty($info['user_id'])){
-                    $pointsListService = new PointsList();
+            //获得贴吧id信息
+            $postItUserService = new PostItUser();
+            $postItUserService->setId($this->getPUserId());
+            $info = $postItUserService->getPostItUserInfoById();
+            if($info && !empty($info['user_id'])){
+                $pointsListService = new PointsList();
+                $pointsListService->setUserId($info['user_id']);
+                //参加奥特曼任务积分
+                $pointsTaskService = new PointsTask();
+                $pointsTaskService->setTaskType(2);
+                $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
+                if ($pointsTaskInfo) {
                     $pointsListService->setPid($pointsTaskInfo['id']);
-                    $pointsListService->setUserId($info['user_id']);
-                    $pointsListId = $pointsListService->addPoints();
-                    if (!$pointsListId) {
+                    if (!$pointsListService->addPoints()) {
+                        throw new \Exception('新增积分失败');
+                    }
+                }
+                //更新奥特曼任务积分
+                $pointsTaskService->setTaskType(3);
+                $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
+                if ($pointsTaskInfo) {
+                    $pointsListService->setPid($pointsTaskInfo['id']);
+                    if (!$pointsListService->addPoints()) {
                         throw new \Exception('新增积分失败');
                     }
                 }
             }
+
 
             Db::commit();
             return $uid;

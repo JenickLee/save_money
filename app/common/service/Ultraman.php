@@ -247,12 +247,16 @@ class Ultraman extends UltramanBean
             $pointsTaskService = new PointsTask();
             $pointsTaskService->setTaskType(3);
             $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
-            if ($pointsTaskInfo) {
+            if ($pointsTaskInfo && !empty($info['user_id'])) {
                 $pointsListService = new PointsList();
                 $pointsListService->setPid($pointsTaskInfo['id']);
-                $pointsListId = $pointsListService->addPoints();
-                if(!$pointsListId){
-                    throw new \Exception('新增积分失败');
+                $pointsListService->setUserId($info['user_id']);
+                $pointsListInfo = $pointsListService->getOnePointsByUserIdAndPid();
+                if (!$pointsListInfo || date('Y-m-d', $pointsListInfo['create_time']) == date('Y-m-d')) {
+                    $pointsListId = $pointsListService->addPoints();
+                    if(!$pointsListId){
+                        throw new \Exception('新增积分失败');
+                    }
                 }
             }
 

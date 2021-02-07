@@ -53,4 +53,23 @@ class PointsList extends PointsListBean
         ];
         return $this->model->insertGetId($data);
     }
+
+    /**
+     * Notes:添加积分
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 3:20 下午
+     * @return int|string
+     * @throws \Exception
+     */
+    public function getOnePointsByUserIdAndPid()
+    {
+        $where = [
+            'user_id' => $this->getUserId(),
+            'pid' => $this->getPid()
+        ];
+        $this->model->setWhereArr($where);
+        $this->model->setOrder("id desc");
+        return $this->model->findOneInfo();
+    }
 }

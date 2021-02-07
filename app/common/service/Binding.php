@@ -182,19 +182,25 @@ class Binding extends BindingBean
                 throw new \Exception('该百度ID不存在或已被绑定！');
             }
 
+            //判断该用户是否已绑定账号
+            $postUserItModel->setWhereArr([
+                ['user_id', '=', $bindingInfo['cby']],
+            ]);
+            if ($postUserItModel->findOneInfo()) {
+                throw new \Exception('该用户已绑定账号！');
+            }
+
             //判断该处理任务更新为已处理
             $this->model->setId($this->getId());
             $this->model->setArr(['schedule' => 1, 'result' => 1, 'process_result' => '已绑定', 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
-            $res = $this->model->useIdUpdateData();
-            if (!$res) {
+            if (!$this->model->useIdUpdateData()) {
                 throw new \Exception('操作失败');
             }
 
             //对百度id进行绑定操作
             $postUserItModel->setId($postUserItInfo['id']);
             $postUserItModel->setArr(['user_id' => $bindingInfo['cby'], 'uby' => $this->getUby(), 'update_time' => $this->getUpdateTime()]);
-            $res = $postUserItModel->useIdUpdateData();
-            if (!$res) {
+            if (!$postUserItModel->useIdUpdateData()) {
                 throw new \Exception('操作失败');
             }
 
@@ -205,6 +211,19 @@ class Binding extends BindingBean
             $subscriptionMessageService = new SubscriptionMessage();
             $subscriptionMessageService->setUserId($bindingInfo['cby']);
             $subscriptionMessageService->sendBaiduIdReviewNotice('百度ID审核结果通知', $userInfo['nickname'], '已通过');
+
+            //绑定贴吧id任务积分
+            $pointsTaskService = new PointsTask();
+            $pointsTaskService->setTaskType(1);
+            $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
+            if ($pointsTaskInfo) {
+                $pointsListService = new PointsList();
+                $pointsListService->setUserId($bindingInfo['cby']);
+                $pointsListService->setPid($pointsTaskInfo['id']);
+                if (!$pointsListService->addPoints()) {
+                    throw new \Exception('新增积分失败');
+                }
+            }
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();

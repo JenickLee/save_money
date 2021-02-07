@@ -14,6 +14,8 @@ return [
     'biz_post_it_user' => env('table.biz_post_it_user', 'biz_post_it_user'),
     //绑定百度ID表
     'biz_binding' => env('table.biz_binding', 'biz_binding'),
+    //用户积分数据表
+    'biz_points_list' => env('table.biz_points_list', 'biz_points_list'),
     //用户表
     'fnd_user' => env('table.fnd_user', 'fnd_user'),
     //系统图片设置
@@ -26,4 +28,5 @@ return [
     'fnd_template' => env('table.fnd_template', 'fnd_template'),
     //积分任务表
     'fnd_points_task' => env('table.fnd_points_task', 'fnd_points_task'),
+
 ];

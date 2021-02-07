@@ -228,17 +228,34 @@ class Ultraman extends UltramanBean
                     }
                     break;
             }
+
+            //更新奥特曼
             $this->model->setId($id);
             $this->model->setArr($ultramanData);
             $res = $this->model->useIdUpdateData();
             if (!$res) {
                 throw new \Exception('修改失败');
             }
+            //记录日志
             $logModel = new UltramanLogModel();
             $lid = $logModel->insertGetId($logData);
             if (!$lid) {
                 throw new \Exception('日志记录失败');
             }
+
+            //获得积分
+            $pointsTaskService = new PointsTask();
+            $pointsTaskService->setTaskType(3);
+            $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
+            if ($pointsTaskInfo) {
+                $pointsListService = new PointsList();
+                $pointsListService->setPid($pointsTaskInfo['id']);
+                $pointsListId = $pointsListService->addPoints();
+                if(!$pointsListId){
+                    throw new \Exception('新增积分失败');
+                }
+            }
+
             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();

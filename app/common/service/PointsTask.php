@@ -39,4 +39,36 @@ class PointsTask extends PointsTaskBean
         $this->model->setWhereArr($where);
         return $this->model->findAllInfo();
     }
+
+    /**
+     * Notes:根据id获取积分任务详情
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 12:25 上午
+     */
+    public function getPointsTaskInfoById()
+    {
+        $where = [
+            ['id', '=', $this->getId()]
+        ];
+        $this->model->setWhereArr($where);
+        return $this->model->findOneInfo();
+    }
+
+    /**
+     * Notes:根据任务类型获取积分任务详情
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 12:25 上午
+     */
+    public function getPointsTaskInfoByTaskType()
+    {
+        $where = [
+            ['task_type', '=', $this->getTaskType()],
+            ['eff_time', '<', $this->getEffTime()],
+            ['exp_time', '=', null]
+        ];
+        $this->model->setWhereArr($where);
+        return $this->model->findOneInfo();
+    }
 }

@@ -65,13 +65,24 @@ class PointsList extends PointsListBean
     public function getTodayPointsByUserIdAndPid()
     {
         $where = [
-            ['user_id' ,'=', $this->getUserId()],
-            ['pid' ,'=', $this->getPid()],
-            ['create_time' ,'>=', date('Y-m-d 00:00:00')],
-            ['create_time' ,'<=', date('Y-m-d 23:59:59')]
+            ['user_id', '=', $this->getUserId()],
+            ['pid', '=', $this->getPid()],
+            ['create_time', '>=', date('Y-m-d 00:00:00')],
+            ['create_time', '<=', date('Y-m-d 23:59:59')]
         ];
         $this->model->setWhereArr($where);
         $this->model->setOrder("id desc");
         return $this->model->findOneInfo();
+    }
+
+    /**
+     * Notes:获取我的积分总数
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 5:01 下午
+     */
+    public function getMyTotalPoints()
+    {
+        return $this->model->getMyTotalPoints($this->getUserId());
     }
 }

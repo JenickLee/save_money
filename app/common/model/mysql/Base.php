@@ -44,7 +44,6 @@ class Base extends Bean
             } else {
                 $res = $this->field($this->getField())->where($this->getWhereArr())->order($this->getOrder())->find();
             }
-
             if (is_object($res)) $res = $res->toArray();
             return $res;
         } catch (\Exception $e) {

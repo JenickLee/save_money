@@ -16,6 +16,8 @@ return [
     'biz_binding' => env('table.biz_binding', 'biz_binding'),
     //用户积分数据表
     'biz_points_list' => env('table.biz_points_list', 'biz_points_list'),
+    //积分抵扣详情表
+    'biz_points_deduction_details' => env('table.biz_points_deduction_details', 'biz_points_deduction_details'),
     //用户表
     'fnd_user' => env('table.fnd_user', 'fnd_user'),
     //系统图片设置

@@ -62,11 +62,13 @@ class PointsList extends PointsListBean
      * @return int|string
      * @throws \Exception
      */
-    public function getOnePointsByUserIdAndPid()
+    public function getTodayPointsByUserIdAndPid()
     {
         $where = [
-            'user_id' => $this->getUserId(),
-            'pid' => $this->getPid()
+            ['user_id' ,'=', $this->getUserId()],
+            ['pid' ,'=', $this->getPid()],
+            ['create_time' ,'>=', date('Y-m-d 00:00:00')],
+            ['create_time' ,'<=', date('Y-m-d 23:59:59')]
         ];
         $this->model->setWhereArr($where);
         $this->model->setOrder("id desc");

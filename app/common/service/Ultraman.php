@@ -177,7 +177,7 @@ class Ultraman extends UltramanBean
     public function editUltraman($type, $calculation)
     {
         $id = $this->getId();
-        $this->model->setField('u.*, user.username');
+        $this->model->setField('u.*, user.username, user.user_id');
         $this->model->setWhereArr(['u.id' => $id]);
         $info = $this->model->findOneInfoJoinUser();
         if (!$info) {
@@ -251,8 +251,8 @@ class Ultraman extends UltramanBean
                 $pointsListService = new PointsList();
                 $pointsListService->setPid($pointsTaskInfo['id']);
                 $pointsListService->setUserId($info['user_id']);
-                $pointsListInfo = $pointsListService->getOnePointsByUserIdAndPid();
-                if (!$pointsListInfo || date('Y-m-d', $pointsListInfo['create_time']) == date('Y-m-d')) {
+                $pointsListInfo = $pointsListService->getTodayPointsByUserIdAndPid();
+                if (!$pointsListInfo) {
                     $pointsListId = $pointsListService->addPoints();
                     if(!$pointsListId){
                         throw new \Exception('新增积分失败');

@@ -48,6 +48,7 @@ class PointsList extends PointsListBean
             'user_id' => $this->getUserId(),
             'type' => 1,
             'pid' => $pointsTaskInfo['id'],
+            'detail' => "{$pointsTaskInfo['title']}获得积分",
             'integral' => $pointsTaskInfo['integral'],
             'create_time' => $this->getCreateTime()
         ];

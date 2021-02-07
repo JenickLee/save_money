@@ -18,6 +18,8 @@ class PointsList extends Base
     private $type = null;
     //积分任务id/兑换产品id
     private $pid = null;
+    //积分详情
+    private $detail = null;
     //积分数量
     private $integral = 0;
     //获得/使用时间
@@ -95,6 +97,22 @@ class PointsList extends Base
     public function setPid($pid): void
     {
         $this->pid = $pid;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDetail()
+    {
+        return $this->detail;
+    }
+
+    /**
+     * @param null $detail
+     */
+    public function setDetail($detail): void
+    {
+        $this->detail = $detail;
     }
 
     /**

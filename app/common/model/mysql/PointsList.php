@@ -34,7 +34,7 @@ class PointsList extends Base
                 ->where("pdd.uid = p.id")
                 ->buildSql();
 
-            $field = "SUM(p.integral - {$subQuery}) as num";
+            $field = "SUM(p.integral - IFNULL({$subQuery}, 0)) as num";
             $res = $this->alias('p')
                 ->field($field)
                 ->where($where)

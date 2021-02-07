@@ -86,4 +86,33 @@ class PointsList extends PointsListBean
     {
         return $this->model->getMyTotalPoints($this->getUserId());
     }
+
+    /**
+     * Notes:根据user_id获取积分明细
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 6:15 下午
+     */
+    public function getPointsListByUserId()
+    {
+        $this->model->setWhereArr([
+            'user_id' => $this->getUserId()
+        ]);
+        $this->model->setOrder("create_time desc, id desc");
+        return $this->model->findAllInfo();
+    }
+
+    /**
+     * Notes:根据user_id获取积分明细总数
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 6:15 下午
+     */
+    public function getPointsCountByUserId()
+    {
+        $this->model->setWhereArr([
+            'user_id' => $this->getUserId()
+        ]);
+        return $this->model->getCount();
+    }
 }

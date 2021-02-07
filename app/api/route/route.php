@@ -40,3 +40,4 @@ Route::post("/addSubscribeMessage", 'SubscriptionMessage/addSubscribeMessage');/
 //---------------------------------------积分任务-------------------------------------------------
 Route::get("/getPointsTaskList", 'PointsTask/getPointsTaskList');//获取积分任务
 Route::get("/getMyTotalPoints", 'PointsList/getMyTotalPoints');//获取我的积分总数
+Route::get("/getPointsList", 'PointsList/getPointsList');//获取积分明细

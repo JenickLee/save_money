@@ -32,4 +32,18 @@ class PointsList extends Base
         $this->obj->setUserId($this->userId);
         return Response::success($this->obj->getMyTotalPoints());
     }
+
+    /**
+     * Notes:获取积分明细
+     * User: Jenick
+     * Date: 2021/2/7
+     * Time: 12:21 上午
+     */
+    public function getPointsList()
+    {
+        $this->obj->setUserId($this->userId);
+        $this->response['list'] = $this->obj->getPointsListByUserId();
+        $this->response['count'] = $this->obj->getPointsCountByUserId();
+        return Response::success($this->response);
+    }
 }

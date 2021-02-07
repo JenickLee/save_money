@@ -154,7 +154,8 @@ class Ultraman extends UltramanBean
                    u.aims,
                    DATE_FORMAT(u.end_time, '%Y-%m-%d') as end_time, 
                    if( ((u.aims - u.deposit_base) < 0), 0.00, (u.aims - u.deposit_base))  as difference,
-                   if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) as schedule";
+                   if( truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 0, if(truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2) > 100, 100.00, truncate(((`u`.`deposit_base` / `u`.`aims`) * 100),2)), 0.00) as schedule,
+                   u.update_time";
 
         $where = [
             ['u.end_time', '>=', date('Y-m-d H:i:s')],

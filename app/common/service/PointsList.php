@@ -55,7 +55,7 @@ class PointsList extends PointsListBean
     }
 
     /**
-     * Notes:添加积分
+     * Notes:根据user_id和pid判断今日是否已获得
      * User: Jenick
      * Date: 2021/2/7
      * Time: 3:20 下午

@@ -132,12 +132,33 @@ class Ultraman extends UltramanBean
             if (!$lid) {
                 throw new \Exception('日志记录失败');
             }
+
+            //获得积分
+            $pointsTaskService = new PointsTask();
+            $pointsTaskService->setTaskType(2);
+            $pointsTaskInfo = $pointsTaskService->getPointsTaskInfoByTaskType();
+            if ($pointsTaskInfo) {
+                $postItUserService = new PostItUser();
+                $postItUserService->setId($this->getPUserId());
+                $info = $postItUserService->getPostItUserInfoById();
+                if($info && !empty($info['user_id'])){
+                    $pointsListService = new PointsList();
+                    $pointsListService->setPid($pointsTaskInfo['id']);
+                    $pointsListService->setUserId($info['user_id']);
+                    $pointsListId = $pointsListService->addPoints();
+                    if (!$pointsListId) {
+                        throw new \Exception('新增积分失败');
+                    }
+                }
+            }
+
             Db::commit();
+            return $uid;
         } catch (\Exception $e) {
             Db::rollback();
             throw new \Exception($e->getMessage());
         }
-        return $uid;
+
     }
 
     /**
@@ -254,7 +275,7 @@ class Ultraman extends UltramanBean
                 $pointsListInfo = $pointsListService->getTodayPointsByUserIdAndPid();
                 if (!$pointsListInfo) {
                     $pointsListId = $pointsListService->addPoints();
-                    if(!$pointsListId){
+                    if (!$pointsListId) {
                         throw new \Exception('新增积分失败');
                     }
                 }

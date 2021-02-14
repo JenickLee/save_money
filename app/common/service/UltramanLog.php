@@ -39,26 +39,25 @@ class UltramanLog extends UltramanLogBean
         $this->model->setWhereArr($where);
         $this->model->setField("FROM_UNIXTIME( UNIX_TIMESTAMP( log.create_time ), '%Y-%m-%d' ) date, log.deposit_base value");
         $res = $this->model->getUserDepositBaseDataAnalysis();
-        $newArr = [];
-        for ($i = 0; $i < count($res); $i++) {
-            array_push($newArr, $res[$i]);
-            $startDate =  date('Y-m-d', strtotime($res[$i]['date']) + 86400);
-            $endDate = null;
-            if (!isset($res[$i + 1])) {
-                $endDate = date('Y-m-d');
-            } else if ($startDate != $res[$i + 1]['date']) {
-                $endDate = date('Y-m-d', strtotime($res[$i + 1]['date']) - 86400);
-            }
-
-            if(isset($endDate)){
-                $value = $res[$i]['value'];
-                $dateArr = Date::getDateByInterval($startDate, $endDate);
-                foreach ($dateArr as $vo) {
-                    array_push($newArr, ['date' => $vo, 'value' => $value]);
-                }
-            }
-
-        }
-        return $newArr;
+//        $newArr = [];
+//        for ($i = 0; $i < count($res); $i++) {
+//            array_push($newArr, $res[$i]);
+//            $startDate =  date('Y-m-d', strtotime($res[$i]['date']) + 86400);
+//            $endDate = null;
+//            if (!isset($res[$i + 1])) {
+//                $endDate = date('Y-m-d');
+//            } else if ($startDate != $res[$i + 1]['date']) {
+//                $endDate = date('Y-m-d', strtotime($res[$i + 1]['date']) - 86400);
+//            }
+//
+//            if(isset($endDate)){
+//                $value = $res[$i]['value'];
+//                $dateArr = Date::getDateByInterval($startDate, $endDate);
+//                foreach ($dateArr as $vo) {
+//                    array_push($newArr, ['date' => $vo, 'value' => $value]);
+//                }
+//            }
+//        }
+        return $res;
     }
 }

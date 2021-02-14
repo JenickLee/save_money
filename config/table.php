@@ -30,5 +30,7 @@ return [
     'fnd_template' => env('table.fnd_template', 'fnd_template'),
     //积分任务表
     'fnd_points_task' => env('table.fnd_points_task', 'fnd_points_task'),
+    //兑换商品表
+    'fnd_exchange_goods' => env('table.fnd_exchange_goods', 'fnd_exchange_goods'),
 
 ];

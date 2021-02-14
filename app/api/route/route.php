@@ -41,3 +41,6 @@ Route::post("/addSubscribeMessage", 'SubscriptionMessage/addSubscribeMessage');/
 Route::get("/getPointsTaskList", 'PointsTask/getPointsTaskList');//获取积分任务
 Route::get("/getMyTotalPoints", 'PointsList/getMyTotalPoints');//获取我的积分总数
 Route::get("/getPointsList", 'PointsList/getPointsList');//获取积分明细
+
+//---------------------------------------积分兑换-------------------------------------------------
+Route::get("/getExchangeGoodsList", 'ExchangeGoods/getExchangeGoodsList');//获取积分兑换列表
